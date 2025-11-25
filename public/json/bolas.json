@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "nome": "Bola Nike Pitch Futebol",
+    "imagem": "produtos/bola1.webp",
+    "descricao": "Bola vibrante para melhor visibilidade e controle em treinos.",
+    "preco": 89.90,
+    "tamanho": "Único",
+    "avaliacao": 4.4,
+    "numAvaliacoes": 110,
+    "estoque": 45
+  },
+  {
+    "id": 2,
+    "nome": "Bola Nike Pitch Futebol",
+    "imagem": "produtos/bola2.webp",
+    "descricao": "Bola resistente, ideal para treinos recreativos.",
+    "preco": 99.90,
+    "tamanho": "Único",
+    "avaliacao": 4.5,
+    "numAvaliacoes": 125,
+    "estoque": 38
+  },
+  {
+    "id": 3,
+    "nome": "Bola Nike Pitch Futebol",
+    "imagem": "produtos/bola3.webp",
+    "descricao": "Costurada à máquina para toque suave e durabilidade.",
+    "preco": 79.90,
+    "tamanho": "Único",
+    "avaliacao": 4.2,
+    "numAvaliacoes": 90,
+    "estoque": 50
+  },
+  {
+    "id": 4,
+    "nome": "Bola Nike Pitch Futebol",
+    "imagem": "produtos/bola4.webp",
+    "descricao": "Leve e equilibrada para treinos de precisão.",
+    "preco": 69.90,
+    "tamanho": "Único",
+    "avaliacao": 4.0,
+    "numAvaliacoes": 77,
+    "estoque": 70
+  },
+  {
+    "id": 5,
+    "nome": "Bola de Futebol Campo Adidas Euro 24",
+    "imagem": "produtos/bola5.webp",
+    "angulo": [
+      "produtos/bola5.webp",
+      "produtos/bola5_1.webp",
+      "produtos/bola5_2.webp",
+      "produtos/bola5_3.webp"
+    ],
+    "descricao": "Inspirada na Euro 2024, modelo certificado FIFA Quality Pro.",
+    "preco": 119.90,
+    "tamanho": "Único",
+    "avaliacao": 4.8,
+    "numAvaliacoes": 205,
+    "estoque": 34
+  },
+  {
+    "id": 6,
+    "nome": "Bola Futebol Adidas Tango Glider Campo",
+    "imagem": "produtos/bola6.webp",
+    "angulo": [
+      "produtos/bola6.webp",
+      "produtos/bola6_1.webp",
+      "produtos/bola6_2.webp",
+      "produtos/bola6_3.webp",
+      "produtos/bola6_4.webp"
+    ],
+    "descricao": "Clássica e resistente, costurada para durar.",
+    "preco": 109.90,
+    "tamanho": "Único",
+    "avaliacao": 4.6,
+    "numAvaliacoes": 148,
+    "estoque": 37
+  },
+  {
+    "id": 7,
+    "nome": "Bola Campo Adidas Tiro Club",
+    "imagem": "produtos/bola7.webp",
+    "angulo": [
+      "produtos/bola7.webp",
+      "produtos/bola7_1.webp",
+      "produtos/bola7_2.webp"
+    ],
+    "descricao": "Modelo durável com excelente desempenho.",
+    "preco": 99.90,
+    "tamanho": "Único",
+    "avaliacao": 4.3,
+    "numAvaliacoes": 112,
+    "estoque": 48
+  },
+  {
+    "id": 8,
+    "nome": "Bola Nike Academy Team Futebol",
+    "imagem": "produtos/bola8.webp",
+    "descricao": "Toque consistente e alta resistência para treinos frequentes.",
+    "preco": 89.90,
+    "tamanho": "Único",
+    "avaliacao": 4.4,
+    "numAvaliacoes": 102,
+    "estoque": 52
+  },
+  {
+    "id": 9,
+    "nome": "Bola Nike Academy Team Futebol",
+    "imagem": "produtos/bola9.webp",
+    "descricao": "Bola versátil com design moderno e longa durabilidade.",
+    "preco": 79.90,
+    "tamanho": "Único",
+    "avaliacao": 4.1,
+    "numAvaliacoes": 89,
+    "estoque": 60
+  }
+]

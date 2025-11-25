@@ -1,0 +1,229 @@
+/* -------------------- CONTAINER PRINCIPAL -------------------- */
+.produtos-oferta-container {
+  padding: 40px 6%;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* -------------------- CABEÇALHO -------------------- */
+.produtos-oferta-titulo {
+  text-align: center;
+  font-size: 2.6rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.produtos-oferta-subtitulo {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 35px;
+}
+
+/* -------------------- CONTADOR -------------------- */
+.produtos-oferta-contador {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.produtos-oferta-contador-titulo {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.produtos-oferta-contador-tempo {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.produtos-oferta-contador-item {
+  background: #000;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  min-width: 80px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.produtos-oferta-contador-numero {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.produtos-oferta-contador-label {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* -------------------- FILTROS -------------------- */
+.produtos-oferta-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.filtro-btn-oferta {
+  background: white;
+  border: 2px solid #111;
+  color: #111;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.filtro-btn-oferta:hover,
+.filtro-btn-oferta.ativo {
+  background: #111;
+  color: white;
+}
+
+/* -------------------- GRID DE PRODUTOS -------------------- */
+.produtos-oferta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
+  justify-content: center;
+  gap: 35px;
+}
+
+/* -------------------- CARDS -------------------- */
+.produto-card-oferta {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 470px;
+}
+
+.produto-card-oferta:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.produto-badge-oferta {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(45deg, #e60000, #ff3b3b);
+  color: white;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  font-weight: bold;
+  z-index: 3;
+}
+
+/* -------------------- IMAGEM -------------------- */
+.produto-imagem-oferta {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+/* -------------------- INFO -------------------- */
+.produto-info-oferta {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.produto-categoria-oferta {
+  text-transform: uppercase;
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.produto-nome-oferta {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 6px 0;
+  color: #111;
+}
+
+.produto-descricao-oferta {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+/* -------------------- AVALIAÇÃO -------------------- */
+.produto-avaliacao-oferta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.estrelas-oferta {
+  color: gold;
+  font-size: 1.2rem;
+}
+
+.avaliacao-texto-oferta {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* -------------------- PREÇOS -------------------- */
+.produto-precos-oferta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.produto-preco-original-oferta {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 1rem;
+}
+
+.produto-preco-oferta {
+  color: #e60000;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+/* -------------------- RESPONSIVIDADE -------------------- */
+@media (max-width: 768px) {
+  .produtos-oferta-titulo {
+    font-size: 2rem;
+  }
+
+  .produtos-oferta-contador-item {
+    padding: 12px;
+    min-width: 60px;
+  }
+
+  .produto-card-oferta {
+    height: auto;
+  }
+
+  .produto-imagem-oferta {
+    height: 200px;
+  }
+
+  .produto-nome-oferta {
+    font-size: 1.1rem;
+  }
+
+  .produto-preco-oferta {
+    font-size: 1.1rem;
+  }
+}

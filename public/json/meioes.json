@@ -1,0 +1,124 @@
+[
+  {
+    "id": 1,
+    "nome": "Meia Futebol Finta Pro Grip Antiderrapante",
+    "imagem": "produtos/meiao1.webp",
+    "descricao": "Meia profissional antiderrapante que garante máxima estabilidade.",
+    "preco": 89.90,
+    "tamanho": "Único",
+    "avaliacao": 4.5,
+    "numAvaliacoes": 103,
+    "estoque": 60
+  },
+  {
+    "id": 2,
+    "nome": "Meia Futebol Finta Pro Grip Antiderrapante",
+    "imagem": "produtos/meiao2.webp",
+    "descricao": "Com áreas de compressão, garantindo conforto e firmeza.",
+    "preco": 99.90,
+    "tamanho": "Único",
+    "avaliacao": 4.7,
+    "numAvaliacoes": 120,
+    "estoque": 42
+  },
+  {
+    "id": 3,
+    "nome": "Meia Futebol Finta Pro Grip Antiderrapante",
+    "imagem": "produtos/meiao3.webp",
+    "descricao": "Tecido respirável com grip antiderrapante.",
+    "preco": 79.90,
+    "tamanho": "Único",
+    "avaliacao": 4.4,
+    "numAvaliacoes": 88,
+    "estoque": 75
+  },
+  {
+    "id": 4,
+    "nome": "Meia Futebol Finta Pro Grip Antiderrapante",
+    "imagem": "produtos/meiao4.webp",
+    "descricao": "Grip reforçado para tração ideal durante o jogo.",
+    "preco": 69.90,
+    "tamanho": "Único",
+    "avaliacao": 4.2,
+    "numAvaliacoes": 64,
+    "estoque": 58
+  },
+  {
+    "id": 5,
+    "nome": "Meião Nike Classic Football Dri-FIT",
+    "imagem": "produtos/meiao5.webp",
+    "angulo": [
+      "produtos/meiao5.webp",
+      "produtos/meiao5_1.webp",
+      "produtos/meiao5_2.webp"
+    ],
+    "descricao": "Tecnologia Dri-FIT para manter os pés secos.",
+    "preco": 119.90,
+    "tamanho": "Único",
+    "avaliacao": 4.8,
+    "numAvaliacoes": 190,
+    "estoque": 40
+  },
+  {
+    "id": 6,
+    "nome": "Meião Nike Classic Football Dri-FIT",
+    "imagem": "produtos/meiao6.webp",
+    "angulo": [
+      "produtos/meiao6.webp",
+      "produtos/meiao6_1.webp",
+      "produtos/meiao6_2.webp"
+    ],
+    "descricao": "Ajuste anatômico e conforto avançado.",
+    "preco": 109.90,
+    "tamanho": "Único",
+    "avaliacao": 4.6,
+    "numAvaliacoes": 133,
+    "estoque": 47
+  },
+  {
+    "id": 7,
+    "nome": "Meião Nike Classic Football Dri-FIT",
+    "imagem": "produtos/meiao7.webp",
+    "angulo": [
+      "produtos/meiao7.webp",
+      "produtos/meiao7_1.webp",
+      "produtos/meiao7_2.webp"
+    ],
+    "descricao": "Modelo leve, resistente e com alta performance.",
+    "preco": 99.90,
+    "tamanho": "Único",
+    "avaliacao": 4.6,
+    "numAvaliacoes": 115,
+    "estoque": 50
+  },
+  {
+    "id": 8,
+    "nome": "Meião Adidas Milano 23",
+    "imagem": "produtos/meiao8.webp",
+    "angulo": [
+      "produtos/meiao8.webp",
+      "produtos/meiao8_1.webp"
+    ],
+    "descricao": "Design clássico com ajuste firme.",
+    "preco": 89.90,
+    "tamanho": "Único",
+    "avaliacao": 4.3,
+    "numAvaliacoes": 92,
+    "estoque": 66
+  },
+  {
+    "id": 9,
+    "nome": "Meião Adidas Milano 23",
+    "imagem": "produtos/meiao9.webp",
+    "angulo": [
+      "produtos/meiao9.webp",
+      "produtos/meiao9_1.webp"
+    ],
+    "descricao": "Durável e confortável, ideal para treinos pesados.",
+    "preco": 79.90,
+    "tamanho": "Único",
+    "avaliacao": 4.1,
+    "numAvaliacoes": 80,
+    "estoque": 70
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "nome": "Caneleira Adidas Tiro",
+    "imagem": "produtos/caneleira1.webp",
+    "descricao": "Caneleira leve e resistente, ideal para treinos e partidas casuais.",
+    "preco": 79.90,
+    "tamanho": "Único",
+    "avaliacao": 4.3,
+    "numAvaliacoes": 87,
+    "estoque": 42
+  },
+  {
+    "id": 2,
+    "nome": "Caneleira Futebol Nike J Guard",
+    "imagem": "produtos/caneleira2.webp",
+    "descricao": "Modelo compacto e confortável, oferecendo proteção com excelente mobilidade.",
+    "preco": 129.50,
+    "tamanho": "Único",
+    "avaliacao": 4.6,
+    "numAvaliacoes": 152,
+    "estoque": 30
+  },
+  {
+    "id": 3,
+    "nome": "Caneleira Nike J Guard",
+    "imagem": "produtos/caneleira3.webp",
+    "descricao": "Design minimalista com estrutura leve e de alta durabilidade.",
+    "preco": 129.50,
+    "tamanho": "Único",
+    "avaliacao": 4.4,
+    "numAvaliacoes": 96,
+    "estoque": 28
+  },
+  {
+    "id": 4,
+    "nome": "Caneleira Adidas Tiro Club SG",
+    "imagem": "produtos/caneleira4.webp",
+    "descricao": "Proteção reforçada com ajuste seguro para jogos intensos.",
+    "preco": 99.00,
+    "tamanho": "Único",
+    "avaliacao": 4.1,
+    "numAvaliacoes": 65,
+    "estoque": 50
+  },
+  {
+    "id": 5,
+    "nome": "Caneleira Nike Mercurial Lite Unissex",
+    "imagem": "produtos/caneleira5.webp",
+    "descricao": "Ultra leve e ventilada, garantindo conforto durante toda a partida.",
+    "preco": 149.90,
+    "tamanho": "Único",
+    "avaliacao": 4.8,
+    "numAvaliacoes": 203,
+    "estoque": 22
+  },
+  {
+    "id": 6,
+    "nome": "Caneleira Penalty Matis",
+    "imagem": "produtos/caneleira6.webp",
+    "descricao": "Ótima absorção de impacto para máxima segurança.",
+    "preco": 54.90,
+    "tamanho": "Único",
+    "avaliacao": 4.2,
+    "numAvaliacoes": 71,
+    "estoque": 80
+  },
+  {
+    "id": 7,
+    "nome": "Caneleira Puma Neymar JR Ultra Flex",
+    "imagem": "produtos/caneleira7.webp",
+    "descricao": "Flexibilidade, leveza e proteção inspiradas em Neymar Jr.",
+    "preco": 250.00,
+    "tamanho": "Único",
+    "avaliacao": 4.9,
+    "numAvaliacoes": 189,
+    "estoque": 17
+  },
+  {
+    "id": 8,
+    "nome": "Caneleira Nike Mercurial Lite Masculina",
+    "imagem": "produtos/caneleira8.webp",
+    "descricao": "Modelo leve, resistente e com excelente ventilação.",
+    "preco": 145.00,
+    "tamanho": "Único",
+    "avaliacao": 4.7,
+    "numAvaliacoes": 142,
+    "estoque": 33
+  }
+]

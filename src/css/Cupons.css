@@ -1,0 +1,128 @@
+    .cupons-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .cupons-title {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    
+    .cupons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    
+    .cupom-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    
+    .cupom-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .cupom-header {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .cupom-code {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin: 10px 0;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    
+    .cupom-body {
+      padding: 20px;
+    }
+    
+    .cupom-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .cupom-description {
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+    
+    .cupom-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+    
+    .cupom-validity {
+      color: #555;
+    }
+    
+    .cupom-discount {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    
+    .cupom-actions {
+      text-align: center;
+      margin-top: 15px;
+    }
+    
+    .btn-copiar {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    
+    .btn-copiar:hover {
+      background: #2980b9;
+    }
+    
+    .cupom-tag {
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      background: #e74c3c;
+      color: white;
+      padding: 5px 30px;
+      transform: rotate(45deg);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .cupom-info {
+      margin-top: 40px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+      .cupons-grid {
+        grid-template-columns: 1fr;
+      }
+    }

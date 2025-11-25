@@ -1,0 +1,283 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.container-soccer-points {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f5f5;
+  color: #111;
+}
+
+/* ===== HERO / TOPO ===== */
+.hero-soccer-points {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.caixa-hero-soccer-points {
+  background: linear-gradient(135deg, #000, #222);
+  color: white;
+  border-radius: 14px;
+  padding: 40px 30px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.caixa-hero-soccer-points h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.caixa-hero-soccer-points p {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 25px;
+}
+
+/* ===== PAINEL DE PONTOS ===== */
+.painel-pontos-soccer-points {
+  margin-top: 30px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 25px;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.painel-pontos-soccer-points h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.valor-pontos-soccer-points {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #000;
+  margin: 15px 0;
+}
+
+.barra-nivel-soccer-points {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progresso-soccer-points {
+  height: 100%;
+  background: #000;
+  transition: width 0.4s ease;
+}
+
+.meta-soccer-points {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* ===== BOTÃO DE GANHAR PONTOS ===== */
+.btn-ganhar-soccer-points {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-ganhar-soccer-points:hover {
+  background: #444;
+}
+
+/* ===== BRINDES ===== */
+.brindes-soccer-points {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.brindes-soccer-points h2 {
+  font-size: 1.8rem;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.subtitulo-soccer-points {
+  color: #444;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+/* Brindes em linha (carrossel horizontal) */
+.grid-brindes-soccer-points {
+  display: flex;
+  overflow-x: auto;
+  gap: 25px;
+  padding: 10px 5px;
+  scroll-behavior: smooth;
+}
+
+.grid-brindes-soccer-points::-webkit-scrollbar {
+  height: 6px;
+}
+
+.grid-brindes-soccer-points::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 4px;
+}
+
+.card-brinde-soccer-points {
+  flex: 0 0 auto;
+  width: 230px;
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+}
+
+.card-brinde-soccer-points:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.img-brinde-soccer-points {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.card-brinde-soccer-points h3 {
+  font-size: 1.1rem;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.pontos-necessarios-soccer-points {
+  color: #000;
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.btn-resgatar-soccer-points {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-resgatar-soccer-points:hover {
+  background: #444;
+}
+
+/* ===== HISTÓRICO ===== */
+.historico-soccer-points {
+  margin-top: 60px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  padding: 25px 30px;
+}
+
+.historico-soccer-points h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #000;
+}
+
+.historico-soccer-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.historico-soccer-points li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.historico-soccer-points li:last-child {
+  border-bottom: none;
+}
+
+/* Cores agora só em preto e branco */
+.ganho-soccer-points {
+  color: #000;
+  font-weight: 600;
+}
+
+.resgate-soccer-points {
+  color: #555;
+  font-weight: 600;
+}
+
+/* ===== MODAL ===== */
+.modal-overlay-soccer-points {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.modal-soccer-points {
+  background: white;
+  border-radius: 14px;
+  padding: 30px 25px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.modal-soccer-points h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.modal-soccer-points p {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.img-modal-soccer-points {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin: 20px auto;
+}
+
+.btn-fechar-soccer-points {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn-fechar-soccer-points:hover {
+  background: #444;
+}
