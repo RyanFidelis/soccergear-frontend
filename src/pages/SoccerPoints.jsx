@@ -10,7 +10,7 @@ export default function SoccerPoints() {
   const [brindeSelecionado, setBrindeSelecionado] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   const brindes = [
     {
@@ -112,7 +112,6 @@ export default function SoccerPoints() {
       <section className="hero-soccer-points">
         <div className="caixa-hero-soccer-points">
           <h1>Ganhe Pontos, Conquiste Prêmios!</h1>
-          {/* Texto atualizado para a nova regra segura */}
           <p>A cada R$ 10,00 em compras aprovadas, você ganha 1 ponto.</p>
         </div>
         <div className="painel-pontos-soccer-points">

@@ -7,7 +7,7 @@ export default function MinhasCompras() {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   const carregarCompras = async () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));

@@ -13,7 +13,7 @@ export default function Perfil() {
   const [mostrarCamera, setMostrarCamera] = useState(false);
   const [stream, setStream] = useState(null);
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   useEffect(() => {
     const userData = localStorage.getItem("usuarioLogado");
@@ -124,7 +124,7 @@ export default function Perfil() {
         window.dispatchEvent(new Event("user-updated"));
         
         setEditando(false);
-        alert("✅ Perfil atualizado com sucesso!");
+        alert("Seu perfil foi atualizado com sucesso!");
       } else {
         alert(`Erro: ${data.message}`);
       }
@@ -226,18 +226,18 @@ export default function Perfil() {
                 <label>Time do Coração</label>
                 <select name="time" value={formData.time || ""} onChange={handleInputChange}>
                   <option value="">Selecione seu time</option>
-                  <option value="São Paulo">São Paulo</option>
                   <option value="Corinthians">Corinthians</option>
-                  <option value="Palmeiras">Palmeiras</option>
-                  <option value="Santos">Santos</option>
                   <option value="Flamengo">Flamengo</option>
+                  <option value="São Paulo">São Paulo</option>
+                  <option value="Santos">Santos</option>
                   <option value="Vasco">Vasco</option>
-                  <option value="Botafogo">Botafogo</option>
                   <option value="Fluminense">Fluminense</option>
+                  <option value="Cruzeiro">Cruzeiro</option>
+                  <option value="Atlético-MG">Atlético-MG</option>
+                  <option value="Botafogo">Botafogo</option>
                   <option value="Grêmio">Grêmio</option>
                   <option value="Internacional">Internacional</option>
-                  <option value="Atlético-MG">Atlético-MG</option>
-                  <option value="Cruzeiro">Cruzeiro</option>
+                  <option value="Palmeiras">Palmeiras</option>
                 </select>
               </div>
             </div>

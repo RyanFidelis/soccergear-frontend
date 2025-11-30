@@ -14,7 +14,8 @@ export default function Cadastro() {
   const [termos, setTermos] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = process.env.REACT_APP_API_URL;
+
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   const handleCadastro = async (e) => {
     e.preventDefault();

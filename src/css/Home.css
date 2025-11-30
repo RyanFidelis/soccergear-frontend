@@ -144,9 +144,8 @@
   color: #f39c12;
 }
 
-/* Botão do carrinho */
 .btn-cart {
-  background-color: #2ecc71; /* Verde da paleta */
+  background-color: #2ecc71;
   flex-grow: 1;
   height: 36px;
 }
@@ -155,13 +154,10 @@
   background-color: #27ae60;
 }
 
-/* Estilo específico para a imagem do carrinho dentro do botão */
 .btn-cart .icon.carrinho {
   width: 24px;
   height: 24px;
   object-fit: contain;
-  /* Se a imagem for preta e você quiser branca: */
-  /* filter: brightness(0) invert(1); */
 }
 
 .seta {
@@ -296,4 +292,99 @@
   .produtos {
     padding: 10px 20px;
   }
+}
+
+.modal-overlay-tamanho {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content-tamanho {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-produto-nome {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.grid-tamanhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-tamanho {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-tamanho:hover:not(:disabled) {
+    border-color: #333;
+}
+
+.btn-tamanho.selecionado {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.btn-tamanho.esgotado {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #eee;
+    text-decoration: line-through;
+}
+
+.modal-acoes {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-cancelar-modal, .btn-confirmar-modal {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancelar-modal {
+    background: #eee;
+    color: #333;
+}
+
+.btn-confirmar-modal {
+    background: #333;
+    color: white;
+}
+
+.btn-confirmar-modal:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

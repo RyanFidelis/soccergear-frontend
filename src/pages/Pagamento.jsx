@@ -21,7 +21,7 @@ export default function Pagamento() {
     bandeira: "mastercard"
   });
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   const chavePix =
     "00020126360014BR.GOV.BCB.PIX0114+55119999999990214Pagamento Teste52040000530398654041.005802BR5925SoccerGear Pagamento6014SAO PAULO BR62070503***6304ABCD";

@@ -11,7 +11,7 @@ export default function Notificacoes() {
   const [modalLimparOpen, setModalLimparOpen] = useState(false);
   const [notificacaoSelecionada, setNotificacaoSelecionada] = useState(null);
   
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   const checarAtualizacoesBackend = async () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));

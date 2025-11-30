@@ -28,6 +28,9 @@ export default function Home() {
   const [resultados, setResultados] = useState([]);
   const [buscou, setBuscou] = useState(false);
 
+  const [modalCompra, setModalCompra] = useState({ aberto: false, produto: null, uid: null });
+  const [tamanhoSelecionado, setTamanhoSelecionado] = useState("");
+
   const refsCategorias = useRef({});
 
   const mostrarFeedback = (msg) => {
@@ -35,10 +38,38 @@ export default function Home() {
     setTimeout(() => setFeedbackMsg(""), 2000);
   };
 
-  const adicionarRapidoAoCarrinho = (produto, uid) => {
-    const estoqueDisp = produto.estoque ? (produto.estoque['Único'] || Object.values(produto.estoque)[0] || 0) : 1;
+  const abrirModalCompra = (produto, uid) => {
+    const temEstoque = produto.estoque && Object.keys(produto.estoque).length > 0;
+    
+    if (!temEstoque) {
+        adicionarAoCarrinhoFinal(produto, uid, "Único");
+    } else {
+        setModalCompra({ aberto: true, produto, uid });
+        setTamanhoSelecionado("");
+    }
+  };
+
+  const confirmarAdicaoAoCarrinho = () => {
+    if (!tamanhoSelecionado) {
+        alert("Por favor, selecione um tamanho.");
+        return;
+    }
+    
+    const { produto, uid } = modalCompra;
+    adicionarAoCarrinhoFinal(produto, uid, tamanhoSelecionado);
+    fecharModalCompra();
+  };
+
+  const fecharModalCompra = () => {
+    setModalCompra({ aberto: false, produto: null, uid: null });
+    setTamanhoSelecionado("");
+  };
+
+  const adicionarAoCarrinhoFinal = (produto, uid, tamanhoEscolhido) => {
+    const estoqueDisp = produto.estoque ? (produto.estoque[tamanhoEscolhido] || 0) : 1;
+
     if (Number(estoqueDisp) <= 0) {
-        mostrarFeedback("Produto esgotado!");
+        mostrarFeedback("Tamanho esgotado!");
         return;
     }
 
@@ -52,7 +83,7 @@ export default function Home() {
       nome: produto.nome,
       imagem: produto.imagem,
       preco: produto.preco,
-      tamanho: "Único",
+      tamanho: tamanhoEscolhido,
       quantity: 1,
     };
 
@@ -65,7 +96,7 @@ export default function Home() {
 
     localStorage.setItem(key, JSON.stringify(carrinho));
     window.dispatchEvent(new CustomEvent("cart-updated", { detail: carrinho }));
-    mostrarFeedback(`${produto.nome} adicionado!`);
+    mostrarFeedback(`${produto.nome} (Tam: ${tamanhoEscolhido}) adicionado!`);
   };
 
   useEffect(() => {
@@ -88,7 +119,6 @@ export default function Home() {
       setProdutos(dados);
     }
     carregar();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -198,7 +228,7 @@ export default function Home() {
                 title="Adicionar ao carrinho"
                 onClick={(e) => {
                     e.stopPropagation();
-                    adicionarRapidoAoCarrinho(produto, uid);
+                    abrirModalCompra(produto, uid);
                 }}
             >
                 <img src="imagem/carrinho.png" alt="Carrinho" className="icon carrinho" />
@@ -308,6 +338,39 @@ export default function Home() {
             </section>
           ))}
         </>
+      )}
+
+      {modalCompra.aberto && modalCompra.produto && (
+        <div className="modal-overlay-tamanho">
+            <div className="modal-content-tamanho">
+                <h3>Selecione o Tamanho</h3>
+                <p className="modal-produto-nome">{modalCompra.produto.nome}</p>
+                
+                <div className="grid-tamanhos">
+                    {Object.keys(modalCompra.produto.estoque || {}).map((tam) => {
+                        const qtd = modalCompra.produto.estoque[tam];
+                        const esgotado = qtd <= 0;
+                        return (
+                            <button
+                                key={tam}
+                                disabled={esgotado}
+                                className={`btn-tamanho ${tamanhoSelecionado === tam ? 'selecionado' : ''} ${esgotado ? 'esgotado' : ''}`}
+                                onClick={() => setTamanhoSelecionado(tam)}
+                            >
+                                {tam}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                <div className="modal-acoes">
+                    <button className="btn-cancelar-modal" onClick={fecharModalCompra}>Cancelar</button>
+                    <button className="btn-confirmar-modal" onClick={confirmarAdicaoAoCarrinho} disabled={!tamanhoSelecionado}>
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
       )}
     </main>
   );
