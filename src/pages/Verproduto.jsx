@@ -13,6 +13,12 @@ export default function VerProduto() {
   const [estoquePorTamanho, setEstoquePorTamanho] = useState({});
   const [mensagemFeedback, setMensagemFeedback] = useState("");
 
+  // 🔹 Função auxiliar para pegar a chave correta do carrinho
+  const getCartKey = () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    return usuario && usuario.id ? `cart_${usuario.id}` : "cart_guest";
+  };
+
   // --- util: ler/atualizar estoque armazenado localmente (por produto id)
   function lerEstoqueLocal(prodId) {
     try {
@@ -145,7 +151,6 @@ export default function VerProduto() {
   // ---------------------------
   function selecionarTamanho(t) {
     setTamanhoSelecionado(String(t));
-    // atualiza estoquePorTamanho (já está no state); nada mais necessário aqui
   }
 
   // ---------------------------
@@ -157,14 +162,15 @@ export default function VerProduto() {
       return;
     }
 
-    // checar estoque disponível (não decrementa, apenas bloqueia adicionar se esgotado)
     const qtd = Number(estoquePorTamanho?.[tamanhoSelecionado] ?? produto.estoque?.[tamanhoSelecionado] ?? 0);
     if (produto.tamanhos?.length > 0 && qtd <= 0) {
       alert("Tamanho sem estoque.");
       return;
     }
 
-    const raw = localStorage.getItem("cart");
+    // 🔹 CORREÇÃO: Usar a chave dinâmica (cart_ID)
+    const key = getCartKey();
+    const raw = localStorage.getItem(key);
     let carrinho = raw ? JSON.parse(raw) : [];
 
     const item = {
@@ -184,7 +190,9 @@ export default function VerProduto() {
     if (idx >= 0) carrinho[idx].quantity++;
     else carrinho.push(item);
 
-    localStorage.setItem("cart", JSON.stringify(carrinho));
+    localStorage.setItem(key, JSON.stringify(carrinho));
+    
+    // Dispara evento para o Header atualizar
     window.dispatchEvent(new CustomEvent("cart-updated", { detail: carrinho }));
 
     mostrarFeedback(`${produto.nome} adicionado ao carrinho!`);
@@ -192,7 +200,7 @@ export default function VerProduto() {
   }
 
   // ---------------------------
-  // Comprar agora (reserva/desconta 1 unidade do estoque local e vai ao pagamento)
+  // Comprar agora 
   // ---------------------------
   function comprarAgora() {
     const usuario = localStorage.getItem("usuarioLogado");
@@ -222,7 +230,6 @@ export default function VerProduto() {
       quantity: 1,
     };
 
-    // 🔹 Limpa qualquer compra anterior e define a atual
     localStorage.removeItem("compraAtual");
     localStorage.setItem("compraAtual", JSON.stringify([item]));
 
@@ -230,9 +237,6 @@ export default function VerProduto() {
     navigate("/pagamento");
   }
 
-  // ---------------------------
-  // Tela de carregamento
-  // ---------------------------
   if (carregando || !produto) {
     return (
       <main className="produto-detalhe" style={{ textAlign: "center", padding: 40 }}>
@@ -241,13 +245,9 @@ export default function VerProduto() {
     );
   }
 
-  // obter quantidade atual do tamanho selecionado
   const qtdSelecionada =
     tamanhoSelecionado && (estoquePorTamanho?.[tamanhoSelecionado] ?? produto.estoque?.[tamanhoSelecionado] ?? 0);
 
-  // ---------------------------
-  // RENDERIZAÇÃO FINAL
-  // ---------------------------
   return (
     <main className="produto-detalhe">
       <div className="imagem-produto">
@@ -283,11 +283,9 @@ export default function VerProduto() {
           R$ {Number(produto.preco).toFixed(2).replace(".", ",")}
         </p>
 
-        {/* Tamanhos*/}
         {produto.tamanhos?.length > 0 && (
           <>
             <label>Tamanho</label>
-
             <div className="tamanhos-opcoes" role="tablist" aria-label="Tamanhos">
               {produto.tamanhos.map((t) => {
                 const tStr = String(t);
@@ -307,7 +305,6 @@ export default function VerProduto() {
               })}
             </div>
 
-            {/* Exibir estoque do tamanho selecionado */}
             {tamanhoSelecionado && (
               <p className="info-estoque">
                 {qtdSelecionada > 0 ? `Em estoque: ${qtdSelecionada} unidade(s)` : "Esgotado"}
@@ -316,7 +313,6 @@ export default function VerProduto() {
           </>
         )}
 
-        {/* Outras variações */}
         {variacoes.length > 0 && (
           <div className="outras-variacoes-container">
             <h3>Outras variações</h3>
@@ -327,7 +323,6 @@ export default function VerProduto() {
                   key={v.id}
                   className="outras-variacao-card"
                   onClick={() => {
-                    // CORREÇÃO do erro includes: garantimos que v.categoria exista
                     const cat = v.categoria || "";
                     const tamanhosAuto = cat === "luvas"
                       ? ["9", "10", "11", "12"]
@@ -339,7 +334,6 @@ export default function VerProduto() {
                     setImagemPrincipal(v.imagem || "");
                     setMiniaturas(v.angulo || []);
                     setTamanhoSelecionado("");
-                    // atualizar estoquePorTamanho com estoque local se existir
                     const estoqueLocal = lerEstoqueLocal(v.id);
                     setEstoquePorTamanho(estoqueLocal || (v.estoque ? { ...v.estoque } : {}));
                   }}
@@ -361,7 +355,6 @@ export default function VerProduto() {
           </button>
         </div>
 
-        {/* feedback simples */}
         <div className="feedback-message" aria-live="polite">
           {mensagemFeedback}
         </div>

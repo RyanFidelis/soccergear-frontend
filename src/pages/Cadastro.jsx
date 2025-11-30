@@ -14,6 +14,8 @@ export default function Cadastro() {
   const [termos, setTermos] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const handleCadastro = async (e) => {
     e.preventDefault();
 
@@ -35,7 +37,7 @@ export default function Cadastro() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/register', {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,13 +54,8 @@ export default function Cadastro() {
       const data = await response.json();
 
       if (response.ok) {
-        // === MUDANÇA PROFISSIONAL ===
-        // Em vez de mandar para o login, já logamos o usuário direto!
         localStorage.setItem("usuarioLogado", JSON.stringify(data.user));
-        
         alert(`Bem-vindo, ${data.user.name}! Cadastro realizado com sucesso.`);
-        
-        // Redireciona direto para o Perfil (ou Home)
         navigate("/perfil");
       } else {
         alert(`❌ Erro: ${data.message || "Erro ao cadastrar"}`);

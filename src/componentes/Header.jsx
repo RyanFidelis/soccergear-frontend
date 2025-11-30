@@ -13,51 +13,85 @@ export default function Header() {
     return nome.trim().charAt(0).toUpperCase();
   };
 
+  const getCartKey = (user) => {
+    return user && user.id ? `cart_${user.id}` : "cart_guest";
+  };
+
   const fetchUsuarioDoBanco = async () => {
     const saved = localStorage.getItem("usuarioLogado");
-    if (!saved) { setUsuario(null); return; }
+    if (!saved) { 
+      setUsuario(null); 
+      atualizarCarrinho(null);
+      return; 
+    }
 
     try {
       const userLocal = JSON.parse(saved);
-      if (!userLocal?.id) return;
+      if (!userLocal?.id) {
+        atualizarCarrinho(null);
+        return;
+      }
 
-      // Busca do banco para garantir dados novos
       const res = await fetch(`http://localhost:3001/api/auth/user/${userLocal.id}?_t=${Date.now()}`);
 
       if (res.ok) {
         const userBanco = await res.json();
-        // Log para confirmar o que está chegando
-        console.log("📡 FOTO VINDA DO BANCO:", userBanco.foto ? userBanco.foto.substring(0, 30) + "..." : "Sem foto");
-
         setUsuario(userBanco);
         localStorage.setItem("usuarioLogado", JSON.stringify(userBanco));
+        atualizarCarrinho(userBanco);
       } else {
         setUsuario(userLocal);
+        atualizarCarrinho(userLocal);
       }
     } catch (error) {
       console.error("Erro Header:", error);
-      setUsuario(JSON.parse(saved));
+      const userLocal = JSON.parse(saved);
+      setUsuario(userLocal);
+      atualizarCarrinho(userLocal);
     }
   };
 
-  const atualizarCarrinho = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartCount(cart.reduce((total, item) => total + (item.quantity || 0), 0));
+  const atualizarCarrinho = (userContext) => {
+    // Se userContext não for passado, tenta pegar do state ou localStorage
+    let currentUser = userContext;
+    if (currentUser === undefined) {
+        const saved = localStorage.getItem("usuarioLogado");
+        currentUser = saved ? JSON.parse(saved) : null;
+    }
+
+    const key = getCartKey(currentUser);
+    const cart = JSON.parse(localStorage.getItem(key)) || [];
+    setCartCount(cart.reduce((total, item) => total + (item.quantity || 1), 0));
   };
 
   useEffect(() => {
     fetchUsuarioDoBanco();
-    atualizarCarrinho();
 
-    const handleAll = () => { fetchUsuarioDoBanco(); atualizarCarrinho(); };
-    window.addEventListener("user-updated", handleAll);
-    window.addEventListener("storage", handleAll);
-    window.addEventListener("cart-updated", atualizarCarrinho);
+    const handleUserUpdate = () => { fetchUsuarioDoBanco(); };
+    const handleStorage = (e) => {
+        fetchUsuarioDoBanco();
+        // Se a mudança for no carrinho atual, atualiza o contador
+        const currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+        const key = getCartKey(currentUser);
+        if (e.key === key || e.key === "usuarioLogado") {
+            atualizarCarrinho(currentUser);
+        }
+    };
+    
+    // Escuta evento personalizado disparado pelo Carrinho.jsx
+    const handleCartUpdated = () => {
+        const currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+        atualizarCarrinho(currentUser);
+    };
+
+    window.addEventListener("user-updated", handleUserUpdate);
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("cart-updated", handleCartUpdated);
 
     return () => {
-      window.removeEventListener("user-updated", handleAll);
-      window.removeEventListener("storage", handleAll);
-      window.removeEventListener("cart-updated", atualizarCarrinho);
+      window.removeEventListener("user-updated", handleUserUpdate);
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("cart-updated", handleCartUpdated);
     };
   }, []);
 
@@ -83,7 +117,6 @@ export default function Header() {
         <div className="conta" onClick={() => navigate(usuario ? "/perfil" : "/login")} style={{ cursor: "pointer" }}>
           {usuario ? (
             <>
-              {/* LÓGICA SIMPLIFICADA: Se tem foto, joga direto no src */}
               {(usuario.foto && usuario.foto.length > 20) ? (
                 <img
                   key={Date.now()}
@@ -95,9 +128,7 @@ export default function Header() {
                     display: "block", margin: "0 auto", backgroundColor: "#333"
                   }}
                   onError={(e) => {
-                    console.error("❌ A imagem quebrou ao renderizar.");
-                    e.target.style.display = 'none'; // Esconde se quebrar
-                    // Aqui você poderia forçar mostrar a inicial se quisesse
+                    e.target.style.display = 'none'; 
                   }}
                 />
               ) : (
@@ -138,10 +169,10 @@ export default function Header() {
           <li onClick={() => { setDrawerOpen(false); navigate("/"); }}>Home</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/minhas-compras"); }}>Minhas Compras</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/ofertas"); }}>Ofertas</li>
+          <li onClick={() => { setDrawerOpen(false); navigate("/cupons"); }}>Cupons</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/notificacoes"); }}>Notificações</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/favoritos"); }}>Favoritos</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/soccerpoints"); }}>Soccer Points</li>
-
         </ul>
       </nav>
       {drawerOpen && <div className="drawer-overlay" onClick={() => setDrawerOpen(false)} />}

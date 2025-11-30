@@ -7,17 +7,13 @@ export default function Perfil() {
   const [usuario, setUsuario] = useState(null);
   const [editando, setEditando] = useState(false);
   const [formData, setFormData] = useState({});
-  
-  // Estados de Imagem
   const [fotoPreview, setFotoPreview] = useState("");
-  
-  // Referências para câmera e arquivo
   const fileInputRef = useRef(null);
   const videoRef = useRef(null);
-  
-  // --- CORREÇÃO AQUI: Estados necessários para a câmera funcionar ---
   const [mostrarCamera, setMostrarCamera] = useState(false);
-  const [stream, setStream] = useState(null); // Guarda o sinal da câmera
+  const [stream, setStream] = useState(null);
+
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const userData = localStorage.getItem("usuarioLogado");
@@ -37,14 +33,12 @@ export default function Perfil() {
     }
   }, [navigate]);
 
-  // --- CORREÇÃO: Conecta o vídeo assim que o Modal abre ---
   useEffect(() => {
     if (mostrarCamera && stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
   }, [mostrarCamera, stream]);
 
-  // Helper para URL da imagem
   const getImageUrl = (path) => {
     if (!path) return null;
     if (path.startsWith("data:image")) return path;
@@ -52,12 +46,11 @@ export default function Perfil() {
     return path;
   };
 
-  // --- FUNÇÕES DA CÂMERA ---
   const iniciarCamera = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setStream(mediaStream); // Guarda o sinal primeiro
-      setMostrarCamera(true); // Depois abre a janela
+      setStream(mediaStream); 
+      setMostrarCamera(true); 
     } catch (error) {
       console.error(error);
       alert("Erro ao acessar câmera. Verifique se deu permissão.");
@@ -66,7 +59,7 @@ export default function Perfil() {
 
   const pararCamera = () => {
     if (stream) {
-      stream.getTracks().forEach((track) => track.stop()); // Desliga a luz da câmera
+      stream.getTracks().forEach((track) => track.stop()); 
       setStream(null);
     }
     setMostrarCamera(false);
@@ -79,16 +72,14 @@ export default function Perfil() {
       canvas.height = videoRef.current.videoHeight;
       const ctx = canvas.getContext("2d");
       
-      // Desenha a foto
       ctx.drawImage(videoRef.current, 0, 0);
       const fotoDataUrl = canvas.toDataURL("image/jpeg");
       
       setFotoPreview(fotoDataUrl);
-      pararCamera(); // Fecha a câmera após tirar a foto
+      pararCamera(); 
     }
   };
 
-  // --- SELEÇÃO DE ARQUIVO ---
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -103,7 +94,6 @@ export default function Perfil() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // --- SALVAR EDIÇÃO ---
   const salvarEdicao = async () => {
     if (!usuario || !usuario.id) return;
 
@@ -113,7 +103,7 @@ export default function Perfil() {
         foto: fotoPreview, 
       };
 
-      const response = await fetch(`http://localhost:3001/api/auth/update/${usuario.id}`, {
+      const response = await fetch(`${API_URL}/api/auth/update/${usuario.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dadosParaEnviar),
@@ -154,7 +144,7 @@ export default function Perfil() {
     });
     setFotoPreview(usuario.foto || "");
     setEditando(false);
-    pararCamera(); // Garante que a câmera feche se cancelar
+    pararCamera(); 
   };
 
   const handleLogout = () => {

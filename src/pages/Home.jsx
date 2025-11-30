@@ -14,20 +14,66 @@ export default function Home() {
     { nome: "bolas", titulo: "Bolas" },
   ];
 
+  const getStorageKey = (prefix) => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    return usuario && usuario.id ? `${prefix}_${usuario.id}` : `${prefix}_guest`;
+  };
+
   const [produtos, setProdutos] = useState({});
-  const [favoritos, setFavoritos] = useState(
-    JSON.parse(localStorage.getItem("favoritos")) || []
-  );
-  const [carrinho, setCarrinho] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
-  );
+  const [favoritos, setFavoritos] = useState([]);
+  const [favoritosCarregados, setFavoritosCarregados] = useState(false);
+  const [feedbackMsg, setFeedbackMsg] = useState("");
+
   const [termoBusca, setTermoBusca] = useState("");
   const [resultados, setResultados] = useState([]);
-  const [buscou, setBuscou] = useState(false); 
+  const [buscou, setBuscou] = useState(false);
 
   const refsCategorias = useRef({});
 
+  const mostrarFeedback = (msg) => {
+    setFeedbackMsg(msg);
+    setTimeout(() => setFeedbackMsg(""), 2000);
+  };
+
+  const adicionarRapidoAoCarrinho = (produto, uid) => {
+    const estoqueDisp = produto.estoque ? (produto.estoque['Único'] || Object.values(produto.estoque)[0] || 0) : 1;
+    if (Number(estoqueDisp) <= 0) {
+        mostrarFeedback("Produto esgotado!");
+        return;
+    }
+
+    const key = getStorageKey("cart");
+    const raw = localStorage.getItem(key);
+    let carrinho = raw ? JSON.parse(raw) : [];
+
+    const itemToAdd = {
+      id: produto.id,
+      uid: uid,
+      nome: produto.nome,
+      imagem: produto.imagem,
+      preco: produto.preco,
+      tamanho: "Único",
+      quantity: 1,
+    };
+
+    const idx = carrinho.findIndex(
+      (it) => it.id === itemToAdd.id && it.tamanho === itemToAdd.tamanho
+    );
+
+    if (idx >= 0) carrinho[idx].quantity++;
+    else carrinho.push(itemToAdd);
+
+    localStorage.setItem(key, JSON.stringify(carrinho));
+    window.dispatchEvent(new CustomEvent("cart-updated", { detail: carrinho }));
+    mostrarFeedback(`${produto.nome} adicionado!`);
+  };
+
   useEffect(() => {
+    const favKey = getStorageKey("favoritos");
+    const salvos = JSON.parse(localStorage.getItem(favKey)) || [];
+    setFavoritos(salvos);
+    setFavoritosCarregados(true);
+
     async function carregar() {
       const dados = {};
       for (const { nome } of categorias) {
@@ -42,17 +88,16 @@ export default function Home() {
       setProdutos(dados);
     }
     carregar();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(carrinho));
-  }, [carrinho]);
+    if (favoritosCarregados) {
+      const favKey = getStorageKey("favoritos");
+      localStorage.setItem(favKey, JSON.stringify(favoritos));
+    }
+  }, [favoritos, favoritosCarregados]);
 
-  useEffect(() => {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }, [favoritos]);
-
-  // 🔍 Busca acionada apenas ao clicar no botão
   const buscarProdutos = () => {
     const termo = termoBusca.trim().toLowerCase();
     setBuscou(true);
@@ -66,12 +111,10 @@ export default function Home() {
       lista.map((p) => ({ ...p, categoria }))
     );
 
-    // Busca fuzzy (termos parecidos)
     const filtrados = todos.filter((p) => {
       const nome = p.nome.toLowerCase();
       const descricao = (p.descricao || "").toLowerCase();
 
-      // Aceita correspondências parciais, parecidas ou dentro do nome
       return (
         nome.includes(termo) ||
         descricao.includes(termo) ||
@@ -82,7 +125,6 @@ export default function Home() {
     setResultados(filtrados);
   };
 
-  // 🧠 Função de similaridade simples (Levenshtein simplificado)
   function similaridade(a, b) {
     if (!a || !b) return 0;
     a = a.toLowerCase();
@@ -95,7 +137,6 @@ export default function Home() {
     return matches / Math.max(a.length, b.length);
   }
 
-  // 🔙 Voltar para Home normal
   const voltarParaHome = () => {
     setResultados([]);
     setBuscou(false);
@@ -107,47 +148,61 @@ export default function Home() {
     const favorito = favoritos.some((f) => f.uid === uid);
     const produtoComUID = { ...produto, uid };
 
+    const irParaDetalhes = () => {
+        localStorage.setItem("produtoSelecionado", JSON.stringify(produtoComUID));
+        navigate("/verproduto");
+    };
+
     return (
-      <div
-        className="produto"
-        key={uid}
-        onClick={() => {
-          localStorage.setItem(
-            "produtoSelecionado",
-            JSON.stringify(produtoComUID)
-          );
-          navigate("/verproduto");
-        }}
-      >
-        <div className="produto-imagem">
-          <img
-            src={produto.imagem}
-            alt={produto.nome}
-            onError={(e) => (e.target.src = "/imagem/placeholder.png")}
-          />
+      <div className="produto" key={uid}>
+        <div className="produto-clicavel" onClick={irParaDetalhes}>
+            <div className="produto-imagem">
+            <img
+                src={produto.imagem}
+                alt={produto.nome}
+                onError={(e) => (e.target.src = "/imagem/placeholder.png")}
+            />
+            </div>
+
+            <div className="produto-info">
+            <h4>{produto.nome}</h4>
+            <p className="preco">
+                R$ {produto.preco.toFixed(2).replace(".", ",")}
+            </p>
+            </div>
         </div>
 
-        <div className="produto-info">
-          <h4>{produto.nome}</h4>
-          <p className="descricao">{produto.descricao}</p>
-          <p className="preco">
-            R$ {produto.preco.toFixed(2).replace(".", ",")}
-          </p>
+        <div className="produto-acoes-card">
+            <button 
+                className={`btn-acao-card btn-fav ${favorito ? 'ativo' : ''}`}
+                title={favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                onClick={(e) => {
+                    e.stopPropagation(); 
+                    setFavoritos((prev) => {
+                        const existe = prev.find((f) => f.uid === uid);
+                        if (existe) {
+                             mostrarFeedback("Removido dos favoritos");
+                             return prev.filter((f) => f.uid !== uid);
+                        } else {
+                             mostrarFeedback("Adicionado aos favoritos");
+                             return [...prev, produtoComUID];
+                        }
+                    });
+                }}
+            >
+                {favorito ? "⭐" : "☆"}
+            </button>
 
-          <span
-            className="estrela-favorito"
-            onClick={(e) => {
-              e.stopPropagation();
-              setFavoritos((prev) => {
-                const existe = prev.find((f) => f.uid === uid);
-                return existe
-                  ? prev.filter((f) => f.uid !== uid)
-                  : [...prev, produtoComUID];
-              });
-            }}
-          >
-            {favorito ? "⭐" : "☆"}
-          </span>
+            <button 
+                className="btn-acao-card btn-cart"
+                title="Adicionar ao carrinho"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    adicionarRapidoAoCarrinho(produto, uid);
+                }}
+            >
+                <img src="imagem/carrinho.png" alt="Carrinho" className="icon carrinho" />
+            </button>
         </div>
       </div>
     );
@@ -165,8 +220,11 @@ export default function Home() {
   };
 
   return (
-    <main>
-      {/* 🔍 Barra de pesquisa */}
+    <main style={{ position: 'relative' }}>
+      <div className={`feedback-toast ${feedbackMsg ? 'show' : ''}`}>
+        {feedbackMsg}
+      </div>
+
       <div className="barra-pesquisa">
         <input
           type="text"
@@ -176,7 +234,6 @@ export default function Home() {
         />
         <button onClick={buscarProdutos}>Buscar</button>
 
-        {/* 🔙 Botão para voltar à Home (só aparece após buscar) */}
         {buscou && (
           <button
             style={{
@@ -195,7 +252,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* 🔹 Exibe o lançamento apenas se não estiver buscando */}
       {!buscou && (
         <>
           <h2 className="titulo">Lançamento</h2>
@@ -207,7 +263,6 @@ export default function Home() {
         </>
       )}
 
-      {/* 🔹 Resultados da busca */}
       {buscou && resultados.length > 0 && (
         <>
           <h2 className="titulo">Resultados da busca</h2>
@@ -217,14 +272,12 @@ export default function Home() {
         </>
       )}
 
-      {/* 🔹 Se buscou e não encontrou nada */}
       {buscou && resultados.length === 0 && (
         <p style={{ textAlign: "center", marginTop: "2rem", color: "#555" }}>
-          Nenhum produto encontrado para "{termoBusca}". 
+          Nenhum produto encontrado para "{termoBusca}".
         </p>
       )}
 
-      {/* 🔹 Se não buscou, mostra categorias */}
       {!buscou && (
         <>
           <h2 className="titulo">Produtos</h2>

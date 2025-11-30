@@ -5,22 +5,25 @@ export default function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);
   const [feedback, setFeedback] = useState("");
 
-  // 🔄 Carrega os favoritos do localStorage
+  const getStorageKey = () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    return usuario && usuario.id ? `favoritos_${usuario.id}` : "favoritos_guest";
+  };
+
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("favoritos")) || [];
+    const saved = JSON.parse(localStorage.getItem(getStorageKey())) || [];
     setFavoritos(saved);
   }, []);
 
-  // 🗑️ Remove um favorito
   const removerFavorito = (id) => {
+    const key = getStorageKey();
     const atualizados = favoritos.filter((p) => String(p.id) !== String(id));
     const removido = favoritos.find((p) => String(p.id) === String(id));
     setFavoritos(atualizados);
-    localStorage.setItem("favoritos", JSON.stringify(atualizados));
+    localStorage.setItem(key, JSON.stringify(atualizados));
     mostrarFeedback(`${removido?.nome || "Produto"} removido dos favoritos`);
   };
 
-  // 🛒 Abre o produto clicado
   const abrirProduto = (id) => {
     const produto = favoritos.find((p) => String(p.id) === String(id));
     if (!produto) return;
@@ -28,26 +31,25 @@ export default function Favoritos() {
     window.location.href = "/verproduto";
   };
 
-  // 💬 Mostra mensagem temporária
   const mostrarFeedback = (mensagem) => {
     setFeedback(mensagem);
     setTimeout(() => setFeedback(""), 2000);
   };
 
-  // 🔹 Caso não tenha favoritos
   if (favoritos.length === 0) {
     return (
-      <main className="favoritos-vazio">
-        <h1>Meus Favoritos</h1>
-        <p>Você ainda não favoritou nenhum produto ⭐</p>
-        {feedback && (
-          <div className="feedback-message-favoritos show">{feedback}</div>
-        )}
+      <main>
+        <center>
+          <h1>Meus Favoritos</h1>
+          <p>Você ainda não favoritou nenhum produto</p>
+          {feedback && (
+            <div className="feedback-message-favoritos show">{feedback}</div>
+          )}
+        </center>
       </main>
     );
   }
 
-  // 🔹 Renderização normal
   return (
     <main className="favoritos-container">
       <h1>Meus Favoritos</h1>
@@ -75,7 +77,7 @@ export default function Favoritos() {
                 title="Remover favorito"
                 role="button"
                 onClick={(e) => {
-                  e.stopPropagation(); // impede abrir o produto ao clicar na estrela
+                  e.stopPropagation();
                   removerFavorito(prod.id);
                 }}
               >

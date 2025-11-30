@@ -10,6 +10,19 @@ export default function Pagamento() {
   const [copiadoBoleto, setCopiadoBoleto] = useState(false);
   const [processando, setProcessando] = useState(false);
 
+
+  const [dadosCartao, setDadosCartao] = useState({
+    numero: "",
+    nome: "",
+    cpf: "",
+    validade: "",
+    cvv: "",
+    tipo: "credito",
+    bandeira: "mastercard"
+  });
+
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const chavePix =
     "00020126360014BR.GOV.BCB.PIX0114+55119999999990214Pagamento Teste52040000530398654041.005802BR5925SoccerGear Pagamento6014SAO PAULO BR62070503***6304ABCD";
 
@@ -40,6 +53,11 @@ export default function Pagamento() {
     setItens(compra);
   }, [navigate]);
 
+  const handleInputCartao = (e) => {
+    const { name, value } = e.target;
+    setDadosCartao((prev) => ({ ...prev, [name]: value }));
+  };
+
   if (!itens.length) return null;
 
   const total = itens.reduce(
@@ -60,12 +78,19 @@ export default function Pagamento() {
 
   const finalizar = async () => {
     if (processando) return;
+
+    if (metodo === "cartao") {
+      if (!dadosCartao.numero || !dadosCartao.nome || !dadosCartao.cpf || !dadosCartao.validade || !dadosCartao.cvv) {
+        alert("Por favor, preencha todos os dados do cartão.");
+        return;
+      }
+    }
+
     setProcessando(true);
 
     const usuarioString = localStorage.getItem("usuarioLogado");
     const usuario = usuarioString ? JSON.parse(usuarioString) : null;
 
-    // 1. Verificação de Segurança: O usuário tem ID?
     if (!usuario || !usuario.id) {
       alert("Erro de Identificação: Faça login novamente para continuar.");
       setProcessando(false);
@@ -73,18 +98,17 @@ export default function Pagamento() {
       return;
     }
 
-    // Prepara o objeto exatamente como o Backend espera
     const pedido = { 
       cliente: usuario, 
       itens: itens, 
-      metodo: metodo, 
-      total: parseFloat(total.toFixed(2)), // Garante formato numérico
-      status: "aguardando" // O backend sobrescreve, mas enviamos por garantia
+      metodo: metodo,
+      detalhesPagamento: metodo === "cartao" ? dadosCartao : null, 
+      total: parseFloat(total.toFixed(2)), 
+      status: "aguardando" 
     };
 
     try {
-      // Tenta conectar com o Backend
-      const req = await fetch("http://localhost:3001/api/pedido/novo", {
+      const req = await fetch(`${API_URL}/api/pedido/novo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(pedido),
@@ -93,17 +117,13 @@ export default function Pagamento() {
       const res = await req.json();
 
       if (req.ok && res.sucesso) {
-        // SUCESSO: O pedido foi salvo no Banco de Dados
-        alert("✅ Sucesso! Seu pedido foi enviado para análise do administrador.");
+        alert("Sucesso! Seu pedido foi enviado para análise.");
 
-        // --- Atualiza LocalStorage (Feedback Visual para o Usuário) ---
-        
-        // Notificações
         const notificacoes = JSON.parse(localStorage.getItem("notificacoes")) || [];
         notificacoes.unshift({
           id: Date.now(),
           titulo: "Pagamento em análise",
-          descricao: `Seu pedido de R$ ${total.toFixed(2)} está aguardando aprovação.`,
+          descricao: `Seu pedido de R$ ${total.toFixed(2)} via ${metodo} está aguardando aprovação.`,
           categoria: "pendente",
           data: new Date(),
           lida: false,
@@ -111,31 +131,28 @@ export default function Pagamento() {
         });
         localStorage.setItem("notificacoes", JSON.stringify(notificacoes));
 
-        // Histórico de Compras Local
         const minhasCompras = JSON.parse(localStorage.getItem("minhasCompras")) || [];
         minhasCompras.push({
           data: new Date().toLocaleString("pt-BR"),
           itens,
           total,
-          status: "aguardando"
+          status: "aguardando",
+          metodo
         });
         localStorage.setItem("minhasCompras", JSON.stringify(minhasCompras));
 
-        // Limpa carrinho
         localStorage.removeItem("cart");
         localStorage.removeItem("compraAtual");
         window.dispatchEvent(new CustomEvent("cart-updated", { detail: [] }));
         
         navigate("/notificacoes");
       } else {
-        // ERRO DO BACKEND (Ex: Falha ao salvar no banco)
         console.error("Erro do Backend:", res);
         alert(`Erro ao registrar pedido: ${res.message || "Erro desconhecido no servidor."}`);
       }
     } catch (err) {
-      // ERRO DE CONEXÃO (Ex: Servidor desligado)
       console.error("Erro de Conexão:", err);
-      alert("Não foi possível conectar ao servidor. Verifique se o backend (porta 3001) está rodando.");
+      alert("Não foi possível conectar ao servidor.");
     } finally {
       setProcessando(false);
     }
@@ -206,6 +223,106 @@ export default function Pagamento() {
           <button className={`pagamento-btn-copiar ${copiadoBoleto ? "copiado" : ""}`} onClick={copiarBoleto}>
             {copiadoBoleto ? "copiado!" : "copiar"}
           </button>
+        </div>
+      )}
+
+      {metodo === "cartao" && (
+        <div className="pagamento-cartao-box">
+          <h3>Dados do Cartão</h3>
+          
+          <div className="form-cartao">
+            <div className="linha-tipo">
+              <label>
+                <input 
+                  type="radio" 
+                  name="tipo" 
+                  value="credito" 
+                  checked={dadosCartao.tipo === "credito"} 
+                  onChange={handleInputCartao} 
+                /> Crédito
+              </label>
+              <label>
+                <input 
+                  type="radio" 
+                  name="tipo" 
+                  value="debito" 
+                  checked={dadosCartao.tipo === "debito"} 
+                  onChange={handleInputCartao} 
+                /> Débito
+              </label>
+            </div>
+
+            <div className="campo-cartao">
+              <label>Número do Cartão</label>
+              <input 
+                type="text" 
+                name="numero" 
+                placeholder="0000 0000 0000 0000"
+                value={dadosCartao.numero} 
+                onChange={handleInputCartao}
+                maxLength="19"
+              />
+            </div>
+
+            <div className="campo-cartao">
+              <label>Nome do Titular (Como no cartão)</label>
+              <input 
+                type="text" 
+                name="nome" 
+                placeholder="NOME IMPRESSO"
+                value={dadosCartao.nome} 
+                onChange={handleInputCartao}
+              />
+            </div>
+
+            <div className="campo-cartao">
+              <label>CPF do Titular</label>
+              <input 
+                type="text" 
+                name="cpf" 
+                placeholder="000.000.000-00"
+                value={dadosCartao.cpf} 
+                onChange={handleInputCartao}
+                maxLength="14"
+              />
+            </div>
+
+            <div className="linha-dupla">
+              <div className="campo-cartao">
+                <label>Validade</label>
+                <input 
+                  type="text" 
+                  name="validade" 
+                  placeholder="MM/AA"
+                  value={dadosCartao.validade} 
+                  onChange={handleInputCartao}
+                  maxLength="5"
+                />
+              </div>
+              <div className="campo-cartao">
+                <label>CVV</label>
+                <input 
+                  type="text" 
+                  name="cvv" 
+                  placeholder="123"
+                  value={dadosCartao.cvv} 
+                  onChange={handleInputCartao}
+                  maxLength="4"
+                />
+              </div>
+            </div>
+
+            <div className="campo-cartao">
+              <label>Bandeira</label>
+              <select name="bandeira" value={dadosCartao.bandeira} onChange={handleInputCartao}>
+                <option value="mastercard">Mastercard</option>
+                <option value="visa">Visa</option>
+                <option value="elo">Elo</option>
+                <option value="amex">American Express</option>
+                <option value="hipercard">Hipercard</option>
+              </select>
+            </div>
+          </div>
         </div>
       )}
 

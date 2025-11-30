@@ -42,8 +42,8 @@ export default function App() {
           <Route path="/pagamento" element={<Pagamento />} /> 
           <Route path="/minhas-compras" element={<MinhasCompras />} />
           <Route path="/ofertas" element={<Ofertas />} />
-          <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/cupons" element={<Cupons />} />
+          <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/soccerpoints" element={<SoccerPoints />} />
           <Route path="/provador" element={<Provador />} />

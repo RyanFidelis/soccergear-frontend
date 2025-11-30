@@ -1,4 +1,3 @@
-// Carrinho.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Carrinho.css";
@@ -8,8 +7,13 @@ export default function Carrinho() {
   const [cart, setCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
 
+  const getCartKey = () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    return usuario && usuario.id ? `cart_${usuario.id}` : "cart_guest";
+  };
+
   function carregarCart() {
-    const raw = localStorage.getItem("cart");
+    const raw = localStorage.getItem(getCartKey());
     const stored = raw ? JSON.parse(raw) : [];
     setCart(stored);
   }
@@ -18,7 +22,7 @@ export default function Carrinho() {
     carregarCart();
 
     const onStorage = (e) => {
-      if (e.key === "cart") carregarCart();
+      if (e.key === getCartKey()) carregarCart();
     };
 
     const onCartUpdated = () => carregarCart();
@@ -48,7 +52,7 @@ export default function Carrinho() {
     );
 
     setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem(getCartKey(), JSON.stringify(newCart));
     window.dispatchEvent(
       new CustomEvent("cart-updated", { detail: newCart })
     );
@@ -57,7 +61,7 @@ export default function Carrinho() {
   const removeItem = (index) => {
     const newCart = cart.filter((_, i) => i !== index);
     setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem(getCartKey(), JSON.stringify(newCart));
     window.dispatchEvent(
       new CustomEvent("cart-updated", { detail: newCart })
     );
