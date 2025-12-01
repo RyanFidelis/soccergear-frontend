@@ -14,6 +14,50 @@ export default function Home() {
     { nome: "bolas", titulo: "Bolas" },
   ];
 
+  const originalBanners = [
+    { id: 1, img: "/imagem/anuncio.webp", titulo: "Nike Phantom" },
+    { id: 2, img: "/imagem/anuncio2.png", titulo: "Camisa do Corinthians 25/26" },
+    { id: 3, img: "/imagem/anuncio3.avif", titulo: "Nike Zoom Mercurial Vapor 16 Elite KM" }
+  ];
+
+  const banners = [
+    originalBanners[originalBanners.length - 1],
+    ...originalBanners,
+    originalBanners[0]
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const intervalRef = useRef(null);
+
+  const nextSlide = () => {
+    if (currentIndex >= banners.length - 1) return; 
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const prevSlide = () => {
+    if (currentIndex <= 0) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  };
+
+  useEffect(() => {
+    intervalRef.current = setInterval(nextSlide, 6000);
+    return () => clearInterval(intervalRef.current);
+  }, [currentIndex]);
+
+  const handleTransitionEnd = () => {
+    if (currentIndex === banners.length - 1) {
+      setIsTransitioning(false);
+      setCurrentIndex(1);
+    }
+    if (currentIndex === 0) {
+      setIsTransitioning(false);
+      setCurrentIndex(banners.length - 2);
+    }
+  };
+
   const getStorageKey = (prefix) => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     return usuario && usuario.id ? `${prefix}_${usuario.id}` : `${prefix}_guest`;
@@ -66,7 +110,8 @@ export default function Home() {
   };
 
   const adicionarAoCarrinhoFinal = (produto, uid, tamanhoEscolhido) => {
-    const estoqueDisp = produto.estoque ? (produto.estoque[tamanhoEscolhido] || 0) : 1;
+    const temEstoqueGerenciado = produto.estoque && Object.keys(produto.estoque).length > 0;
+    const estoqueDisp = temEstoqueGerenciado ? (produto.estoque[tamanhoEscolhido] || 0) : 1;
 
     if (Number(estoqueDisp) <= 0) {
         mostrarFeedback("Tamanho esgotado!");
@@ -249,6 +294,8 @@ export default function Home() {
     }
   };
 
+  const realIndex = (currentIndex - 1 + originalBanners.length) % originalBanners.length;
+
   return (
     <main style={{ position: 'relative' }}>
       <div className={`feedback-toast ${feedbackMsg ? 'show' : ''}`}>
@@ -284,10 +331,46 @@ export default function Home() {
 
       {!buscou && (
         <>
-          <h2 className="titulo">Lançamento</h2>
-          <div className="anuncio">
-            <img src="/imagem/anuncio.jpg" alt="Anúncio" />
-            <p>Nike React Gato - Futsal</p>
+          <h2 className="titulo">Destaques da Semana</h2>
+          <div className="carrossel-container">
+            <button className="carrossel-btn prev" onClick={prevSlide}>&#10094;</button>
+            
+            <div 
+                className="carrossel-track" 
+                onTransitionEnd={handleTransitionEnd}
+                style={{ 
+                    transform: `translateX(-${currentIndex * 100}%)`,
+                    transition: isTransitioning ? 'transform 0.8s ease-in-out' : 'none'
+                }}
+            >
+                {banners.map((banner, idx) => (
+                    <div className="carrossel-slide" key={idx}>
+                        <img 
+                            src={banner.img} 
+                            alt={banner.titulo} 
+                            onError={(e) => e.target.src = "/imagem/placeholder.png"} 
+                        />
+                        <div className="carrossel-legenda">
+                            <p>{banner.titulo}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <button className="carrossel-btn next" onClick={nextSlide}>&#10095;</button>
+            
+            <div className="carrossel-dots">
+                {originalBanners.map((_, index) => (
+                    <span 
+                        key={index} 
+                        className={`dot ${realIndex === index ? 'active' : ''}`}
+                        onClick={() => {
+                            setIsTransitioning(true);
+                            setCurrentIndex(index + 1);
+                        }}
+                    ></span>
+                ))}
+            </div>
           </div>
           <hr />
         </>

@@ -1,118 +1,256 @@
-.titulo-carrinho{
-    align-self: center;
+.titulo-carrinho {
+  align-self: center;
 }
+
 main.carrinho-container {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  position: relative;
 }
 
 .carrinho-itens {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .carrinho-item {
-    display: flex;
-    gap: 15px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-    align-items: center;
-    background-color: #f9f9f9;
+  display: flex;
+  gap: 15px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  align-items: center;
+  background-color: #f9f9f9;
 }
 
 .carrinho-item img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .item-info {
-    flex: 1;
+  flex: 1;
 }
 
 .item-info h4 {
-    margin: 0;
-    font-size: 16px;
+  margin: 0;
+  font-size: 16px;
 }
 
 .item-info p {
-    margin: 5px 0;
-    font-weight: bold;
+  margin: 5px 0;
+  font-weight: bold;
 }
 
 .item-quantidade {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.quantidade-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
+.item-quantidade button {
+  width: 32px;
+  height: 32px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.item-quantidade button:hover {
+  background-color: #e0e0e0;
+  border-color: #bbb;
+  transform: scale(1.05);
+}
+
+.item-quantidade button:active {
+  background-color: #ccc;
+  transform: scale(0.95);
+}
+
+.item-quantidade span {
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
 }
 
 .remover-item {
-    background-color: crimson;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 18px;
-    cursor: pointer;
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .resumo-carrinho {
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
 }
 
 .resumo-carrinho h3 {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .resumo-linha {
-    display: flex;
-    justify-content: space-between;
-    margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
 }
 
 .resumo-linha.total {
-    font-weight: bold;
-    font-size: 18px;
-    color: #222;
+  font-weight: bold;
+  font-size: 18px;
+  color: #222;
 }
 
 .botao-primario {
-    width: 100%;
-    padding: 12px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
 }
 
 .botao-primario:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 .carrinho-vazio {
-    text-align: center;
-    font-size: 16px;
-    color: #666;
-    padding: 30px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding: 30px 0;
+}
+
+/* ===========================
+   ESTILOS DO MODAL DE FRETE
+   =========================== */
+
+.modal-frete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-frete-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-frete-content h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.modal-input-group {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.modal-input-group input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.modal-input-group button {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-input-group button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.modal-resultado {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: left;
+  border: 1px solid #eee;
+}
+
+.valor-destaque {
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+
+.btn-cancelar {
+  background: #eee;
+  color: #333;
+}
+
+.btn-confirmar {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-confirmar:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

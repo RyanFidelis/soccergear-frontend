@@ -234,9 +234,9 @@ export default function Perfil() {
                   <option value="Fluminense">Fluminense</option>
                   <option value="Cruzeiro">Cruzeiro</option>
                   <option value="Atlético-MG">Atlético-MG</option>
-                  <option value="Botafogo">Botafogo</option>
                   <option value="Grêmio">Grêmio</option>
                   <option value="Internacional">Internacional</option>
+                  <option value="Botafogo">Botafogo</option>
                   <option value="Palmeiras">Palmeiras</option>
                 </select>
               </div>

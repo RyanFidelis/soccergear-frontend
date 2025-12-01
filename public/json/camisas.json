@@ -1,26 +1,24 @@
 [
   {
     "id": 1,
-    "nome": "Camisa Corinthians 21/22",
-    "imagem": "produtos/camisa1.avif",
+    "nome": "Camisa do Corinthians 25/26",
+    "imagem": "produtos/camisa1.webp",
     "angulo": [
-      "produtos/camisa1.avif",
-      "produtos/camisa1_1.avif",
-      "produtos/camisa1_2.avif",
-      "produtos/camisa1_3.avif",
-      "produtos/camisa1_4.avif"
+      "produtos/camisa1.webp",
+      "produtos/camisa1_1.webp"
     ],
-    "descricao": "Camisa Corinthians 21/22 modelo torcedor, tecido respirável e conforto para uso diário ou esportivo.",
+    "descricao": "Camisa Corinthians 25/26 com design inspirado na famosa total 90.",
     "preco": 349.90,
-    "avaliacao": 4.6,
-    "numAvaliacoes": 187,
+    "avaliacao": 4.4,
+    "numAvaliacoes": 167,
     "tamanhos": ["P", "M", "G", "GG"],
     "estoque": {
-      "P": 12,
-      "M": 18,
-      "G": 9,
-      "GG": 6
-    }
+      "P": 9,
+      "M": 17,
+      "G": 12,
+      "GG": 18
+    }   
+    
   },
   {
     "id": 2,
@@ -171,6 +169,29 @@
       "M": 17,
       "G": 12,
       "GG": 8
+    }   
+  },
+    {
+    "id": 9,
+    "nome": "Camisa Corinthians 21/22",
+    "imagem": "produtos/camisa9.avif",
+    "angulo": [
+      "produtos/camisa9.avif",
+      "produtos/camisa9_1.avif",
+      "produtos/camisa9_2.avif",
+      "produtos/camisa9_3.avif",
+      "produtos/camisa9_4.avif"
+    ],
+    "descricao": "Camisa Corinthians 21/22 modelo torcedor, tecido respirável e conforto para uso diário ou esportivo.",
+    "preco": 349.90,
+    "avaliacao": 4.6,
+    "numAvaliacoes": 187,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 12,
+      "M": 18,
+      "G": 9,
+      "GG": 6
     }
   }
 ]

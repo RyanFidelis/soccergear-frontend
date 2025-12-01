@@ -10,7 +10,6 @@ export default function Pagamento() {
   const [copiadoBoleto, setCopiadoBoleto] = useState(false);
   const [processando, setProcessando] = useState(false);
 
-
   const [dadosCartao, setDadosCartao] = useState({
     numero: "",
     nome: "",
@@ -58,22 +57,32 @@ export default function Pagamento() {
     setDadosCartao((prev) => ({ ...prev, [name]: value }));
   };
 
+  const itemFrete = itens.find((i) => i.id === "frete-checkout");
+  const produtosReais = itens.filter((i) => i.id !== "frete-checkout");
+
   if (!itens.length) return null;
 
-  const total = itens.reduce(
+  const subtotal = produtosReais.reduce(
     (sum, it) => sum + Number(it.preco) * (it.quantity || 1),
     0
   );
 
-  const removerItem = (index) => {
-    const nova = itens.filter((_, i) => i !== index);
-    if (!nova.length) {
+  const valorFrete = itemFrete ? Number(itemFrete.preco) : 0;
+  const totalFinal = subtotal + valorFrete;
+
+  const removerItem = (itemParaRemover) => {
+    const novosItens = itens.filter((i) => i !== itemParaRemover);
+    
+    const aindaTemProdutos = novosItens.some(i => i.id !== "frete-checkout");
+
+    if (!aindaTemProdutos) {
       localStorage.removeItem("compraAtual");
       navigate("/");
       return;
     }
-    setItens(nova);
-    localStorage.setItem("compraAtual", JSON.stringify(nova));
+
+    setItens(novosItens);
+    localStorage.setItem("compraAtual", JSON.stringify(novosItens));
   };
 
   const finalizar = async () => {
@@ -100,10 +109,10 @@ export default function Pagamento() {
 
     const pedido = { 
       cliente: usuario, 
-      itens: itens, 
+      itens: produtosReais, 
       metodo: metodo,
       detalhesPagamento: metodo === "cartao" ? dadosCartao : null, 
-      total: parseFloat(total.toFixed(2)), 
+      total: parseFloat(totalFinal.toFixed(2)), 
       status: "aguardando" 
     };
 
@@ -123,7 +132,7 @@ export default function Pagamento() {
         notificacoes.unshift({
           id: Date.now(),
           titulo: "Pagamento em análise",
-          descricao: `Seu pedido de R$ ${total.toFixed(2)} via ${metodo} está aguardando aprovação.`,
+          descricao: `Seu pedido de R$ ${totalFinal.toFixed(2)} via ${metodo} está aguardando aprovação.`,
           categoria: "pendente",
           data: new Date(),
           lida: false,
@@ -134,15 +143,18 @@ export default function Pagamento() {
         const minhasCompras = JSON.parse(localStorage.getItem("minhasCompras")) || [];
         minhasCompras.push({
           data: new Date().toLocaleString("pt-BR"),
-          itens,
-          total,
+          itens: produtosReais,
+          total: totalFinal,
           status: "aguardando",
           metodo
         });
         localStorage.setItem("minhasCompras", JSON.stringify(minhasCompras));
 
-        localStorage.removeItem("cart");
+        const cartKey = usuario && usuario.id ? `cart_${usuario.id}` : "cart_guest";
+        localStorage.removeItem(cartKey);
+        
         localStorage.removeItem("compraAtual");
+        
         window.dispatchEvent(new CustomEvent("cart-updated", { detail: [] }));
         
         navigate("/notificacoes");
@@ -175,7 +187,7 @@ export default function Pagamento() {
       <h1>Finalizar Pagamento</h1>
 
       <h2>Itens da compra:</h2>
-      {itens.map((it, index) => (
+      {produtosReais.map((it, index) => (
         <div key={index} className="pagamento-item-linha">
           <img src={it.imagem} alt={it.nome} />
           <div>
@@ -184,11 +196,28 @@ export default function Pagamento() {
             <p>Quantidade: {it.quantity}</p>
             <p>R$ {Number(it.preco).toFixed(2)}</p>
           </div>
-          <button onClick={() => removerItem(index)}>Remover</button>
+          <button onClick={() => removerItem(it)}>Remover</button>
         </div>
       ))}
 
-      <h2>Total: R$ {total.toFixed(2)}</h2>
+      <div style={{ margin: "20px 0", padding: "15px", background: "#f8f9fa", borderRadius: "8px", border: "1px solid #e9ecef" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+          <span>Subtotal:</span>
+          <span>R$ {subtotal.toFixed(2)}</span>
+        </div>
+        
+        {valorFrete > 0 && (
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", color: "#27ae60", fontWeight: "bold" }}>
+            <span>+ Frete:</span>
+            <span>R$ {valorFrete.toFixed(2)}</span>
+          </div>
+        )}
+
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", borderTop: "1px solid #ccc", paddingTop: "10px" }}>
+          <h2 style={{ margin: 0 }}>Total:</h2>
+          <h2 style={{ margin: 0 }}>R$ {totalFinal.toFixed(2)}</h2>
+        </div>
+      </div>
 
       <h2>Selecione o método de pagamento:</h2>
 

@@ -15,6 +15,105 @@
   border-radius: 6px;
 }
 
+.carrossel-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  background-color: #000;
+}
+
+/* Container flexível que segura todas as imagens */
+.carrossel-track {
+  display: flex;
+  transition: transform 0.8s ease-in-out; /* Efeito de deslizamento suave */
+  width: 100%;
+}
+
+.carrossel-slide {
+  position: relative;
+  min-width: 100%; /* Cada slide ocupa 100% da largura visível */
+  height: 500px;
+}
+
+.carrossel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carrossel-legenda {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  padding: 20px 10px 10px 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.carrossel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 15px 10px;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.carrossel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carrossel-btn.prev {
+  left: 10px;
+}
+
+.carrossel-btn.next {
+  right: 10px;
+}
+
+.carrossel-dots {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.dot.active {
+  background-color: white;
+  transform: scale(1.3);
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
 .categoria {
   position: relative;
   margin: 20px;
@@ -291,6 +390,15 @@
 
   .produtos {
     padding: 10px 20px;
+  }
+
+  .carrossel-slide {
+    height: 300px;
+  }
+  
+  .carrossel-btn {
+    font-size: 18px;
+    padding: 8px;
   }
 }
 

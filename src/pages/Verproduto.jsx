@@ -13,13 +13,15 @@ export default function VerProduto() {
   const [estoquePorTamanho, setEstoquePorTamanho] = useState({});
   const [mensagemFeedback, setMensagemFeedback] = useState("");
 
-  // 🔹 Função auxiliar para pegar a chave correta do carrinho
+  const [cep, setCep] = useState("");
+  const [freteInfo, setFreteInfo] = useState(null);
+  const [loadingFrete, setLoadingFrete] = useState(false);
+
   const getCartKey = () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     return usuario && usuario.id ? `cart_${usuario.id}` : "cart_guest";
   };
 
-  // --- util: ler/atualizar estoque armazenado localmente (por produto id)
   function lerEstoqueLocal(prodId) {
     try {
       const raw = localStorage.getItem("estoqueAtual");
@@ -38,33 +40,19 @@ export default function VerProduto() {
       obj[prodId] = novoMapa;
       localStorage.setItem("estoqueAtual", JSON.stringify(obj));
     } catch (e) {
-      console.error("Erro ao salvar estoqueLocal", e);
+      console.error(e);
     }
   }
 
-  // decrementa estoque local (delta negativo para reduzir)
-  function atualizarEstoque(prodId, tamanho, delta) {
-    const atual = lerEstoqueLocal(prodId) || { ...produto.estoque };
-    const atualQtd = Number(atual[tamanho] ?? produto.estoque?.[tamanho] ?? 0);
-    const novo = Math.max(0, atualQtd + delta);
-    const novoMapa = { ...(atual || {}), [tamanho]: novo };
-    gravarEstoqueLocal(prodId, novoMapa);
-    setEstoquePorTamanho(novoMapa);
-    return novo;
-  }
-
-  // ---------------------------
-  // Carregar produto selecionado
-  // ---------------------------
   useEffect(() => {
     const produtoSelecionado = JSON.parse(localStorage.getItem("produtoSelecionado"));
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 
     if (!produtoSelecionado) {
       navigate("/");
       return;
     }
 
-    // define tamanhos padrão
     let tamanhosDefinidos = produtoSelecionado.tamanhos || [];
 
     if (produtoSelecionado.categoria === "luvas") {
@@ -75,25 +63,23 @@ export default function VerProduto() {
       tamanhosDefinidos = [];
     }
 
-    // merge produto com tamanhos definidos (mantendo estoque/avaliacao se existirem)
     const prod = { ...produtoSelecionado, tamanhos: tamanhosDefinidos };
     setProduto(prod);
     setImagemPrincipal(produtoSelecionado.imagem || "");
     setMiniaturas(produtoSelecionado.angulo || []);
     setCarregando(false);
 
-    // carregar estoque local (se existir) ou do próprio JSON
     const estoqueLocal = lerEstoqueLocal(prod.id);
     if (estoqueLocal) setEstoquePorTamanho(estoqueLocal);
     else setEstoquePorTamanho(prod.estoque ? { ...prod.estoque } : {});
 
+    if (usuarioLogado && usuarioLogado.endereco) {
+      setCep(usuarioLogado.endereco);
+    }
+
     carregarVariacoes(produtoSelecionado);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
-  // ---------------------------
-  // Carregar variações do mesmo produto
-  // ---------------------------
   async function carregarVariacoes(produtoBase) {
     const arquivos = ["chuteiras", "bolas", "meioes", "luvas", "camisas", "caneleiras"];
 
@@ -111,13 +97,10 @@ export default function VerProduto() {
 
       setVariacoes(filtradas);
     } catch (error) {
-      console.log("Erro ao carregar variações:", error);
+      console.log(error);
     }
   }
 
-  // ---------------------------
-  // Mostrar alert bonito
-  // ---------------------------
   function mostrarFeedback(msg) {
     setMensagemFeedback(msg);
     const el = document.querySelector(".feedback-message");
@@ -129,9 +112,6 @@ export default function VerProduto() {
     }
   }
 
-  // ---------------------------
-  // RENDER: estrelas da avaliação
-  // ---------------------------
   function renderEstrelas(nota) {
     if (!nota && nota !== 0) return null;
     const full = Math.floor(nota);
@@ -146,16 +126,10 @@ export default function VerProduto() {
     );
   }
 
-  // ---------------------------
-  // Selecionar tamanho (bolinha)
-  // ---------------------------
   function selecionarTamanho(t) {
     setTamanhoSelecionado(String(t));
   }
 
-  // ---------------------------
-  // Adicionar ao carrinho (NAO decrementa estoque)
-  // ---------------------------
   function adicionarAoCarrinho() {
     if (produto.tamanhos?.length > 0 && !tamanhoSelecionado) {
       alert("Por favor, selecione um tamanho.");
@@ -168,7 +142,6 @@ export default function VerProduto() {
       return;
     }
 
-    // 🔹 CORREÇÃO: Usar a chave dinâmica (cart_ID)
     const key = getCartKey();
     const raw = localStorage.getItem(key);
     let carrinho = raw ? JSON.parse(raw) : [];
@@ -192,16 +165,12 @@ export default function VerProduto() {
 
     localStorage.setItem(key, JSON.stringify(carrinho));
     
-    // Dispara evento para o Header atualizar
     window.dispatchEvent(new CustomEvent("cart-updated", { detail: carrinho }));
 
     mostrarFeedback(`${produto.nome} adicionado ao carrinho!`);
     return item;
   }
 
-  // ---------------------------
-  // Comprar agora 
-  // ---------------------------
   function comprarAgora() {
     const usuario = localStorage.getItem("usuarioLogado");
     if (!usuario) {
@@ -221,7 +190,12 @@ export default function VerProduto() {
       return;
     }
 
-    const item = {
+    if (!freteInfo) {
+      alert("Por favor, informe o CEP para entrega antes de comprar!");
+      return;
+    }
+
+    const itemProduto = {
       id: produto.id,
       nome: produto.nome,
       imagem: produto.imagem,
@@ -230,12 +204,84 @@ export default function VerProduto() {
       quantity: 1,
     };
 
-    localStorage.removeItem("compraAtual");
-    localStorage.setItem("compraAtual", JSON.stringify([item]));
+    const listaParaPagar = [itemProduto];
 
-    mostrarFeedback("Produto reservado. Indo para pagamento...");
+    if (freteInfo && freteInfo.valor) {
+        const valorFrete = parseFloat(freteInfo.valor.replace(',', '.'));
+        if (valorFrete > 0) {
+            const itemFrete = {
+                id: "frete-checkout",
+                nome: `Frete (${freteInfo.prazo})`,
+                imagem: "https://cdn-icons-png.flaticon.com/512/759/759063.png",
+                preco: valorFrete,
+                tamanho: "-",
+                quantity: 1
+            };
+            listaParaPagar.push(itemFrete);
+        }
+    }
+
+    localStorage.removeItem("compraAtual");
+    localStorage.setItem("compraAtual", JSON.stringify(listaParaPagar));
+
+    mostrarFeedback("Indo para pagamento...");
     navigate("/pagamento");
   }
+
+  const calcularFrete = async () => {
+    const cepLimpo = cep.replace(/\D/g, "");
+
+    if (!cepLimpo) {
+      alert("Por favor, informe o CEP para entrega!");
+      return;
+    }
+
+    if (cepLimpo.length !== 8) {
+      alert("Digite um CEP válido com 8 dígitos.");
+      return;
+    }
+
+    setLoadingFrete(true);
+    setFreteInfo(null);
+
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        alert("CEP não encontrado.");
+        setLoadingFrete(false);
+        return;
+      }
+
+      let valor = 0;
+      let prazo = "";
+
+      if (data.localidade === "Santana de Parnaíba" && data.uf === "SP") {
+        valor = 5.00;
+        prazo = "1 dia útil (Local)";
+      } else if (data.uf === "SP") {
+        valor = 10.00;
+        prazo = "2 a 4 dias úteis";
+      } else {
+        valor = 50.00;
+        prazo = "5 a 10 dias úteis";
+      }
+
+      setFreteInfo({
+        valor: valor.toFixed(2).replace(".", ","),
+        prazo: prazo,
+        cidade: data.localidade,
+        uf: data.uf,
+      });
+
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao calcular frete. Tente novamente.");
+    } finally {
+      setLoadingFrete(false);
+    }
+  };
 
   if (carregando || !produto) {
     return (
@@ -251,19 +297,23 @@ export default function VerProduto() {
   return (
     <main className="produto-detalhe">
       <div className="imagem-produto">
+        {/* Imagem Principal */}
         <img src={imagemPrincipal} alt={produto.nome} className="imagem-principal" />
 
-        <div className="miniaturas">
-          {miniaturas.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt={`Miniatura ${i}`}
-              className={`miniatura ${img === imagemPrincipal ? "ativo" : ""}`}
-              onClick={() => setImagemPrincipal(img)}
-            />
-          ))}
-        </div>
+        {/* Miniaturas em linha logo abaixo */}
+        {miniaturas.length > 0 && (
+          <div className="miniaturas">
+            {miniaturas.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt={`Miniatura ${i}`}
+                className={`miniatura ${img === imagemPrincipal ? "ativo" : ""}`}
+                onClick={() => setImagemPrincipal(img)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="info-produto">
@@ -316,7 +366,6 @@ export default function VerProduto() {
         {variacoes.length > 0 && (
           <div className="outras-variacoes-container">
             <h3>Outras variações</h3>
-
             <div className="outras-variacoes-cards">
               {variacoes.map((v) => (
                 <div
@@ -353,6 +402,44 @@ export default function VerProduto() {
           <button className="btn-comprar" onClick={comprarAgora}>
             Comprar Agora
           </button>
+        </div>
+
+        <div className="container-frete">
+          <label className="label-frete">Calcular Frete e Prazo:</label>
+          <div className="input-frete-wrapper">
+            <input 
+              type="text" 
+              placeholder="00000-000" 
+              maxLength="9"
+              value={cep}
+              onChange={(e) => setCep(e.target.value)}
+              className="input-frete"
+            />
+            <button onClick={calcularFrete} disabled={loadingFrete} className="btn-calc-frete">
+              {loadingFrete ? "..." : "OK"}
+            </button>
+          </div>
+          
+          <a 
+            href="https://buscacepinter.correios.com.br/app/endereco/index.php" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="link-nao-sei-cep"
+          >
+            Não sei meu CEP
+          </a>
+
+          {freteInfo && (
+            <div className="resultado-frete">
+              <p className="destino-frete">
+                Entregar em: <strong>{freteInfo.cidade} - {freteInfo.uf}</strong>
+              </p>
+              <div className="detalhes-frete">
+                <span className="valor-frete">R$ {freteInfo.valor}</span>
+                <span className="prazo-frete">{freteInfo.prazo}</span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="feedback-message" aria-live="polite">

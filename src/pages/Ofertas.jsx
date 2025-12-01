@@ -13,7 +13,7 @@ export default function Ofertas() {
     segundos: 0,
   });
 
-  // Produtos em oferta
+
   const produtosOferta = [
     {
       id: 1,
