@@ -173,6 +173,7 @@ export default function Header() {
           <li onClick={() => { setDrawerOpen(false); navigate("/notificacoes"); }}>Notificações</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/favoritos"); }}>Favoritos</li>
           <li onClick={() => { setDrawerOpen(false); navigate("/soccerpoints"); }}>Soccer Points</li>
+          <li onClick={() => { setDrawerOpen(false); navigate("/provador"); }}>Provador</li>
         </ul>
       </nav>
       {drawerOpen && <div className="drawer-overlay" onClick={() => setDrawerOpen(false)} />}
