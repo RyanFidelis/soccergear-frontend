@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./componentes/Header";
 import Footer from "./componentes/Footer";
 
-// Páginas principais
+
 import Home from "./pages/Home";
 import Carrinho from "./pages/Carrinho";
 import VerProduto from "./pages/Verproduto";
@@ -16,13 +16,12 @@ import SoccerPoints from "./pages/SoccerPoints";
 import Pagamento from "./pages/Pagamento";   
 import Provador from "./pages/provador/Provador";   
 
-// Páginas de usuário
+
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Perfil from "./pages/Perfil";
 
 
-// ======== Função de proteção de rota ========
 function RotaProtegida({ children }) {
   const usuarioLogado = localStorage.getItem("usuarioLogado");
   return usuarioLogado ? children : <Navigate to="/login" replace />;
@@ -60,7 +59,6 @@ export default function App() {
             }
           />
 
-          {/* Redirecionamento padrão */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
