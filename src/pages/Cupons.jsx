@@ -6,12 +6,10 @@ export default function Cupons() {
   const [cupons, setCupons] = useState([]);
   const [copiado, setCopiado] = useState(null);
 
-  // 🔐 Inicializa Gemini se houver API key
   const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
   const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
   const model = genAI ? genAI.getGenerativeModel({ model: "gemini-1.5-flash" }) : null;
 
-  // ✨ Função para gerar cupom novo
   const gerarCupom = async () => {
     let novoCupom = null;
 
@@ -39,7 +37,6 @@ export default function Cupons() {
       console.warn("Falha ao gerar cupom via IA:", e.message);
     }
 
-    // Fallback se Gemini falhar
     if (!novoCupom) {
       const exemplos = [
         {
@@ -72,7 +69,6 @@ export default function Cupons() {
       novoCupom = exemplos[Math.floor(Math.random() * exemplos.length)];
     }
 
-    // Adiciona cupom à lista e salva no localStorage
     novoCupom.id = Date.now();
     setCupons((prev) => {
       const atualizados = [novoCupom, ...prev].slice(0, 10);
@@ -81,7 +77,6 @@ export default function Cupons() {
     });
   };
 
-  // 🕒 Carrega cupons e inicia intervalo de 2 horas
   useEffect(() => {
     const salvos = JSON.parse(localStorage.getItem("cupons")) || [];
     if (salvos.length === 0) {
@@ -93,7 +88,7 @@ export default function Cupons() {
           codigo: "BEMVINDO20",
           titulo: "20% OFF na Primeira Compra",
           descricao: "Desconto especial para novos clientes. Válido para compras acima de R$ 50,00.",
-          validade: "30/11/2025",
+          validade: "10/12/2025",
           desconto: "20% OFF",
         },
         {
@@ -122,12 +117,10 @@ export default function Cupons() {
       setCupons(salvos);
     }
 
-    // Gera novo cupom a cada 2 horas
     const intervalo = setInterval(gerarCupom, 2 * 60 * 60 * 1000);
     return () => clearInterval(intervalo);
   }, []);
 
-  // 📋 Copiar código (sem alert)
   const copiarCodigo = (codigo) => {
     navigator.clipboard.writeText(codigo);
     setCopiado(codigo);
@@ -140,6 +133,16 @@ export default function Cupons() {
       <p style={{ textAlign: "center", marginBottom: "30px", color: "#666" }}>
         Aproveite nossos cupons exclusivos e economize em suas compras!
       </p>
+
+            <div className="cupom-info">
+        <h3>Como usar os cupons</h3>
+        <p>1. Escolha o cupom desejado e clique em "Copiar Código"</p>
+        <p>
+          2. No processo de finalização da compra, cole o código no campo "Cupom
+          de Desconto"
+        </p>
+        <p>3. O desconto será aplicado automaticamente ao seu pedido</p>
+      </div>
 
       <div className="cupons-grid">
         {cupons.map((cupom) => (
@@ -170,15 +173,6 @@ export default function Cupons() {
         ))}
       </div>
 
-      <div className="cupom-info">
-        <h3>Como usar os cupons</h3>
-        <p>1. Escolha o cupom desejado e clique em "Copiar Código"</p>
-        <p>
-          2. No processo de finalização da compra, cole o código no campo "Cupom
-          de Desconto"
-        </p>
-        <p>3. O desconto será aplicado automaticamente ao seu pedido</p>
-      </div>
     </main>
   );
 }

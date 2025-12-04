@@ -22,20 +22,19 @@
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   background-color: #000;
 }
 
-/* Container flexível que segura todas as imagens */
 .carrossel-track {
   display: flex;
-  transition: transform 0.8s ease-in-out; /* Efeito de deslizamento suave */
+  transition: transform 0.8s ease-in-out;
   width: 100%;
 }
 
 .carrossel-slide {
   position: relative;
-  min-width: 100%; /* Cada slide ocupa 100% da largura visível */
+  min-width: 100%;
   height: 500px;
 }
 
@@ -51,13 +50,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
   color: white;
   padding: 20px 10px 10px 10px;
   text-align: center;
   font-weight: bold;
   font-size: 1.1rem;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .carrossel-btn {
@@ -105,13 +104,13 @@
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .dot.active {
   background-color: white;
   transform: scale(1.3);
-  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .categoria {
@@ -274,7 +273,7 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: background 0.2s, transform 0.2s;
 }
 
@@ -325,8 +324,7 @@
 .ResultadosProdutos {
   padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
 .grid-produtos {
@@ -336,6 +334,7 @@
   gap: 20px;
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
 }
 
 .feedback-toast {
@@ -352,7 +351,7 @@
   transform: translateY(-20px);
   transition: all 0.3s ease;
   font-weight: 500;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .feedback-toast.show {
@@ -365,24 +364,24 @@
   .produto {
     width: 180px;
   }
-  
+
   .produto-imagem {
     height: 150px;
   }
-  
+
   .btn-cart {
     height: 32px;
   }
-  
+
   .btn-cart .icon.carrinho {
     width: 20px;
     height: 20px;
   }
-  
+
   .btn-acao-card {
     height: 32px;
   }
-  
+
   .btn-fav {
     width: 32px;
     font-size: 1.2rem;
@@ -395,7 +394,7 @@
   .carrossel-slide {
     height: 300px;
   }
-  
+
   .carrossel-btn {
     font-size: 18px;
     padding: 8px;
@@ -403,96 +402,107 @@
 }
 
 .modal-overlay-tamanho {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .modal-content-tamanho {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    animation: fadeIn 0.3s ease;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
 }
 
 .modal-produto-nome {
-    color: #666;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
 }
 
 .grid-tamanhos {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .btn-tamanho {
-    padding: 10px;
-    border: 1px solid #ddd;
-    background: #f9f9f9;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: all 0.2s;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.2s;
 }
 
 .btn-tamanho:hover:not(:disabled) {
-    border-color: #333;
+  border-color: #333;
 }
 
 .btn-tamanho.selecionado {
-    background: #28a745;
-    color: white;
-    border-color: #28a745;
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
 }
 
 .btn-tamanho.esgotado {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: #eee;
-    text-decoration: line-through;
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #eee;
+  text-decoration: line-through;
 }
 
 .modal-acoes {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
-.btn-cancelar-modal, .btn-confirmar-modal {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
+.btn-cancelar-modal,
+.btn-confirmar-modal {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .btn-cancelar-modal {
-    background: #eee;
-    color: #333;
+  background: #eee;
+  color: #333;
 }
 
 .btn-confirmar-modal {
-    background: #333;
-    color: white;
+  background: #333;
+  color: white;
 }
 
 .btn-confirmar-modal:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

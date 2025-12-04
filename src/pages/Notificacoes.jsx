@@ -6,6 +6,8 @@ const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const API_URL = "https://soccergear-backend.onrender.com";
 
+const TEMPO_ENTRE_NOTIFICACOES = 10 * 60 * 1000; 
+
 const getUsuario = () => {
   try {
     return JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -23,7 +25,13 @@ const getStorageKeys = (userId) => ({
 export default function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState([]);
   const [filtro, setFiltro] = useState("todas");
-  const [modalLimparOpen, setModalLimparOpen] = useState(false);
+  
+  const [modalConfirmacao, setModalConfirmacao] = useState({
+    aberto: false,
+    tipo: null, 
+    id: null,   
+  });
+
   const [notificacaoSelecionada, setNotificacaoSelecionada] = useState(null);
   
   const checarAtualizacoesBackend = useCallback(async () => {
@@ -52,13 +60,21 @@ export default function Notificacoes() {
 
         if (!jaProcessado) {
           const valorFormatado = pedido.total ? Number(pedido.total).toFixed(2).replace('.', ',') : "0,00";
+          
+          const nomeProduto = 
+            (pedido.itens && pedido.itens[0]?.nome) || 
+            (pedido.produtos && pedido.produtos[0]?.nome) || 
+            (pedido.nome_produto) ||
+            `Pedido #${pedido.id}`; 
+
+          const textoBase = `O pagamento de R$ ${valorFormatado} do pedido ${nomeProduto}`;
 
           if (status === "aprovado" || status === "pago") {
             novasNotificacoes.unshift({
               id: Date.now() + Math.random(),
               idExterno: idEvento,
               titulo: "✓ Pagamento Confirmado",
-              descricao: `O pagamento de R$ ${valorFormatado} do pedido #${pedido.id} foi aprovado!`,
+              descricao: `${textoBase} foi aprovado!`,
               categoria: "aprovado",
               lida: false,
               data: new Date(),
@@ -72,7 +88,7 @@ export default function Notificacoes() {
               id: Date.now() + Math.random(),
               idExterno: idEvento,
               titulo: "✕ Falha no Pagamento",
-              descricao: `O pagamento de R$ ${valorFormatado} referente ao pedido #${pedido.id} foi recusado.`,
+              descricao: `${textoBase} foi recusado.`,
               categoria: "rejeitado",
               lida: false,
               data: new Date(),
@@ -86,7 +102,7 @@ export default function Notificacoes() {
               id: Date.now() + Math.random(),
               idExterno: idEvento,
               titulo: "Pagamento em Análise",
-              descricao: `Estamos processando o pagamento de R$ ${valorFormatado} do pedido #${pedido.id}.`,
+              descricao: `${textoBase} está em análise.`,
               categoria: "aguardando",
               lida: false,
               data: new Date(),
@@ -117,7 +133,6 @@ export default function Notificacoes() {
     const { keyNotificacoes, keyLastIATime } = getStorageKeys(usuario.id);
     const lastTime = localStorage.getItem(keyLastIATime);
     const now = Date.now();
-    const ONE_HOUR = 60 * 60 * 1000; 
     const nomeUsuario = usuario.name || 'Atleta';
 
     const criarPrompt = (tema) => `Crie uma notificação curta e empolgante para um e-commerce de futebol chamado SoccerGear. 
@@ -125,7 +140,7 @@ export default function Notificacoes() {
       Responda APENAS um JSON válido neste formato: {"titulo": "...", "descricao": "..."}`;
 
     const gerarUnica = async (tema) => {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent(criarPrompt(tema));
         const text = result.response.text().replace(/```json|```/g, '').trim();
         const { titulo, descricao } = JSON.parse(text);
@@ -153,7 +168,7 @@ export default function Notificacoes() {
             });
             localStorage.setItem(keyLastIATime, now.toString());
         } 
-        else if (now - Number(lastTime) > ONE_HOUR) {
+        else if (now - Number(lastTime) > TEMPO_ENTRE_NOTIFICACOES) {
             const temas = ["oferta relâmpago", "dica de treino", "curiosidade futebol", "camisa retrô"];
             const temaAleatorio = temas[Math.floor(Math.random() * temas.length)];
             const nova = await gerarUnica(temaAleatorio);
@@ -194,16 +209,44 @@ export default function Notificacoes() {
     }
   }, [checarAtualizacoesBackend, gerarNotificacaoIA]);
 
-  const confirmarLimpeza = () => {
-    const usuario = getUsuario();
-    if (usuario) {
-      const { keyNotificacoes, keyLastIATime } = getStorageKeys(usuario.id);
-      setNotificacoes([]);
-      localStorage.removeItem(keyNotificacoes);
-      localStorage.removeItem(keyLastIATime); 
-    }
-    setModalLimparOpen(false);
+  
+  const abrirModalLimparTudo = () => {
+    setModalConfirmacao({ aberto: true, tipo: 'tudo', id: null });
   };
+
+  const abrirModalExcluirUm = (id) => {
+    setModalConfirmacao({ aberto: true, tipo: 'unico', id: id });
+  };
+
+  const fecharModalConfirmacao = () => {
+    setModalConfirmacao({ aberto: false, tipo: null, id: null });
+  };
+
+  const executarAcaoConfirmada = () => {
+    const { tipo, id } = modalConfirmacao;
+
+    if (tipo === 'tudo') {
+        const usuario = getUsuario();
+        if (usuario) {
+            const { keyNotificacoes, keyLastIATime } = getStorageKeys(usuario.id);
+            setNotificacoes([]);
+            localStorage.removeItem(keyNotificacoes);
+            localStorage.removeItem(keyLastIATime); 
+        }
+    } else if (tipo === 'unico' && id) {
+        const usuario = getUsuario();
+        const atualizadas = notificacoes.filter(item => item.id !== id);
+        setNotificacoes(atualizadas);
+
+        if (usuario) {
+            const { keyNotificacoes } = getStorageKeys(usuario.id);
+            localStorage.setItem(keyNotificacoes, JSON.stringify(atualizadas));
+        }
+    }
+
+    fecharModalConfirmacao();
+  };
+
 
   const marcarComoLida = (n) => {
     const usuario = getUsuario();
@@ -215,17 +258,6 @@ export default function Notificacoes() {
        localStorage.setItem(keyNotificacoes, JSON.stringify(atualizadas));
     }
     setNotificacaoSelecionada(n);
-  };
-
-  const excluirUnica = (id) => {
-    const usuario = getUsuario();
-    const atualizadas = notificacoes.filter(item => item.id !== id);
-    setNotificacoes(atualizadas);
-
-    if (usuario) {
-      const { keyNotificacoes } = getStorageKeys(usuario.id);
-      localStorage.setItem(keyNotificacoes, JSON.stringify(atualizadas));
-    }
   };
 
   const marcarTodasLidas = () => {
@@ -251,7 +283,7 @@ export default function Notificacoes() {
         <h2>Central de Notificações</h2>
         <div className="acoes-header">
           <button className="btn-acao ler-tudo" onClick={marcarTodasLidas}>Marcar todas como lidas</button>
-          <button className="btn-acao limpar" onClick={() => setModalLimparOpen(true)}>Limpar tudo</button>
+          <button className="btn-acao limpar" onClick={abrirModalLimparTudo}>Limpar tudo</button>
         </div>
       </div>
 
@@ -285,21 +317,37 @@ export default function Notificacoes() {
               </div>
               <div className="card-actions">
                 <button className="icon-btn ver" title="Ver Detalhes" onClick={() => marcarComoLida(n)}>👁</button>
-                <button className="icon-btn del" title="Excluir" onClick={(e) => { e.stopPropagation(); excluirUnica(n.id); }}>🗑</button>
+                <button 
+                    className="icon-btn del" 
+                    title="Excluir" 
+                    onClick={(e) => { 
+                        e.stopPropagation(); 
+                        abrirModalExcluirUm(n.id);
+                    }}
+                >
+                    🗑
+                </button>
               </div>
             </div>
           ))
         )}
       </div>
 
-      {modalLimparOpen && (
+      {modalConfirmacao.aberto && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <h3>Limpar notificações?</h3>
-            <p>Isso removerá todas as notificações e reiniciará o ciclo da IA.</p>
+            <h3>Confirmar exclusão</h3>
+            <p>
+                {modalConfirmacao.tipo === 'tudo' 
+                    ? "Isso removerá todas as notificações permanentemente."
+                    : "Tem certeza que deseja excluir esta notificação?"
+                }
+            </p>
             <div className="modal-buttons">
-              <button className="btn-secundario" onClick={() => setModalLimparOpen(false)}>Cancelar</button>
-              <button className="btn-primario perigo" onClick={confirmarLimpeza}>Sim, limpar tudo</button>
+              <button className="btn-secundario" onClick={fecharModalConfirmacao}>Cancelar</button>
+              <button className="btn-primario perigo" onClick={executarAcaoConfirmada}>
+                {modalConfirmacao.tipo === 'tudo' ? "Limpar tudo" : "Excluir"}
+              </button>
             </div>
           </div>
         </div>

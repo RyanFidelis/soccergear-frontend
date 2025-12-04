@@ -1,15 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
 .container-soccer-points {
   max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
   padding: 40px 20px;
   font-family: "Poppins", sans-serif;
   background-color: #f5f5f5;
   color: #111;
+  overflow-x: hidden;
 }
 
 .hero-soccer-points {
   text-align: center;
   margin-bottom: 40px;
+  width: 100%;
 }
 
 .caixa-hero-soccer-points {
@@ -18,12 +25,14 @@
   border-radius: 14px;
   padding: 40px 30px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 
 .caixa-hero-soccer-points h1 {
   font-size: 2.2rem;
   font-weight: bold;
   margin-bottom: 15px;
+  line-height: 1.2;
 }
 
 .caixa-hero-soccer-points p {
@@ -39,6 +48,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 25px;
   max-width: 450px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -103,6 +113,7 @@
 .brindes-soccer-points {
   margin-top: 60px;
   text-align: center;
+  width: 100%;
 }
 
 .brindes-soccer-points h2 {
@@ -119,25 +130,17 @@
 
 .grid-brindes-soccer-points {
   display: flex;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 25px;
   padding: 10px 5px;
-  scroll-behavior: smooth;
-  justify-content: flex-start;
-}
-
-.grid-brindes-soccer-points::-webkit-scrollbar {
-  height: 6px;
-}
-
-.grid-brindes-soccer-points::-webkit-scrollbar-thumb {
-  background: #000;
-  border-radius: 4px;
+  justify-content: center;
+  width: 100%;
 }
 
 .card-brinde-soccer-points {
-  flex: 0 0 auto;
-  width: 230px;
+  flex: 0 1 230px;
+  width: 100%;
+  max-width: 230px;
   background: white;
   border-radius: 12px;
   padding: 18px;
@@ -145,6 +148,8 @@
   transition: transform 0.25s, box-shadow 0.25s;
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-brinde-soccer-points:hover {
@@ -201,6 +206,7 @@
   cursor: pointer;
   transition: background 0.3s ease;
   width: 100%;
+  margin-top: auto;
 }
 
 .btn-resgatar-soccer-points:hover {
@@ -218,6 +224,7 @@
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   padding: 25px 30px;
+  width: 100%;
 }
 
 .historico-soccer-points h2 {
@@ -267,6 +274,7 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  padding: 20px;
 }
 
 .modal-soccer-points {
@@ -275,7 +283,7 @@
   padding: 30px;
   text-align: center;
   max-width: 350px;
-  width: 90%;
+  width: 100%;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   position: relative;
   animation: fadeInModal 0.3s ease-out;
@@ -322,6 +330,7 @@
   font-weight: bold;
   font-size: 1rem;
   transition: transform 0.2s ease, background 0.3s ease;
+  width: 100%;
 }
 
 .btn-fechar-soccer-points:hover {
@@ -331,27 +340,37 @@
 
 @media (max-width: 768px) {
   .container-soccer-points {
-    padding: 20px 15px;
+    padding: 20px 10px;
   }
 
   .caixa-hero-soccer-points {
-    padding: 30px 20px;
+    padding: 30px 15px;
   }
 
   .caixa-hero-soccer-points h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+  }
+
+  .painel-pontos-soccer-points {
+    padding: 20px 15px;
+  }
+
+  .card-brinde-soccer-points {
+    max-width: 100%;
+    flex: 1 1 100%;
   }
 
   .grid-brindes-soccer-points {
-    justify-content: flex-start;
+    gap: 15px;
   }
 
   .historico-soccer-points {
-    padding: 20px;
+    padding: 20px 15px;
   }
 
   .historico-soccer-points li {
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
+    align-items: flex-start;
   }
 }

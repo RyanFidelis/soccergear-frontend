@@ -16,7 +16,7 @@ export default function Home() {
 
   const originalBanners = [
     { id: 1, img: "/imagem/anuncio.webp", titulo: "Nike Phantom" },
-    { id: 2, img: "/imagem/anuncio2.png", titulo: "Camisa do Corinthians 25/26" },
+    { id: 2, img: "/imagem/anuncio2.jpg", titulo: "Camisa do Corinthians 25/26" },
     { id: 3, img: "/imagem/anuncio3.avif", titulo: "Nike Zoom Mercurial Vapor 16 Elite KM" }
   ];
 
@@ -379,7 +379,7 @@ export default function Home() {
       {buscou && resultados.length > 0 && (
         <>
           <h2 className="titulo">Resultados da busca</h2>
-          <div className="ResultadosProdutos grid-produtos">
+          <div className="grid-produtos">
             {resultados.map((p) => renderProduto(p, p.categoria))}
           </div>
         </>
