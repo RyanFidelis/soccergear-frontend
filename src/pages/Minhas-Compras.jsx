@@ -121,8 +121,7 @@ export default function MinhasCompras() {
                   {qtdOutros > 0 && <span style={{fontWeight:'normal', color:'#888', fontSize:'14px'}}> (+{qtdOutros} itens)</span>}
                 </div>
                 <div className="pedido-meta">
-                  <span className="pedido-id">#{compra.id}</span>
-                  <span>• {new Date(compra.createdAt).toLocaleDateString('pt-BR')}</span>
+                  <span>{new Date(compra.createdAt).toLocaleDateString('pt-BR')}</span>
                 </div>
               </div>
 
