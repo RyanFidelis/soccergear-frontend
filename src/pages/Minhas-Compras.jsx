@@ -94,7 +94,7 @@ export default function MinhasCompras() {
       <div className="page-header">
         <h1>Meus Pedidos</h1>
         <button onClick={carregarCompras} className="btn-refresh">
-          ↻ Atualizar 
+          ↻ Atualizar
         </button>
       </div>
 
