@@ -271,7 +271,6 @@ export default function Notificacoes() {
     }
   };
 
-  // --- ALTERAÇÃO AQUI ---
   const listaFiltrada = notificacoes
     .filter(n => {
       if (filtro === 'todas') return true;
@@ -279,7 +278,6 @@ export default function Notificacoes() {
       return n.categoria === filtro;
     })
     .sort((a, b) => new Date(b.data) - new Date(a.data)); 
-  // ----------------------
 
   return (
     <main className="notificacoes-container">
@@ -312,7 +310,7 @@ export default function Notificacoes() {
         ) : (
           listaFiltrada.map(n => (
             <div key={n.id} className={`card-notificacao ${n.lida ? 'lida' : 'nao-lida'} ${n.categoria}`}>
-              <div className="card-content" onClick={() => marcarComoLida(n)}>
+              <div className="card-content" onClick={() => marcarComoLida(n)} style={{cursor: 'pointer'}}>
                 <div className="card-top">
                   <span className="card-title">{n.titulo}</span>
                   <span className="card-time">{new Date(n.data).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -320,7 +318,6 @@ export default function Notificacoes() {
                 <p className="card-desc">{n.descricao}</p>
               </div>
               <div className="card-actions">
-                <button className="icon-btn ver" title="Ver Detalhes" onClick={() => marcarComoLida(n)}>👁</button>
                 <button 
                     className="icon-btn del" 
                     title="Excluir" 
@@ -329,7 +326,7 @@ export default function Notificacoes() {
                         abrirModalExcluirUm(n.id);
                     }}
                 >
-                    🗑
+                    ✕
                 </button>
               </div>
             </div>
