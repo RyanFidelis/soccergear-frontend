@@ -271,11 +271,15 @@ export default function Notificacoes() {
     }
   };
 
-  const listaFiltrada = notificacoes.filter(n => {
-    if (filtro === 'todas') return true;
-    if (filtro === 'nao-lidas') return !n.lida;
-    return n.categoria === filtro;
-  });
+  // --- ALTERAÇÃO AQUI ---
+  const listaFiltrada = notificacoes
+    .filter(n => {
+      if (filtro === 'todas') return true;
+      if (filtro === 'nao-lidas') return !n.lida;
+      return n.categoria === filtro;
+    })
+    .sort((a, b) => new Date(b.data) - new Date(a.data)); 
+  // ----------------------
 
   return (
     <main className="notificacoes-container">
