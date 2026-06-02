@@ -1,15 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect,} from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import "../css/SoccerPoints.css";
 
 export default function SoccerPoints() {
   const navigate = useNavigate();
 
-  const [pontos, setPontos] = useState(0);
-  const [historico, setHistorico] = useState([]);
-  const [modalAtivo, setModalAtivo] = useState(false);
-  const [brindeSelecionado, setBrindeSelecionado] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [pontos, setPontos] =
+    useState(0);
+
+  const [historico, setHistorico] =
+    useState([]);
+
+  const [modalAtivo, setModalAtivo] =
+    useState(false);
+
+  const [
+    brindeSelecionado,
+    setBrindeSelecionado,
+  ] = useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
 
   const API_URL =
     process.env.REACT_APP_API_URL ||
@@ -26,6 +39,7 @@ export default function SoccerPoints() {
         "https://carrefourbr.vtexassets.com/arquivos/ids/143273602/24130abb7a354a5fb9bbb54b743c0da2.jpg?v=638504454886130000",
       tag: "Popular",
     },
+
     {
       id: 2,
       nome: "Boné do Time",
@@ -34,6 +48,7 @@ export default function SoccerPoints() {
         "https://th.bing.com/th/id/R.0c1cfa1de4ba155f4c9348f7cabefc82?rik=9Ucxy9QiFwxbzQ&pid=ImgRaw&r=0",
       tag: "Novo",
     },
+
     {
       id: 3,
       nome: "Camisa Oficial",
@@ -44,63 +59,89 @@ export default function SoccerPoints() {
     },
   ];
 
-  const sincronizarDados = async () => {
-    const usuarioLocal = JSON.parse(
-      localStorage.getItem("usuarioLogado")
-    );
-
-    if (!usuarioLocal || !usuarioLocal.id) {
-      setPontos(0);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `${API_URL}/api/auth/user/${usuarioLocal.id}`
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const usuarioAtualizado =
-          data.user || data.usuario || data;
-
-        const pontosAtualizados = Math.min(
-          usuarioAtualizado.pontos || 0,
-          LIMITE_PONTOS
+  const sincronizarDados =
+    async () => {
+      const usuarioLocal =
+        JSON.parse(
+          localStorage.getItem(
+            "usuarioLogado"
+          )
         );
 
-        setPontos(pontosAtualizados);
-
-        localStorage.setItem(
-          "usuarioLogado",
-          JSON.stringify({
-            ...usuarioLocal,
-            ...usuarioAtualizado,
-            pontos: pontosAtualizados,
-          })
-        );
+      if (
+        !usuarioLocal ||
+        !usuarioLocal.id
+      ) {
+        setPontos(0);
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error("Erro ao sincronizar:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+
+      try {
+        const response =
+          await fetch(
+            `${API_URL}/api/auth/user/${usuarioLocal.id}`
+          );
+
+        const data =
+          await response.json();
+
+        if (response.ok) {
+          const usuarioAtualizado =
+            data.user ||
+            data.usuario ||
+            data;
+
+          const pontosAtualizados =
+            Math.min(
+              usuarioAtualizado.pontos ||
+                0,
+              LIMITE_PONTOS
+            );
+
+          setPontos(
+            pontosAtualizados
+          );
+
+          localStorage.setItem(
+            "usuarioLogado",
+            JSON.stringify({
+              ...usuarioLocal,
+              ...usuarioAtualizado,
+              pontos:
+                pontosAtualizados,
+            })
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Erro ao sincronizar:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
   useEffect(() => {
     const usuario = JSON.parse(
-      localStorage.getItem("usuarioLogado")
+      localStorage.getItem(
+        "usuarioLogado"
+      )
     );
 
     if (usuario?.id) {
-      const historicoSalvo = localStorage.getItem(
-        `historico-soccer-points-${usuario.id}`
-      );
+      const historicoSalvo =
+        localStorage.getItem(
+          `historico-soccer-points-${usuario.id}`
+        );
 
       if (historicoSalvo) {
-        setHistorico(JSON.parse(historicoSalvo));
+        setHistorico(
+          JSON.parse(
+            historicoSalvo
+          )
+        );
       }
     }
 
@@ -109,13 +150,17 @@ export default function SoccerPoints() {
 
   useEffect(() => {
     const usuario = JSON.parse(
-      localStorage.getItem("usuarioLogado")
+      localStorage.getItem(
+        "usuarioLogado"
+      )
     );
 
     if (usuario?.id) {
       localStorage.setItem(
         `historico-soccer-points-${usuario.id}`,
-        JSON.stringify(historico)
+        JSON.stringify(
+          historico
+        )
       );
     }
   }, [historico]);
@@ -128,101 +173,149 @@ export default function SoccerPoints() {
     setModalAtivo(false);
   };
 
-  const resgatarBrinde = async (brinde) => {
-    if (pontos < brinde.custo) {
-      alert("Você não possui pontos suficientes.");
-      return;
-    }
-
-    const usuario = JSON.parse(
-      localStorage.getItem("usuarioLogado")
-    );
-
-    if (!usuario?.id) {
-      alert("Faça login novamente.");
-      navigate("/login");
-      return;
-    }
-
-    const novosPontos = pontos - brinde.custo;
-
-    setLoading(true);
-
-    try {
-      const response = await fetch(
-        `${API_URL}/api/auth/update/${usuario.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            pontos: novosPontos,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setPontos(novosPontos);
-
-        const usuarioAtualizado = {
-          ...usuario,
-          pontos: novosPontos,
-        };
-
-        localStorage.setItem(
-          "usuarioLogado",
-          JSON.stringify(usuarioAtualizado)
-        );
-
-        window.dispatchEvent(
-          new Event("user-updated")
-        );
-
-        const novoHistorico = [
-          ...historico,
-          {
-            tipo: "Resgate",
-            valor: -brinde.custo,
-            data: new Date().toLocaleString("pt-BR"),
-            item: brinde.nome,
-          },
-        ];
-
-        setHistorico(novoHistorico);
-
-        setBrindeSelecionado(brinde);
-
-        setModalAtivo(true);
-      } else {
+  const resgatarBrinde =
+    async (brinde) => {
+      if (
+        pontos < brinde.custo
+      ) {
         alert(
-          data.message ||
-            "Erro ao resgatar brinde."
+          "Você não possui pontos suficientes."
         );
+
+        return;
       }
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao conectar ao servidor.");
-    } finally {
-      setLoading(false);
-    }
-  };
+
+      const usuario =
+        JSON.parse(
+          localStorage.getItem(
+            "usuarioLogado"
+          )
+        );
+
+      if (!usuario?.id) {
+        alert(
+          "Faça login novamente."
+        );
+
+        navigate("/login");
+
+        return;
+      }
+
+      const novosPontos =
+        pontos - brinde.custo;
+
+      setLoading(true);
+
+      try {
+        const response =
+          await fetch(
+            `${API_URL}/api/auth/update/${usuario.id}`,
+            {
+              method: "PUT",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body: JSON.stringify({
+                pontos:
+                  novosPontos,
+              }),
+            }
+          );
+
+        const data =
+          await response.json();
+
+        if (response.ok) {
+          setPontos(
+            novosPontos
+          );
+
+          const usuarioAtualizado =
+            {
+              ...usuario,
+              pontos:
+                novosPontos,
+            };
+
+          localStorage.setItem(
+            "usuarioLogado",
+            JSON.stringify(
+              usuarioAtualizado
+            )
+          );
+
+          window.dispatchEvent(
+            new Event(
+              "user-updated"
+            )
+          );
+
+          const novoHistorico =
+            [
+              ...historico,
+
+              {
+                tipo:
+                  "Resgate",
+
+                valor:
+                  -brinde.custo,
+
+                data: new Date().toLocaleString(
+                  "pt-BR"
+                ),
+
+                item:
+                  brinde.nome,
+              },
+            ];
+
+          setHistorico(
+            novoHistorico
+          );
+
+          setBrindeSelecionado(
+            brinde
+          );
+
+          setModalAtivo(true);
+        } else {
+          alert(
+            data.message ||
+              "Erro ao resgatar brinde."
+          );
+        }
+      } catch (error) {
+        console.error(error);
+
+        alert(
+          "Erro ao conectar ao servidor."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <main className="container-soccer-points">
       <section className="hero-soccer-points">
         <div className="caixa-hero-soccer-points">
           <h1>
-            Ganhe Pontos, Conquiste Prêmios!
+            Ganhe Pontos,
+            Conquiste Prêmios!
           </h1>
 
           <p>
-            A cada compra aprovada você
-            acumula pontos para trocar por
-            brindes exclusivos do mundo do
-            futebol.
+            A cada compra
+            aprovada você
+            acumula pontos para
+            trocar por brindes
+            exclusivos do mundo
+            do futebol.
           </p>
         </div>
 
@@ -230,7 +323,9 @@ export default function SoccerPoints() {
           <h2>Seus Pontos</h2>
 
           <p className="valor-pontos-soccer-points">
-            {loading ? "..." : pontos}
+            {loading
+              ? "..."
+              : pontos}
           </p>
 
           <div className="barra-nivel-soccer-points">
@@ -238,7 +333,8 @@ export default function SoccerPoints() {
               className="progresso-soccer-points"
               style={{
                 width: `${Math.min(
-                  (pontos / LIMITE_PONTOS) *
+                  (pontos /
+                    LIMITE_PONTOS) *
                     100,
                   100
                 )}%`,
@@ -247,25 +343,35 @@ export default function SoccerPoints() {
           </div>
 
           <p className="meta-soccer-points">
-            Limite máximo: 5000 pontos
+            Limite máximo:
+            5000 pontos
           </p>
 
-          {pontos >= LIMITE_PONTOS && (
+          {pontos >=
+            LIMITE_PONTOS && (
             <p
               style={{
-                color: "#00b894",
-                fontWeight: "bold",
-                marginTop: "10px",
+                color:
+                  "#00b894",
+
+                fontWeight:
+                  "bold",
+
+                marginTop:
+                  "10px",
               }}
             >
-              Você atingiu o limite máximo
-              de pontos.
+              Você atingiu o
+              limite máximo de
+              pontos.
             </p>
           )}
 
           <button
             className="btn-ganhar-soccer-points"
-            onClick={irParaCompras}
+            onClick={
+              irParaCompras
+            }
           >
             Ir às Compras
           </button>
@@ -273,86 +379,122 @@ export default function SoccerPoints() {
       </section>
 
       <section className="brindes-soccer-points">
-        <h2>Brindes Disponíveis</h2>
+        <h2>
+          Brindes
+          Disponíveis
+        </h2>
 
         <p className="subtitulo-soccer-points">
-          Troque seus pontos por produtos
+          Troque seus pontos
+          por produtos
           exclusivos
         </p>
 
         <div className="grid-brindes-soccer-points">
-          {brindes.map((brinde) => (
-            <div
-              key={brinde.id}
-              className="card-brinde-soccer-points"
-            >
-              {brinde.tag && (
-                <span className="tag-soccer-points">
-                  {brinde.tag}
-                </span>
-              )}
-
-              <img
-                src={brinde.imagem}
-                alt={brinde.nome}
-                className="img-brinde-soccer-points"
-              />
-
-              <h3>{brinde.nome}</h3>
-
-              <p className="descricao-brinde-soccer-points">
-                Troque por este item
-                exclusivo
-              </p>
-
-              <p className="pontos-necessarios-soccer-points">
-                <strong>
-                  {brinde.custo}
-                </strong>{" "}
-                pontos
-              </p>
-
-              <button
-                className="btn-resgatar-soccer-points"
-                onClick={() =>
-                  resgatarBrinde(brinde)
+          {brindes.map(
+            (brinde) => (
+              <div
+                key={
+                  brinde.id
                 }
-                disabled={loading}
+                className="card-brinde-soccer-points"
               >
-                {loading
-                  ? "Processando..."
-                  : "Trocar Agora"}
-              </button>
-            </div>
-          ))}
+                {brinde.tag && (
+                  <span className="tag-soccer-points">
+                    {
+                      brinde.tag
+                    }
+                  </span>
+                )}
+
+                <img
+                  src={
+                    brinde.imagem
+                  }
+                  alt={
+                    brinde.nome
+                  }
+                  className="img-brinde-soccer-points"
+                />
+
+                <h3>
+                  {
+                    brinde.nome
+                  }
+                </h3>
+
+                <p className="descricao-brinde-soccer-points">
+                  Troque por
+                  este item
+                  exclusivo
+                </p>
+
+                <p className="pontos-necessarios-soccer-points">
+                  <strong>
+                    {
+                      brinde.custo
+                    }
+                  </strong>{" "}
+                  pontos
+                </p>
+
+                <button
+                  className="btn-resgatar-soccer-points"
+                  onClick={() =>
+                    resgatarBrinde(
+                      brinde
+                    )
+                  }
+                  disabled={
+                    loading
+                  }
+                >
+                  {loading
+                    ? "Processando..."
+                    : "Trocar Agora"}
+                </button>
+              </div>
+            )
+          )}
         </div>
       </section>
 
       <section className="historico-soccer-points">
-        <h2>Histórico de Pontos</h2>
+        <h2>
+          Histórico de
+          Pontos
+        </h2>
 
-        {historico.length === 0 ? (
+        {historico.length ===
+        0 ? (
           <p>
-            Nenhuma transação realizada
-            ainda.
+            Nenhuma transação
+            realizada ainda.
           </p>
         ) : (
           <ul>
-            {historico.map((h, i) => (
-              <li
-                key={i}
-                className={
-                  h.tipo === "Ganhos"
-                    ? "ganho-soccer-points"
-                    : "resgate-soccer-points"
-                }
-              >
-                <span>{h.data}</span> —{" "}
-                {h.tipo === "Ganhos"
-                  ? `+${h.valor} pontos ganhos`
-                  : `${h.item} - ${h.valor} pontos usados`}
-              </li>
-            ))}
+            {historico.map(
+              (h, i) => (
+                <li
+                  key={i}
+                  className={
+                    h.tipo ===
+                    "Ganhos"
+                      ? "ganho-soccer-points"
+                      : "resgate-soccer-points"
+                  }
+                >
+                  <span>
+                    {h.data}
+                  </span>{" "}
+                  —{" "}
+                  {h.tipo ===
+                  "Ganhos"
+                    ? `+${h.valor} pontos ganhos`
+                    : `${h.item} - ${h.valor} pontos usados`}
+                </li>
+              )
+            )}
           </ul>
         )}
       </section>
@@ -361,21 +503,29 @@ export default function SoccerPoints() {
         brindeSelecionado && (
           <div
             className="modal-overlay-soccer-points"
-            onClick={fecharModal}
+            onClick={
+              fecharModal
+            }
           >
             <div
               className="modal-soccer-points"
-              onClick={(e) =>
+              onClick={(
+                e
+              ) =>
                 e.stopPropagation()
               }
             >
-              <h2>Parabéns!</h2>
+              <h2>
+                Parabéns!
+              </h2>
 
               <p>
                 Você resgatou:
                 <strong>
                   {" "}
-                  {brindeSelecionado.nome}
+                  {
+                    brindeSelecionado.nome
+                  }
                 </strong>
               </p>
 
@@ -391,7 +541,9 @@ export default function SoccerPoints() {
 
               <button
                 className="btn-fechar-soccer-points"
-                onClick={fecharModal}
+                onClick={
+                  fecharModal
+                }
               >
                 Fechar
               </button>
@@ -401,4 +553,4 @@ export default function SoccerPoints() {
     </main>
   );
 }
-```
+
