@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-/* ===========================================================
-   ESTILO GERAL DO PROVADOR 3D ATUALIZADO
-   =========================================================== */
-
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 :root {
   --bg-gray: #d9dfe6;
   --panel: #f8fafc;
@@ -23,12 +16,6 @@
   --shadow-small: 0 4px 10px rgba(2, 6, 23, 0.06);
 }
 
-<<<<<<< HEAD
-/* ========================================
-   RESET E ESTILOS GLOBAIS
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 * {
   margin: 0;
   padding: 0;
@@ -37,12 +24,7 @@
 
 body {
   margin: 0;
-<<<<<<< HEAD
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 
-              'Helvetica Neue', Arial, sans-serif;
-=======
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,  'Helvetica Neue', Arial, sans-serif;
   color: var(--text);
   background: var(--bg-gray);
   line-height: 1.5;
@@ -50,12 +32,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-<<<<<<< HEAD
-/* ========================================
-   LAYOUT PRINCIPAL
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .provador-root {
   min-height: 100vh;
   display: flex;
@@ -75,12 +51,6 @@ body {
   align-items: stretch;
 }
 
-<<<<<<< HEAD
-/* ========================================
-   CANVAS 3D - ÁREA DE VISUALIZAÇÃO
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .provador-canvas {
   flex: 1;
   height: 680px;
@@ -91,8 +61,6 @@ body {
   box-shadow: var(--shadow);
   position: relative;
   transition: all 0.3s ease;
-<<<<<<< HEAD
-=======
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,17 +72,12 @@ body {
   object-fit: contain;
   display: block;
   outline: none;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .provador-canvas:hover {
   box-shadow: var(--shadow-hover);
 }
 
-<<<<<<< HEAD
-/* Canvas loading state */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .provador-canvas:empty::before {
   content: "Carregando...";
   position: absolute;
@@ -126,12 +89,6 @@ body {
   font-weight: 500;
 }
 
-<<<<<<< HEAD
-/* ========================================
-   SIDEBAR ZOOM - CONTROLES VERTICAIS
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .zoom-sidebar {
   position: absolute;
   right: 16px;
@@ -148,15 +105,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 10;
   gap: 8px;
-<<<<<<< HEAD
   transition: all 0.2s ease;
 }
 
 .zoom-sidebar:hover {
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
   transform: translateY(-50%) scale(1.02);
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .zoom-sidebar button {
@@ -169,31 +123,22 @@ body {
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
-<<<<<<< HEAD
   transition: all 0.2s ease;
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(31, 182, 255, 0.3);
-<<<<<<< HEAD
-=======
   transition: all 0.2s ease;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .zoom-sidebar button:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
-<<<<<<< HEAD
   box-shadow: 0 4px 12px rgba(31, 182, 255, 0.4);
 }
 
 .zoom-sidebar button:active {
   transform: translateY(0);
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .zoom-value {
@@ -217,12 +162,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-<<<<<<< HEAD
-/* ========================================
-   CÂMERA - CONTROLES SUPERIORES
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .camera-hud {
   position: absolute;
   top: 16px;
@@ -238,14 +177,11 @@ body {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 10;
-<<<<<<< HEAD
   transition: all 0.2s ease;
 }
 
 .camera-hud:hover {
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .camera-hud h3 {
@@ -273,21 +209,17 @@ body {
   font-weight: 600;
   border-radius: 10px;
   cursor: pointer;
-<<<<<<< HEAD
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(31, 182, 255, 0.3);
   letter-spacing: 0.3px;
   min-width: 70px;
-=======
   box-shadow: 0 2px 8px rgba(31, 182, 255, 0.3);
   transition: all 0.2s ease;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .camera-controls button:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
-<<<<<<< HEAD
   box-shadow: 0 4px 12px rgba(31, 182, 255, 0.4);
 }
 
@@ -295,13 +227,6 @@ body {
   transform: translateY(0);
 }
 
-/* ========================================
-   SIDEBAR PRINCIPAL - MENU DE CONTROLES
-   ======================================== */
-=======
-}
-
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .provador-sidebar {
   width: 380px;
   background: var(--panel);
@@ -328,23 +253,17 @@ body {
   background: linear-gradient(90deg, var(--accent), var(--accent-hover));
 }
 
-<<<<<<< HEAD
 .provador-sidebar:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
 
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .provador-sidebar h2 {
   margin: 0;
   font-size: 24px;
   font-weight: 800;
   color: var(--text);
-<<<<<<< HEAD
   letter-spacing: -0.5px;
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   background: linear-gradient(135deg, var(--text), var(--text-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -359,12 +278,6 @@ body {
   font-weight: 500;
 }
 
-<<<<<<< HEAD
-/* ========================================
-   SEÇÕES E LABELS
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .section {
   margin-top: 8px;
 }
@@ -383,12 +296,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-<<<<<<< HEAD
-/* ========================================
-   TONS DE PELE - SWATCHES
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .swatches {
   display: flex;
   flex-wrap: wrap;
@@ -409,7 +316,6 @@ body {
   overflow: hidden;
 }
 
-<<<<<<< HEAD
 .swatch::before {
   content: '';
   position: absolute;
@@ -424,10 +330,9 @@ body {
 .swatch:hover {
   transform: translateY(-4px) scale(1.1);
   box-shadow: 0 12px 25px rgba(2, 6, 23, 0.15);
-=======
+}
 .swatch:hover {
   transform: translateY(-4px) scale(1.1);
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .swatch.active {
@@ -449,12 +354,7 @@ body {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-<<<<<<< HEAD
-/* ========================================
-   GRID DE ROUPAS - CAMISAS E PARTES INFERIORES
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
+
 .camisas-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -476,7 +376,6 @@ body {
   overflow: hidden;
 }
 
-<<<<<<< HEAD
 .camisa-item::before {
   content: '';
   position: absolute;
@@ -489,21 +388,16 @@ body {
   transition: opacity 0.3s ease;
 }
 
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .camisa-item:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
   border-color: rgba(31, 182, 255, 0.2);
 }
 
-<<<<<<< HEAD
 .camisa-item:hover::before {
   opacity: 1;
 }
 
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .camisa-item.selected {
   border: 3px solid var(--accent);
   box-shadow: 0 12px 30px rgba(31, 182, 255, 0.2);
@@ -524,10 +418,7 @@ body {
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-<<<<<<< HEAD
   letter-spacing: 0.5px;
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .camisa-item img {
@@ -542,12 +433,6 @@ body {
   transform: scale(1.05);
 }
 
-<<<<<<< HEAD
-/* ========================================
-   BOTÕES PRINCIPAIS
-   ======================================== */
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .btn-remover {
   padding: 14px 20px;
   border-radius: 14px;
@@ -563,7 +448,6 @@ body {
   letter-spacing: 0.5px;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
   position: relative;
-<<<<<<< HEAD
   overflow: hidden;
 }
 
@@ -576,9 +460,7 @@ body {
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s ease;
-=======
   width: 100%;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .btn-remover:hover {
@@ -586,7 +468,6 @@ body {
   box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
 }
 
-<<<<<<< HEAD
 .btn-remover:hover::before {
   left: 100%;
 }
@@ -697,7 +578,7 @@ body {
     height: 500px;
     width: 100%;
     min-height: 500px;
-=======
+  }
 @media (max-width: 1024px) {
   .provador-root {
     align-items: flex-start;
@@ -719,12 +600,10 @@ body {
     min-height: auto;
     max-height: none;
     touch-action: none;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 
   .provador-sidebar {
     width: 100%;
-<<<<<<< HEAD
     max-width: 600px;
   }
 
@@ -746,13 +625,12 @@ body {
   .zoom-value {
     margin: 0;
     order: -1;
-=======
   }
 
   .camisas-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-}
+
 
 @media (max-width: 768px) {
   .provador-root {
@@ -781,14 +659,12 @@ body {
     transform: none;
     flex-direction: row;
     padding: 8px 12px;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 
   .zoom-label {
     display: none;
   }
 
-<<<<<<< HEAD
   .camera-hud {
     top: 12px;
     padding: 10px 16px;
@@ -920,7 +796,7 @@ button:focus-visible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-=======
+  }
   .zoom-value {
     margin: 0 8px;
     order: 0;
@@ -942,6 +818,5 @@ button:focus-visible {
     padding: 6px 8px;
     font-size: 11px;
     flex: 1;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 }
