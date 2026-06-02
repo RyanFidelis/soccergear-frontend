@@ -7,12 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-<<<<<<< HEAD
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-=======
+  const handleLogin = async (e) => {e.preventDefault();
   const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
 
   const handleLogin = async (e) => {
@@ -20,7 +15,6 @@ export default function Login() {
 
     console.log("Tentando conectar na API:", API_URL);
 
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     if (!email || !password) {
       alert("Por favor, preencha todos os campos!");
       return;
@@ -29,11 +23,8 @@ export default function Login() {
     setLoading(true);
 
     try {
-<<<<<<< HEAD
       const response = await fetch('http://localhost:3001/api/auth/login', {
-=======
       const response = await fetch(`${API_URL}/api/auth/login`, {
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +35,6 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-<<<<<<< HEAD
         localStorage.setItem("usuarioLogado", JSON.stringify(data.user));
 
         window.dispatchEvent(new Event("user-updated"));
@@ -57,7 +47,6 @@ export default function Login() {
     } catch (error) {
       console.error("Erro no login:", error);
       alert("Erro ao conectar com o servidor.");
-=======
         console.log("Login realizado com sucesso!");
         localStorage.setItem("usuarioLogado", JSON.stringify(data.user));
         
@@ -71,7 +60,6 @@ export default function Login() {
     } catch (error) {
       console.error("Erro crítico no login:", error);
       alert("Erro ao conectar com o servidor. Verifique se o backend está ligado no Render.");
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     } finally {
       setLoading(false);
     }
@@ -91,10 +79,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-<<<<<<< HEAD
-=======
               placeholder="seu@email.com"
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
             />
           </div>
 
@@ -106,10 +91,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-<<<<<<< HEAD
-=======
               placeholder="********"
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
             />
           </div>
 
