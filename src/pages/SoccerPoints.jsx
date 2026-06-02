@@ -45,7 +45,7 @@ export default function SoccerPoints() {
       nome: "Boné do Time",
       custo: 500,
       imagem:
-        "https://th.bing.com/th/id/R.0c1cfa1de4ba155f4c9348f7cabefc82?rik=9Ucxy9QiFwxbzQ&pid=ImgRaw&r=0",
+        "https://tse3.mm.bing.net/th/id/OIP.7_pPC4rg5uFEumxbvUjNaQHaHa?cb=thfc1falcon&rs=1&pid=ImgDetMain&o=7&rm=3",
       tag: "Novo",
     },
 
