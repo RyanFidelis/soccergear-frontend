@@ -11,7 +11,7 @@ export default function Perfil() {
   const fileInputRef = useRef(null);
   const videoRef = useRef(null);
   const [mostrarCamera, setMostrarCamera] = useState(false);
-  const [stream, setStream] = useState(null); // Guarda o sinal da câmera
+  const [stream, setStream] = useState(null); 
   const [fotoPreview, setFotoPreview] = useState("");
   const fileInputRef = useRef(null);
   const videoRef = useRef(null);
