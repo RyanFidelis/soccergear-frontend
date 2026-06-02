@@ -17,28 +17,17 @@ export default function VerProduto() {
   const [freteInfo, setFreteInfo] = useState(null);
   const [loadingFrete, setLoadingFrete] = useState(false);
 
-  // =========================
-  // CARRINHO
-  // =========================
-
   const getCartKey = () => {
-    const usuario = JSON.parse(
-      localStorage.getItem("usuarioLogado")
-    );
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
     return usuario && usuario.id
       ? `cart_${usuario.id}`
       : "cart_guest";
   };
 
-  // =========================
-  // ESTOQUE LOCAL
-  // =========================
-
   function lerEstoqueLocal(prodId) {
     try {
-      const raw =
-        localStorage.getItem("estoqueAtual");
+      const raw = localStorage.getItem("estoqueAtual");
 
       if (!raw) return null;
 
@@ -50,17 +39,11 @@ export default function VerProduto() {
     }
   }
 
-  function gravarEstoqueLocal(
-    prodId,
-    novoMapa
-  ) {
+  function gravarEstoqueLocal(prodId, novoMapa) {
     try {
-      const raw =
-        localStorage.getItem("estoqueAtual");
+      const raw = localStorage.getItem("estoqueAtual");
 
-      const obj = raw
-        ? JSON.parse(raw)
-        : {};
+      const obj = raw ? JSON.parse(raw) : {};
 
       obj[prodId] = novoMapa;
 
@@ -69,65 +52,17 @@ export default function VerProduto() {
         JSON.stringify(obj)
       );
     } catch (e) {
-      console.error(
-        "Erro ao salvar estoque:",
-        e
-      );
+      console.error("Erro ao salvar estoque:", e);
     }
   }
 
-  function atualizarEstoque(
-    prodId,
-    tamanho,
-    delta
-  ) {
-    const atual =
-      lerEstoqueLocal(prodId) || {
-        ...produto.estoque,
-      };
-
-    const atualQtd = Number(
-      atual[tamanho] ??
-        produto.estoque?.[tamanho] ??
-        0
-    );
-
-    const novo = Math.max(
-      0,
-      atualQtd + delta
-    );
-
-    const novoMapa = {
-      ...(atual || {}),
-      [tamanho]: novo,
-    };
-
-    gravarEstoqueLocal(
-      prodId,
-      novoMapa
-    );
-
-    setEstoquePorTamanho(novoMapa);
-
-    return novo;
-  }
-
-  // =========================
-  // CARREGAR PRODUTO
-  // =========================
-
   useEffect(() => {
-    const produtoSelecionado =
-      JSON.parse(
-        localStorage.getItem(
-          "produtoSelecionado"
-        )
-      );
+    const produtoSelecionado = JSON.parse(
+      localStorage.getItem("produtoSelecionado")
+    );
 
     const usuarioLogado = JSON.parse(
-      localStorage.getItem(
-        "usuarioLogado"
-      )
+      localStorage.getItem("usuarioLogado")
     );
 
     if (!produtoSelecionado) {
@@ -138,22 +73,10 @@ export default function VerProduto() {
     let tamanhosDefinidos =
       produtoSelecionado.tamanhos || [];
 
-    if (
-      produtoSelecionado.categoria ===
-      "luvas"
-    ) {
-      tamanhosDefinidos = [
-        "9",
-        "10",
-        "11",
-        "12",
-      ];
+    if (produtoSelecionado.categoria === "luvas") {
+      tamanhosDefinidos = ["9", "10", "11", "12"];
     } else if (
-      [
-        "bolas",
-        "caneleiras",
-        "meioes",
-      ].includes(
+      ["bolas", "caneleiras", "meioes"].includes(
         produtoSelecionado.categoria
       )
     ) {
@@ -167,62 +90,37 @@ export default function VerProduto() {
 
     setProduto(prod);
 
-    setImagemPrincipal(
-      produtoSelecionado.imagem || ""
-    );
+    setImagemPrincipal(produtoSelecionado.imagem || "");
 
     const imagens = [
       produtoSelecionado.imagem,
-      ...(
-        produtoSelecionado.angulo || []
-      ).filter(
-        (img) =>
-          img &&
-          img !==
-            produtoSelecionado.imagem
+      ...(produtoSelecionado.angulo || []).filter(
+        (img) => img && img !== produtoSelecionado.imagem
       ),
     ];
 
     setMiniaturas(imagens);
 
-    const estoqueLocal =
-      lerEstoqueLocal(prod.id);
+    const estoqueLocal = lerEstoqueLocal(prod.id);
 
     if (estoqueLocal) {
-      setEstoquePorTamanho(
-        estoqueLocal
-      );
+      setEstoquePorTamanho(estoqueLocal);
     } else {
       setEstoquePorTamanho(
-        prod.estoque
-          ? { ...prod.estoque }
-          : {}
+        prod.estoque ? { ...prod.estoque } : {}
       );
     }
 
-    if (
-      usuarioLogado &&
-      usuarioLogado.endereco
-    ) {
-      setCep(
-        usuarioLogado.endereco
-      );
+    if (usuarioLogado && usuarioLogado.endereco) {
+      setCep(usuarioLogado.endereco);
     }
 
-    carregarVariacoes(
-      produtoSelecionado
-    );
+    carregarVariacoes(produtoSelecionado);
 
     setCarregando(false);
   }, [navigate]);
 
-  // =========================
-  // VARIAÇÕES
-  // =========================
-
-  async function carregarVariacoes(
-    produtoBase
-  ) {
+  async function carregarVariacoes(produtoBase) {
     const arquivos = [
       "chuteiras",
       "bolas",
@@ -233,48 +131,30 @@ export default function VerProduto() {
     ];
 
     try {
-      const promises =
-        arquivos.map(async (nome) => {
-          const res = await fetch(
-            `/json/${nome}.json`
-          );
+      const promises = arquivos.map(async (nome) => {
+        const res = await fetch(`/json/${nome}.json`);
 
-          return res.ok
-            ? await res.json()
-            : [];
-        });
+        return res.ok ? await res.json() : [];
+      });
 
-      const todos = (
-        await Promise.all(promises)
-      ).flat();
+      const todos = (await Promise.all(promises)).flat();
 
-      const filtradas =
-        todos.filter(
-          (p) =>
-            p.nome ===
-              produtoBase.nome &&
-            p.id !== produtoBase.id
-        );
+      const filtradas = todos.filter(
+        (p) =>
+          p.nome === produtoBase.nome &&
+          p.id !== produtoBase.id
+      );
 
       setVariacoes(filtradas);
     } catch (error) {
-      console.log(
-        "Erro ao carregar variações:",
-        error
-      );
+      console.log("Erro ao carregar variações:", error);
     }
   }
-
-  // =========================
-  // FEEDBACK
-  // =========================
 
   function mostrarFeedback(msg) {
     setMensagemFeedback(msg);
 
-    const el = document.querySelector(
-      ".feedback-message"
-    );
+    const el = document.querySelector(".feedback-message");
 
     if (el) {
       el.classList.add("show");
@@ -285,21 +165,14 @@ export default function VerProduto() {
     }
   }
 
-  // =========================
-  // ESTRELAS
-  // =========================
-
   function renderEstrelas(nota) {
-    if (!nota && nota !== 0)
-      return null;
+    if (!nota && nota !== 0) return null;
 
     const full = Math.floor(nota);
 
-    const meio =
-      nota - full >= 0.5;
+    const meio = nota - full >= 0.5;
 
-    const vazias =
-      5 - full - (meio ? 1 : 0);
+    const vazias = 5 - full - (meio ? 1 : 0);
 
     return (
       <>
@@ -310,83 +183,39 @@ export default function VerProduto() {
     );
   }
 
-  // =========================
-  // TAMANHO
-  // =========================
-
   function selecionarTamanho(t) {
-    setTamanhoSelecionado(
-      String(t)
-    );
+    setTamanhoSelecionado(String(t));
   }
-
-  // =========================
-  // CARRINHO
-  // =========================
 
   function adicionarAoCarrinho() {
     if (
       produto.tamanhos?.length > 0 &&
       !tamanhoSelecionado
     ) {
-      alert(
-        "Por favor, selecione um tamanho."
-      );
-
-      return;
-    }
-
-    const qtd = Number(
-      estoquePorTamanho?.[
-        tamanhoSelecionado
-      ] ??
-        produto.estoque?.[
-          tamanhoSelecionado
-        ] ??
-        0
-    );
-
-    if (
-      produto.tamanhos?.length > 0 &&
-      qtd <= 0
-    ) {
-      alert(
-        "Tamanho sem estoque."
-      );
-
+      alert("Por favor, selecione um tamanho.");
       return;
     }
 
     const key = getCartKey();
 
-    const raw =
-      localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
 
-    let carrinho = raw
-      ? JSON.parse(raw)
-      : [];
+    let carrinho = raw ? JSON.parse(raw) : [];
 
     const item = {
       id: produto.id,
-      uid:
-        produto.uid ||
-        `${produto.id}`,
       nome: produto.nome,
       imagem: produto.imagem,
       preco: produto.preco,
-      tamanho:
-        tamanhoSelecionado ||
-        "Único",
+      tamanho: tamanhoSelecionado || "Único",
       quantity: 1,
     };
 
-    const idx =
-      carrinho.findIndex(
-        (it) =>
-          it.id === item.id &&
-          it.tamanho ===
-            item.tamanho
-      );
+    const idx = carrinho.findIndex(
+      (it) =>
+        it.id === item.id &&
+        it.tamanho === item.tamanho
+    );
 
     if (idx >= 0) {
       carrinho[idx].quantity++;
@@ -399,244 +228,65 @@ export default function VerProduto() {
       JSON.stringify(carrinho)
     );
 
-    window.dispatchEvent(
-      new CustomEvent(
-        "cart-updated",
-        {
-          detail: carrinho,
-        }
-      )
-    );
-
     mostrarFeedback(
       `${produto.nome} adicionado ao carrinho!`
     );
-
-    return item;
   }
 
-  // =========================
-  // COMPRAR
-  // =========================
+  async function calcularFrete() {
+    const cepLimpo = cep.replace(/\D/g, "");
 
-  function comprarAgora() {
-    const usuario =
-      localStorage.getItem(
-        "usuarioLogado"
-      );
-
-    if (!usuario) {
-      localStorage.setItem(
-        "redirecionarParaPagamento",
-        "1"
-      );
-
-      navigate("/login");
-
+    if (!cepLimpo || cepLimpo.length !== 8) {
+      alert("CEP inválido.");
       return;
     }
 
-    if (
-      produto.tamanhos?.length > 0 &&
-      !tamanhoSelecionado
-    ) {
-      alert(
-        "Por favor, selecione um tamanho."
+    setLoadingFrete(true);
+
+    try {
+      const response = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
       );
 
-      return;
-    }
+      const data = await response.json();
 
-    const qtd = Number(
-      estoquePorTamanho?.[
-        tamanhoSelecionado
-      ] ??
-        produto.estoque?.[
-          tamanhoSelecionado
-        ] ??
-        0
-    );
-
-    if (
-      produto.tamanhos?.length > 0 &&
-      qtd <= 0
-    ) {
-      alert(
-        "Tamanho sem estoque."
-      );
-
-      return;
-    }
-
-    if (!freteInfo) {
-      alert(
-        "Por favor, informe o CEP antes de comprar."
-      );
-
-      return;
-    }
-
-    const itemProduto = {
-      id: produto.id,
-      nome: produto.nome,
-      imagem: produto.imagem,
-      preco: produto.preco,
-      tamanho:
-        tamanhoSelecionado ||
-        "Único",
-      quantity: 1,
-    };
-
-    const listaParaPagar = [
-      itemProduto,
-    ];
-
-    if (
-      freteInfo &&
-      freteInfo.valor
-    ) {
-      const valorFrete =
-        parseFloat(
-          freteInfo.valor.replace(
-            ",",
-            "."
-          )
-        );
-
-      if (valorFrete > 0) {
-        listaParaPagar.push({
-          id: "frete-checkout",
-          nome: `Frete (${freteInfo.prazo})`,
-          imagem:
-            "https://cdn-icons-png.flaticon.com/512/759/759063.png",
-          preco: valorFrete,
-          tamanho: "-",
-          quantity: 1,
-        });
-      }
-    }
-
-    localStorage.removeItem(
-      "compraAtual"
-    );
-
-    localStorage.setItem(
-      "compraAtual",
-      JSON.stringify(
-        listaParaPagar
-      )
-    );
-
-    mostrarFeedback(
-      "Indo para pagamento..."
-    );
-
-    navigate("/pagamento");
-  }
-
-  // =========================
-  // FRETE
-  // =========================
-
-  const calcularFrete =
-    async () => {
-      const cepLimpo =
-        cep.replace(/\D/g, "");
-
-      if (!cepLimpo) {
-        alert(
-          "Informe um CEP."
-        );
-
+      if (data.erro) {
+        alert("CEP não encontrado.");
         return;
       }
+
+      let valor = 0;
+      let prazo = "";
 
       if (
-        cepLimpo.length !== 8
+        data.localidade === "Santana de Parnaíba" &&
+        data.uf === "SP"
       ) {
-        alert(
-          "CEP inválido."
-        );
-
-        return;
+        valor = 5;
+        prazo = "1 dia útil";
+      } else if (data.uf === "SP") {
+        valor = 10;
+        prazo = "2 a 4 dias úteis";
+      } else {
+        valor = 50;
+        prazo = "5 a 10 dias úteis";
       }
 
-      setLoadingFrete(true);
+      setFreteInfo({
+        valor: valor.toFixed(2).replace(".", ","),
+        prazo,
+        cidade: data.localidade,
+        uf: data.uf,
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao calcular frete.");
+    } finally {
+      setLoadingFrete(false);
+    }
+  }
 
-      setFreteInfo(null);
-
-      try {
-        const response =
-          await fetch(
-            `https://viacep.com.br/ws/${cepLimpo}/json/`
-          );
-
-        const data =
-          await response.json();
-
-        if (data.erro) {
-          alert(
-            "CEP não encontrado."
-          );
-
-          setLoadingFrete(
-            false
-          );
-
-          return;
-        }
-
-        let valor = 0;
-        let prazo = "";
-
-        if (
-          data.localidade ===
-            "Santana de Parnaíba" &&
-          data.uf === "SP"
-        ) {
-          valor = 5;
-          prazo =
-            "1 dia útil";
-        } else if (
-          data.uf === "SP"
-        ) {
-          valor = 10;
-          prazo =
-            "2 a 4 dias úteis";
-        } else {
-          valor = 50;
-          prazo =
-            "5 a 10 dias úteis";
-        }
-
-        setFreteInfo({
-          valor: valor
-            .toFixed(2)
-            .replace(".", ","),
-          prazo,
-          cidade:
-            data.localidade,
-          uf: data.uf,
-        });
-      } catch (error) {
-        console.error(error);
-
-        alert(
-          "Erro ao calcular frete."
-        );
-      } finally {
-        setLoadingFrete(false);
-      }
-    };
-
-  // =========================
-  // LOADING
-  // =========================
-
-  if (
-    carregando ||
-    !produto
-  ) {
+  if (carregando || !produto) {
     return (
       <main
         className="produto-detalhe"
@@ -650,304 +300,100 @@ export default function VerProduto() {
     );
   }
 
-  const qtdSelecionada =
-    tamanhoSelecionado &&
-    (
-      estoquePorTamanho?.[
-        tamanhoSelecionado
-      ] ??
-      produto.estoque?.[
-        tamanhoSelecionado
-      ] ??
-      0
-    );
-
-  // =========================
-  // JSX
-  // =========================
-
   return (
     <main className="produto-detalhe">
       <div className="imagem-produto">
-        <div className="imagem-principal-container">
-          <img
-            src={imagemPrincipal}
-            alt={produto.nome}
-            className="imagem-principal"
-          />
-        </div>
+        <img
+          src={imagemPrincipal}
+          alt={produto.nome}
+          className="imagem-principal"
+        />
 
-        {miniaturas.length >
-          0 && (
-          <div className="miniaturas">
-            {miniaturas.map(
-              (img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  alt={`Miniatura ${i}`}
-                  className={`miniatura ${
-                    img ===
-                    imagemPrincipal
-                      ? "ativo"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setImagemPrincipal(
-                      img
-                    )
-                  }
-                />
-              )
-            )}
-          </div>
-        )}
+        <div className="miniaturas">
+          {miniaturas.map((img, i) => (
+            <img
+              key={i}
+              src={img}
+              alt={`Miniatura ${i}`}
+              className={
+                img === imagemPrincipal
+                  ? "miniatura ativo"
+                  : "miniatura"
+              }
+              onClick={() =>
+                setImagemPrincipal(img)
+              }
+            />
+          ))}
+        </div>
       </div>
 
       <div className="info-produto">
         <h1>{produto.nome}</h1>
 
-        {produto.avaliacao !==
-          undefined && (
-          <div className="avaliacao-produto">
-            <span className="estrelas">
-              {renderEstrelas(
-                produto.avaliacao
-              )}
-            </span>
+        <div className="avaliacao-produto">
+          {renderEstrelas(produto.avaliacao)}
+        </div>
 
-            <span className="nota">
-              {produto.avaliacao.toFixed(
-                1
-              )}
-            </span>
-
-            <span className="quantidade">
-              (
-              {
-                produto.numAvaliacoes
-              }
-              )
-            </span>
-          </div>
-        )}
-
-        <p>
-          {produto.descricao}
-        </p>
+        <p>{produto.descricao}</p>
 
         <p className="preco">
-          R${" "}
-          {Number(
-            produto.preco
-          )
-            .toFixed(2)
-            .replace(".", ",")}
+          R$ {Number(produto.preco).toFixed(2).replace(".", ",")}
         </p>
 
-        {produto.tamanhos
-          ?.length > 0 && (
+        {produto.tamanhos?.length > 0 && (
           <>
-            <label>
-              Tamanho
-            </label>
+            <label>Tamanho</label>
 
             <div className="tamanhos-opcoes">
-              {produto.tamanhos.map(
-                (t) => {
-                  const tStr =
-                    String(t);
-
-                  const disponivel =
-                    Number(
-                      estoquePorTamanho?.[
-                        tStr
-                      ] ??
-                        produto
-                          .estoque?.[
-                          tStr
-                        ] ??
-                        0
-                    ) > 0;
-
-                  return (
-                    <button
-                      key={tStr}
-                      type="button"
-                      className={`tamanho-bolinha ${
-                        tamanhoSelecionado ===
-                        tStr
-                          ? "ativo"
-                          : ""
-                      } ${
-                        !disponivel
-                          ? "esgotado"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        disponivel &&
-                        selecionarTamanho(
-                          tStr
-                        )
-                      }
-                    >
-                      {tStr}
-                    </button>
-                  );
-                }
-              )}
+              {produto.tamanhos.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className={
+                    tamanhoSelecionado === String(t)
+                      ? "tamanho-bolinha ativo"
+                      : "tamanho-bolinha"
+                  }
+                  onClick={() =>
+                    selecionarTamanho(t)
+                  }
+                >
+                  {t}
+                </button>
+              ))}
             </div>
-
-            {tamanhoSelecionado && (
-              <p className="info-estoque">
-                {qtdSelecionada >
-                0
-                  ? `Em estoque: ${qtdSelecionada}`
-                  : "Esgotado"}
-              </p>
-            )}
           </>
-        )}
-
-        {variacoes.length >
-          0 && (
-          <div className="outras-variacoes-container">
-            <h3>
-              Outras variações
-            </h3>
-
-            <div className="outras-variacoes-cards">
-              {variacoes.map(
-                (v) => (
-                  <div
-                    key={v.id}
-                    className="outras-variacao-card"
-                    onClick={() => {
-                      const cat =
-                        v.categoria ||
-                        "";
-
-                      const tamanhosAuto =
-                        cat ===
-                        "luvas"
-                          ? [
-                              "9",
-                              "10",
-                              "11",
-                              "12",
-                            ]
-                          : [
-                              "bolas",
-                              "caneleiras",
-                              "meioes",
-                            ].includes(
-                              cat
-                            )
-                          ? []
-                          : v.tamanhos ||
-                            [];
-
-                      setProduto({
-                        ...v,
-                        tamanhos:
-                          tamanhosAuto,
-                      });
-
-                      setImagemPrincipal(
-                        v.imagem ||
-                          ""
-                      );
-
-                      setMiniaturas(
-                        v.angulo ||
-                          []
-                      );
-
-                      setTamanhoSelecionado(
-                        ""
-                      );
-
-                      const estoqueLocal =
-                        lerEstoqueLocal(
-                          v.id
-                        );
-
-                      setEstoquePorTamanho(
-                        estoqueLocal ||
-                          (v.estoque
-                            ? {
-                                ...v.estoque,
-                              }
-                            : {})
-                      );
-
-                      carregarVariacoes(
-                        v
-                      );
-                    }}
-                  >
-                    <img
-                      src={v.imagem}
-                      alt={v.nome}
-                    />
-                  </div>
-                )
-              )}
-            </div>
-          </div>
         )}
 
         <div className="botoes-compra">
           <button
             className="btn-carrinho"
-            onClick={
-              adicionarAoCarrinho
-            }
+            onClick={adicionarAoCarrinho}
           >
             Adicionar ao Carrinho
-          </button>
-
-          <button
-            className="btn-comprar"
-            onClick={
-              comprarAgora
-            }
-          >
-            Comprar Agora
           </button>
         </div>
 
         <div className="container-frete">
-          <label className="label-frete">
-            Calcular Frete:
-          </label>
+          <label>Calcular Frete</label>
 
           <div className="input-frete-wrapper">
             <input
               type="text"
               placeholder="00000-000"
-              maxLength="9"
               value={cep}
+              maxLength="9"
               onChange={(e) =>
-                setCep(
-                  e.target.value
-                )
+                setCep(e.target.value)
               }
-              className="input-frete"
             />
 
             <button
-              onClick={
-                calcularFrete
-              }
-              disabled={
-                loadingFrete
-              }
-              className="btn-calc-frete"
+              onClick={calcularFrete}
+              disabled={loadingFrete}
             >
-              {loadingFrete
-                ? "..."
-                : "OK"}
+              {loadingFrete ? "..." : "OK"}
             </button>
           </div>
 
@@ -956,30 +402,17 @@ export default function VerProduto() {
               <p>
                 Entregar em{" "}
                 <strong>
-                  {
-                    freteInfo.cidade
-                  }{" "}
-                  -
-                  {
-                    freteInfo.uf
-                  }
+                  {freteInfo.cidade} - {freteInfo.uf}
                 </strong>
               </p>
 
-              <div className="detalhes-frete">
-                <span>
-                  R${" "}
-                  {
-                    freteInfo.valor
-                  }
-                </span>
+              <p>
+                Frete: R$ {freteInfo.valor}
+              </p>
 
-                <span>
-                  {
-                    freteInfo.prazo
-                  }
-                </span>
-              </div>
+              <p>
+                Prazo: {freteInfo.prazo}
+              </p>
             </div>
           )}
         </div>
@@ -991,4 +424,4 @@ export default function VerProduto() {
     </main>
   );
 }
-```
+
