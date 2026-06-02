@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
-=======
 import React, { useEffect, useState, useCallback } from "react";
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 import { Link } from "react-router-dom";
 import "../css/Minhas-compras.css";
 
@@ -10,8 +7,6 @@ export default function MinhasCompras() {
   const [compras, setCompras] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
-
-<<<<<<< HEAD
   const carregarCompras = async () => {
     try {
       const usuario = JSON.parse(
@@ -97,7 +92,6 @@ export default function MinhasCompras() {
           label: "Em Análise",
           color: "#f39c12",
         };
-=======
   const carregarCompras = useCallback(async () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuario || !usuario.id) {
@@ -145,13 +139,11 @@ export default function MinhasCompras() {
       case "pago": return { label: "Confirmado", className: "status-aprovado" };
       case "rejeitado": return { label: "Cancelado", className: "status-rejeitado" };
       case "aguardando": default: return { label: "Em Análise", className: "status-pendente" };
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     }
   };
 
   const parseItens = (itensData) => {
     try {
-<<<<<<< HEAD
       if (typeof itensData === "string") {
         return JSON.parse(itensData);
       }
@@ -175,7 +167,6 @@ export default function MinhasCompras() {
       <div className="minhas-compras">
         <h2 style={{ color: "red" }}>{erro}</h2>
       </div>
-=======
       if (typeof itensData === 'string') return JSON.parse(itensData);
       return itensData;
     } catch (e) { return []; }
@@ -190,13 +181,11 @@ export default function MinhasCompras() {
                 <button onClick={carregarCompras} className="btn-refresh">Tentar Novamente</button>
             </div>
         </div>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     );
   }
 
   if (compras.length === 0) {
     return (
-<<<<<<< HEAD
       <div className="minhas-compras">
         <h2>
           Você ainda não tem compras registradas.
@@ -221,7 +210,6 @@ export default function MinhasCompras() {
           Ir para Loja
         </Link>
       </div>
-=======
       <main className="minhas-compras">
         <div className="page-header"><h1>Meus Pedidos</h1></div>
         <div className="empty-state">
@@ -230,13 +218,11 @@ export default function MinhasCompras() {
            <Link to="/" style={{color: '#333', textDecoration:'underline', fontWeight:'bold'}}>Ir às compras</Link>
         </div>
       </main>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     );
   }
 
   return (
     <main className="minhas-compras">
-<<<<<<< HEAD
       <div
         style={{
           display: "flex",
@@ -299,7 +285,6 @@ export default function MinhasCompras() {
                     fontSize: "0.9rem",
                   }}
                 >
-=======
       <div className="page-header">
         <h1>Meus Pedidos</h1>
         <button onClick={carregarCompras} className="btn-refresh">
@@ -340,12 +325,10 @@ export default function MinhasCompras() {
 
               <div className="row-status">
                 <span className={`status-badge ${statusInfo.className}`}>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
                   {statusInfo.label}
                 </span>
               </div>
             </div>
-<<<<<<< HEAD
 
             <ul>
               {listaItens.map((item, i) => (
@@ -398,11 +381,9 @@ export default function MinhasCompras() {
           </div>
         );
       })}
-=======
           );
         })}
       </div>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     </main>
   );
 }
