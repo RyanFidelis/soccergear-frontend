@@ -14,6 +14,7 @@ export default function Home() {
     { nome: "bolas", titulo: "Bolas" },
   ];
 
+<<<<<<< HEAD
   const [produtos, setProdutos] = useState({});
   const [favoritos, setFavoritos] = useState(
     JSON.parse(localStorage.getItem("favoritos")) || []
@@ -28,6 +29,144 @@ export default function Home() {
   const refsCategorias = useRef({});
 
   useEffect(() => {
+=======
+  const originalBanners = [
+    { id: 1, img: "/imagem/anuncio.webp", titulo: "Nike Phantom" },
+    { id: 2, img: "/imagem/anuncio2.jpg", titulo: "Camisa do Corinthians 25/26" },
+    { id: 3, img: "/imagem/anuncio3.avif", titulo: "Nike Zoom Mercurial Vapor 16 Elite KM" }
+  ];
+
+  const banners = [
+    originalBanners[originalBanners.length - 1],
+    ...originalBanners,
+    originalBanners[0]
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const intervalRef = useRef(null);
+
+  const nextSlide = () => {
+    if (currentIndex >= banners.length - 1) return; 
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const prevSlide = () => {
+    if (currentIndex <= 0) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  };
+
+  useEffect(() => {
+    intervalRef.current = setInterval(nextSlide, 6000);
+    return () => clearInterval(intervalRef.current);
+  }, [currentIndex]);
+
+  const handleTransitionEnd = () => {
+    if (currentIndex === banners.length - 1) {
+      setIsTransitioning(false);
+      setCurrentIndex(1);
+    }
+    if (currentIndex === 0) {
+      setIsTransitioning(false);
+      setCurrentIndex(banners.length - 2);
+    }
+  };
+
+  const getStorageKey = (prefix) => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    return usuario && usuario.id ? `${prefix}_${usuario.id}` : `${prefix}_guest`;
+  };
+
+  const [produtos, setProdutos] = useState({});
+  const [favoritos, setFavoritos] = useState([]);
+  const [favoritosCarregados, setFavoritosCarregados] = useState(false);
+  const [feedbackMsg, setFeedbackMsg] = useState("");
+
+  const [termoBusca, setTermoBusca] = useState("");
+  const [resultados, setResultados] = useState([]);
+  const [buscou, setBuscou] = useState(false);
+
+  const [modalCompra, setModalCompra] = useState({ aberto: false, produto: null, uid: null });
+  const [tamanhoSelecionado, setTamanhoSelecionado] = useState("");
+
+  const refsCategorias = useRef({});
+
+  const mostrarFeedback = (msg) => {
+    setFeedbackMsg(msg);
+    setTimeout(() => setFeedbackMsg(""), 2000);
+  };
+
+  const abrirModalCompra = (produto, uid) => {
+    const temEstoque = produto.estoque && Object.keys(produto.estoque).length > 0;
+    
+    if (!temEstoque) {
+        adicionarAoCarrinhoFinal(produto, uid, "Único");
+    } else {
+        setModalCompra({ aberto: true, produto, uid });
+        setTamanhoSelecionado("");
+    }
+  };
+
+  const confirmarAdicaoAoCarrinho = () => {
+    if (!tamanhoSelecionado) {
+        alert("Por favor, selecione um tamanho.");
+        return;
+    }
+    
+    const { produto, uid } = modalCompra;
+    adicionarAoCarrinhoFinal(produto, uid, tamanhoSelecionado);
+    fecharModalCompra();
+  };
+
+  const fecharModalCompra = () => {
+    setModalCompra({ aberto: false, produto: null, uid: null });
+    setTamanhoSelecionado("");
+  };
+
+  const adicionarAoCarrinhoFinal = (produto, uid, tamanhoEscolhido) => {
+    const temEstoqueGerenciado = produto.estoque && Object.keys(produto.estoque).length > 0;
+    const estoqueDisp = temEstoqueGerenciado ? (produto.estoque[tamanhoEscolhido] || 0) : 1;
+
+    if (Number(estoqueDisp) <= 0) {
+        mostrarFeedback("Tamanho esgotado!");
+        return;
+    }
+
+    const key = getStorageKey("cart");
+    const raw = localStorage.getItem(key);
+    let carrinho = raw ? JSON.parse(raw) : [];
+
+    const itemToAdd = {
+      id: produto.id,
+      uid: uid,
+      nome: produto.nome,
+      imagem: produto.imagem,
+      preco: produto.preco,
+      tamanho: tamanhoEscolhido,
+      quantity: 1,
+    };
+
+    const idx = carrinho.findIndex(
+      (it) => it.id === itemToAdd.id && it.tamanho === itemToAdd.tamanho
+    );
+
+    if (idx >= 0) carrinho[idx].quantity++;
+    else carrinho.push(itemToAdd);
+
+    localStorage.setItem(key, JSON.stringify(carrinho));
+    window.dispatchEvent(new CustomEvent("cart-updated", { detail: carrinho }));
+    mostrarFeedback(`${produto.nome} (Tam: ${tamanhoEscolhido}) adicionado!`);
+  };
+
+  useEffect(() => {
+    const favKey = getStorageKey("favoritos");
+    const salvos = JSON.parse(localStorage.getItem(favKey)) || [];
+    setFavoritos(salvos);
+    setFavoritosCarregados(true);
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     async function carregar() {
       const dados = {};
       for (const { nome } of categorias) {
@@ -45,6 +184,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+<<<<<<< HEAD
     localStorage.setItem("cart", JSON.stringify(carrinho));
   }, [carrinho]);
 
@@ -53,6 +193,14 @@ export default function Home() {
   }, [favoritos]);
 
   // 🔍 Busca acionada apenas ao clicar no botão
+=======
+    if (favoritosCarregados) {
+      const favKey = getStorageKey("favoritos");
+      localStorage.setItem(favKey, JSON.stringify(favoritos));
+    }
+  }, [favoritos, favoritosCarregados]);
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const buscarProdutos = () => {
     const termo = termoBusca.trim().toLowerCase();
     setBuscou(true);
@@ -103,6 +251,7 @@ export default function Home() {
     const favorito = favoritos.some((f) => f.uid === uid);
     const produtoComUID = { ...produto, uid };
 
+<<<<<<< HEAD
     return (
       <div
         className="produto"
@@ -144,6 +293,63 @@ export default function Home() {
           >
             {favorito ? "⭐" : "☆"}
           </span>
+=======
+    const irParaDetalhes = () => {
+        localStorage.setItem("produtoSelecionado", JSON.stringify(produtoComUID));
+        navigate("/verproduto");
+    };
+
+    return (
+      <div className="produto" key={uid}>
+        <div className="produto-clicavel" onClick={irParaDetalhes}>
+            <div className="produto-imagem">
+            <img
+                src={produto.imagem}
+                alt={produto.nome}
+                onError={(e) => (e.target.src = "/imagem/placeholder.png")}
+            />
+            </div>
+
+            <div className="produto-info">
+            <h4>{produto.nome}</h4>
+            <p className="preco">
+                R$ {produto.preco.toFixed(2).replace(".", ",")}
+            </p>
+            </div>
+        </div>
+
+        <div className="produto-acoes-card">
+            <button 
+                className={`btn-acao-card btn-fav ${favorito ? 'ativo' : ''}`}
+                title={favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                onClick={(e) => {
+                    e.stopPropagation(); 
+                    setFavoritos((prev) => {
+                        const existe = prev.find((f) => f.uid === uid);
+                        if (existe) {
+                             mostrarFeedback("Removido dos favoritos");
+                             return prev.filter((f) => f.uid !== uid);
+                        } else {
+                             mostrarFeedback("Adicionado aos favoritos");
+                             return [...prev, produtoComUID];
+                        }
+                    });
+                }}
+            >
+                {favorito ? "⭐" : "☆"}
+            </button>
+
+            <button 
+                className="btn-acao-card btn-cart"
+                title="Adicionar ao carrinho"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    abrirModalCompra(produto, uid);
+                }}
+            >
+                <img src="imagem/carrinho.png" alt="Carrinho" className="icon carrinho" />
+            </button>
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         </div>
       </div>
     );
@@ -160,8 +366,19 @@ export default function Home() {
     }
   };
 
+<<<<<<< HEAD
   return (
     <main>
+=======
+  const realIndex = (currentIndex - 1 + originalBanners.length) % originalBanners.length;
+
+  return (
+    <main style={{ position: 'relative' }}>
+      <div className={`feedback-toast ${feedbackMsg ? 'show' : ''}`}>
+        {feedbackMsg}
+      </div>
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       <div className="barra-pesquisa">
         <input
           type="text"
@@ -191,10 +408,53 @@ export default function Home() {
 
       {!buscou && (
         <>
+<<<<<<< HEAD
           <h2 className="titulo">Lançamento</h2>
           <div className="anuncio">
             <img src="/imagem/anuncio.jpg" alt="Anúncio" />
             <p>Nike React Gato - Futsal</p>
+=======
+          <h2 className="titulo">Destaques da Semana</h2>
+          <div className="carrossel-container">
+            <button className="carrossel-btn prev" onClick={prevSlide}>&#10094;</button>
+            
+            <div 
+                className="carrossel-track" 
+                onTransitionEnd={handleTransitionEnd}
+                style={{ 
+                    transform: `translateX(-${currentIndex * 100}%)`,
+                    transition: isTransitioning ? 'transform 0.8s ease-in-out' : 'none'
+                }}
+            >
+                {banners.map((banner, idx) => (
+                    <div className="carrossel-slide" key={idx}>
+                        <img 
+                            src={banner.img} 
+                            alt={banner.titulo} 
+                            onError={(e) => e.target.src = "/imagem/placeholder.png"} 
+                        />
+                        <div className="carrossel-legenda">
+                            <p>{banner.titulo}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <button className="carrossel-btn next" onClick={nextSlide}>&#10095;</button>
+            
+            <div className="carrossel-dots">
+                {originalBanners.map((_, index) => (
+                    <span 
+                        key={index} 
+                        className={`dot ${realIndex === index ? 'active' : ''}`}
+                        onClick={() => {
+                            setIsTransitioning(true);
+                            setCurrentIndex(index + 1);
+                        }}
+                    ></span>
+                ))}
+            </div>
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
           </div>
           <hr />
         </>
@@ -203,7 +463,11 @@ export default function Home() {
       {buscou && resultados.length > 0 && (
         <>
           <h2 className="titulo">Resultados da busca</h2>
+<<<<<<< HEAD
           <div className="ResultadosProdutos grid-produtos">
+=======
+          <div className="grid-produtos">
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
             {resultados.map((p) => renderProduto(p, p.categoria))}
           </div>
         </>
@@ -211,7 +475,11 @@ export default function Home() {
 
       {buscou && resultados.length === 0 && (
         <p style={{ textAlign: "center", marginTop: "2rem", color: "#555" }}>
+<<<<<<< HEAD
           Nenhum produto encontrado para "{termoBusca}". 
+=======
+          Nenhum produto encontrado para "{termoBusca}".
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         </p>
       )}
 
@@ -246,6 +514,45 @@ export default function Home() {
           ))}
         </>
       )}
+<<<<<<< HEAD
     </main>
   );
 }
+=======
+
+      {modalCompra.aberto && modalCompra.produto && (
+        <div className="modal-overlay-tamanho">
+            <div className="modal-content-tamanho">
+                <h3>Selecione o Tamanho</h3>
+                <p className="modal-produto-nome">{modalCompra.produto.nome}</p>
+                
+                <div className="grid-tamanhos">
+                    {Object.keys(modalCompra.produto.estoque || {}).map((tam) => {
+                        const qtd = modalCompra.produto.estoque[tam];
+                        const esgotado = qtd <= 0;
+                        return (
+                            <button
+                                key={tam}
+                                disabled={esgotado}
+                                className={`btn-tamanho ${tamanhoSelecionado === tam ? 'selecionado' : ''} ${esgotado ? 'esgotado' : ''}`}
+                                onClick={() => setTamanhoSelecionado(tam)}
+                            >
+                                {tam}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                <div className="modal-acoes">
+                    <button className="btn-cancelar-modal" onClick={fecharModalCompra}>Cancelar</button>
+                    <button className="btn-confirmar-modal" onClick={confirmarAdicaoAoCarrinho} disabled={!tamanhoSelecionado}>
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+      )}
+    </main>
+  );
+}
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db

@@ -105,7 +105,11 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   height: 500px;
+=======
+  height: 100%;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .produto-card-oferta:hover {

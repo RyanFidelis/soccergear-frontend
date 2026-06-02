@@ -14,6 +14,22 @@ export default function Cadastro() {
   const [termos, setTermos] = useState(false);
   const [loading, setLoading] = useState(false);
 
+<<<<<<< HEAD
+=======
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
+
+  const handlePhoneChange = (e) => {
+    let value = e.target.value;
+    value = value.replace(/\D/g, "");
+    value = value.slice(0, 11);
+    value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+    value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+    setTelefone(value);
+  };
+
+  const isPasswordValid = password.length >= 6 && password.length <= 20;
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const handleCadastro = async (e) => {
     e.preventDefault();
 
@@ -22,6 +38,28 @@ export default function Cadastro() {
       return;
     }
 
+<<<<<<< HEAD
+=======
+    // Validação de Nome (Mínimo 2 nomes)
+    const nameParts = username.trim().split(/\s+/);
+    if (nameParts.length < 2) {
+      alert("Por favor, insira seu nome completo (nome e sobrenome).");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!emailRegex.test(email)) {
+      alert("Reveja os dados fornecidos pois o cadastro não pode ser realizado.");
+      return;
+    }
+
+    if (!isPasswordValid) {
+      alert("A senha deve ter entre 6 e 20 caracteres.");
+      return;
+    }
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     if (password !== confirmPassword) {
       alert("As senhas não coincidem!");
       return;
@@ -35,7 +73,11 @@ export default function Cadastro() {
     setLoading(true);
 
     try {
+<<<<<<< HEAD
       const response = await fetch('http://localhost:3001/api/auth/register', {
+=======
+      const response = await fetch(`${API_URL}/api/auth/register`, {
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,9 +95,13 @@ export default function Cadastro() {
 
       if (response.ok) {
         localStorage.setItem("usuarioLogado", JSON.stringify(data.user));
+<<<<<<< HEAD
         
         alert(`Bem-vindo, ${data.user.name}! Cadastro realizado com sucesso.`);
         
+=======
+        alert(`Bem-vindo, ${data.user.name}! Cadastro realizado com sucesso.`);
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         navigate("/perfil");
       } else {
         alert(`Erro: ${data.message || "Erro ao cadastrar"}`);
@@ -104,7 +150,12 @@ export default function Cadastro() {
               type="tel"
               placeholder="(11) 99999-9999"
               value={telefone}
+<<<<<<< HEAD
               onChange={(e) => setTelefone(e.target.value)}
+=======
+              onChange={handlePhoneChange}
+              maxLength="15"
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
               required
             />
           </div>
@@ -129,6 +180,21 @@ export default function Cadastro() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+<<<<<<< HEAD
+=======
+            {password.length > 0 && (
+              <span style={{ 
+                color: isPasswordValid ? "green" : "red", 
+                fontSize: "0.85rem", 
+                display: "block", 
+                marginTop: "5px" 
+              }}>
+                {isPasswordValid 
+                  ? "✔ Confere: deve conter de 6 a 20 caracteres" 
+                  : "✖ Deve conter de 6 a 20 caracteres"}
+              </span>
+            )}
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
           </div>
 
           <div className="input-container-cadastro">

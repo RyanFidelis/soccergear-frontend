@@ -13,7 +13,11 @@ export default function Ofertas() {
     segundos: 0,
   });
 
+<<<<<<< HEAD
   // Produtos em oferta
+=======
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const produtosOferta = [
     {
       id: 1,

@@ -3,12 +3,21 @@
   flex-direction: column;
   padding: 60px 24px;
   gap: 20px;
+<<<<<<< HEAD
 }
 
+=======
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* === Imagens e Miniaturas === */
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .imagem-produto {
   display: flex;
   flex-direction: column;
   align-items: center;
+<<<<<<< HEAD
   gap: 14px;
   width: 100%;
 }
@@ -67,6 +76,51 @@
   object-fit: cover;
 }
 
+=======
+  gap: 12px;
+}
+
+.imagem-produto img.imagem-principal {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+}
+
+.miniaturas {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.miniatura {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .18s;
+  background-color: #fff;
+}
+
+.miniatura:hover {
+  border-color: #888;
+}
+
+.miniatura.ativo {
+  border-color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* === Avaliação === */
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .avaliacao-produto {
   display: flex;
   align-items: center;
@@ -93,8 +147,16 @@
   margin-left: 6px;
 }
 
+<<<<<<< HEAD
 .info-produto {
   padding: 0 12px;
+=======
+/* === Informações do Produto === */
+.info-produto {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .info-produto h1 {
@@ -106,6 +168,7 @@
 .info-produto p {
   margin-bottom: 12px;
   color: #555;
+<<<<<<< HEAD
 }
 
 .preco {
@@ -115,6 +178,19 @@
   margin-bottom: 12px;
 }
 
+=======
+  line-height: 1.5;
+}
+
+.preco {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+/* === Seleção de Tamanhos === */
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 .tamanhos-opcoes {
   display: flex;
   gap: 10px;
@@ -136,6 +212,14 @@
   cursor: pointer;
   transition: all .16s;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+<<<<<<< HEAD
+=======
+  color: #333;
+}
+
+.tamanho-bolinha:hover:not(.esgotado) {
+  border-color: #666;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .tamanho-bolinha.ativo {
@@ -143,23 +227,44 @@
   color: #fff;
   border-color: #000;
   transform: translateY(-2px);
+<<<<<<< HEAD
+=======
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .tamanho-bolinha.esgotado {
   opacity: 0.45;
   cursor: not-allowed;
+<<<<<<< HEAD
+=======
+  background-color: #f5f5f5;
+  color: #aaa;
+  text-decoration: line-through;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .info-estoque {
   margin-top: 6px;
   font-size: 14px;
   color: #333;
+<<<<<<< HEAD
 }
 
 .botoes-compra {
   display: flex;
   gap: 12px;
   margin-top: 16px;
+=======
+  font-weight: 500;
+}
+
+/* === Botões de Ação === */
+.botoes-compra {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   flex-wrap: wrap;
 }
 
@@ -167,25 +272,48 @@
   background: #fff;
   color: #000;
   border: 2px solid #000;
+<<<<<<< HEAD
   padding: 12px 18px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 700;
+=======
+  padding: 14px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  flex: 1;
+  min-width: 200px;
+  transition: all 0.2s;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .btn-comprar {
   background: #000;
   color: #fff;
   border: 2px solid #000;
+<<<<<<< HEAD
   padding: 12px 18px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 700;
+=======
+  padding: 14px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  flex: 1;
+  min-width: 200px;
+  transition: all 0.2s;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .btn-carrinho:hover,
 .btn-comprar:hover {
   transform: translateY(-2px);
+<<<<<<< HEAD
   opacity: 0.95;
 }
 
@@ -213,12 +341,28 @@
 
 .outras-variacoes-container {
   margin-top: 20px;
+=======
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* === Outras Variações === */
+.outras-variacoes-container {
+  margin-top: 32px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.outras-variacoes-container h3 {
+  margin-bottom: 12px;
+  font-size: 18px;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .outras-variacoes-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+<<<<<<< HEAD
   padding-bottom: 5%;
 }
 
@@ -227,6 +371,15 @@
   height: 100px;
   border: 2px solid #ddd;
   border-radius: 6px;
+=======
+}
+
+.outras-variacao-card {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   overflow: hidden;
   cursor: pointer;
   transition: all .2s;
@@ -234,13 +387,19 @@
   align-items: center;
   justify-content: center;
   background: #fff;
+<<<<<<< HEAD
   position: relative;
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .outras-variacao-card:hover {
   transform: scale(1.05);
   border-color: #000;
+<<<<<<< HEAD
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 .outras-variacao-card img {
@@ -249,29 +408,179 @@
   object-fit: cover;
 }
 
+<<<<<<< HEAD
 @media (min-width: 768px) {
   .produto-detalhe {
     flex-direction: row;
     max-width: 1200px;
     margin: 0 auto;
     gap: 30px;
+=======
+/* === Calculadora de Frete === */
+.container-frete {
+  margin-top: 32px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  max-width: 400px;
+}
+
+.label-frete {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input-frete-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.input-frete {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-frete:focus {
+  border-color: #000;
+}
+
+.btn-calc-frete {
+  padding: 0 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-calc-frete:hover {
+  background-color: #000;
+}
+
+.btn-calc-frete:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.link-nao-sei-cep {
+  font-size: 12px;
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.link-nao-sei-cep:hover {
+  color: #000;
+}
+
+.resultado-frete {
+  margin-top: 16px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+.destino-frete {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.detalhes-frete {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.valor-frete {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2ecc71;
+}
+
+.prazo-frete {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* === Mensagem de Feedback (Toast) === */
+.feedback-message {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%) translateY(20px);
+  background: #222;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, transform .3s;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.feedback-message.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* === Animações === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsividade === */
+@media (min-width: 768px) {
+  .produto-detalhe {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 80px 40px;
+    gap: 40px;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 
   .imagem-produto {
     width: 50%;
+<<<<<<< HEAD
+=======
+    position: sticky;
+    top: 20px;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 
   .info-produto {
     width: 50%;
+<<<<<<< HEAD
   }
 
   .botoes-compra {
     flex-direction: row;
+=======
+    padding: 0;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 }
 
 @media (max-width: 767px) {
   .produto-detalhe {
+<<<<<<< HEAD
     padding: 20px;
   }
 
@@ -284,5 +593,27 @@
   .miniatura-box {
     width: 65px;
     height: 65px;
+=======
+    padding: 20px 16px;
+    gap: 30px;
+  }
+
+  .tamanho-bolinha {
+    min-width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  
+  .preco {
+    font-size: 22px;
+  }
+  
+  .botoes-compra {
+    flex-direction: column;
+  }
+  
+  .btn-carrinho, .btn-comprar {
+    width: 100%;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   }
 }

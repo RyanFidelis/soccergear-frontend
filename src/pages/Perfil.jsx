@@ -7,6 +7,7 @@ export default function Perfil() {
   const [usuario, setUsuario] = useState(null);
   const [editando, setEditando] = useState(false);
   const [formData, setFormData] = useState({});
+<<<<<<< HEAD
   
   // Estados de Imagem
   const [fotoPreview, setFotoPreview] = useState("");
@@ -18,6 +19,15 @@ export default function Perfil() {
   // --- CORREÇÃO AQUI: Estados necessários para a câmera funcionar ---
   const [mostrarCamera, setMostrarCamera] = useState(false);
   const [stream, setStream] = useState(null); // Guarda o sinal da câmera
+=======
+  const [fotoPreview, setFotoPreview] = useState("");
+  const fileInputRef = useRef(null);
+  const videoRef = useRef(null);
+  const [mostrarCamera, setMostrarCamera] = useState(false);
+  const [stream, setStream] = useState(null);
+
+  const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 
   useEffect(() => {
     const userData = localStorage.getItem("usuarioLogado");
@@ -37,14 +47,20 @@ export default function Perfil() {
     }
   }, [navigate]);
 
+<<<<<<< HEAD
   // --- CORREÇÃO: Conecta o vídeo assim que o Modal abre ---
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   useEffect(() => {
     if (mostrarCamera && stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
   }, [mostrarCamera, stream]);
 
+<<<<<<< HEAD
   // Helper para URL da imagem
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const getImageUrl = (path) => {
     if (!path) return null;
     if (path.startsWith("data:image")) return path;
@@ -52,12 +68,20 @@ export default function Perfil() {
     return path;
   };
 
+<<<<<<< HEAD
   // --- FUNÇÕES DA CÂMERA ---
   const iniciarCamera = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
       setStream(mediaStream); // Guarda o sinal primeiro
       setMostrarCamera(true); // Depois abre a janela
+=======
+  const iniciarCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      setStream(mediaStream); 
+      setMostrarCamera(true); 
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     } catch (error) {
       console.error(error);
       alert("Erro ao acessar câmera. Verifique se deu permissão.");
@@ -66,7 +90,11 @@ export default function Perfil() {
 
   const pararCamera = () => {
     if (stream) {
+<<<<<<< HEAD
       stream.getTracks().forEach((track) => track.stop()); // Desliga a luz da câmera
+=======
+      stream.getTracks().forEach((track) => track.stop()); 
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       setStream(null);
     }
     setMostrarCamera(false);
@@ -79,16 +107,26 @@ export default function Perfil() {
       canvas.height = videoRef.current.videoHeight;
       const ctx = canvas.getContext("2d");
       
+<<<<<<< HEAD
       // Desenha a foto
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       ctx.drawImage(videoRef.current, 0, 0);
       const fotoDataUrl = canvas.toDataURL("image/jpeg");
       
       setFotoPreview(fotoDataUrl);
+<<<<<<< HEAD
       pararCamera(); // Fecha a câmera após tirar a foto
     }
   };
 
   // --- SELEÇÃO DE ARQUIVO ---
+=======
+      pararCamera(); 
+    }
+  };
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -103,7 +141,10 @@ export default function Perfil() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+<<<<<<< HEAD
   // --- SALVAR EDIÇÃO ---
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const salvarEdicao = async () => {
     if (!usuario || !usuario.id) return;
 
@@ -113,7 +154,11 @@ export default function Perfil() {
         foto: fotoPreview, 
       };
 
+<<<<<<< HEAD
       const response = await fetch(`http://localhost:3001/api/auth/update/${usuario.id}`, {
+=======
+      const response = await fetch(`${API_URL}/api/auth/update/${usuario.id}`, {
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dadosParaEnviar),
@@ -134,7 +179,11 @@ export default function Perfil() {
         window.dispatchEvent(new Event("user-updated"));
         
         setEditando(false);
+<<<<<<< HEAD
         alert("✅ Perfil atualizado com sucesso!");
+=======
+        alert("Seu perfil foi atualizado com sucesso!");
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       } else {
         alert(`Erro: ${data.message}`);
       }
@@ -154,7 +203,11 @@ export default function Perfil() {
     });
     setFotoPreview(usuario.foto || "");
     setEditando(false);
+<<<<<<< HEAD
     pararCamera(); // Garante que a câmera feche se cancelar
+=======
+    pararCamera(); 
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   };
 
   const handleLogout = () => {
@@ -236,6 +289,7 @@ export default function Perfil() {
                 <label>Time do Coração</label>
                 <select name="time" value={formData.time || ""} onChange={handleInputChange}>
                   <option value="">Selecione seu time</option>
+<<<<<<< HEAD
                   <option value="São Paulo">São Paulo</option>
                   <option value="Corinthians">Corinthians</option>
                   <option value="Palmeiras">Palmeiras</option>
@@ -248,6 +302,20 @@ export default function Perfil() {
                   <option value="Internacional">Internacional</option>
                   <option value="Atlético-MG">Atlético-MG</option>
                   <option value="Cruzeiro">Cruzeiro</option>
+=======
+                  <option value="Corinthians">Corinthians</option>
+                  <option value="Flamengo">Flamengo</option>
+                  <option value="São Paulo">São Paulo</option>
+                  <option value="Santos">Santos</option>
+                  <option value="Vasco">Vasco</option>
+                  <option value="Fluminense">Fluminense</option>
+                  <option value="Cruzeiro">Cruzeiro</option>
+                  <option value="Atlético-MG">Atlético-MG</option>
+                  <option value="Grêmio">Grêmio</option>
+                  <option value="Internacional">Internacional</option>
+                  <option value="Botafogo">Botafogo</option>
+                  <option value="Palmeiras">Palmeiras</option>
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
                 </select>
               </div>
             </div>
@@ -257,7 +325,11 @@ export default function Perfil() {
               <div className="info-item"><span className="info-label">E-mail:</span><span className="info-value">{usuario.email || "-"}</span></div>
               <div className="info-item"><span className="info-label">Telefone:</span><span className="info-value">{usuario.telefone || "-"}</span></div>
               <div className="info-item"><span className="info-label">Nascimento:</span><span className="info-value">{formatarDataBR(usuario.dataNascimento)}</span></div>
+<<<<<<< HEAD
               <div className="info-item"><span className="info-label">Time do coração:</span><span className="info-value time-coracao">{usuario.time || "-"}</span></div>
+=======
+              <div className="info-item"><span className="info-label">Time:</span><span className="info-value time-coracao">{usuario.time || "-"}</span></div>
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
               <div className="info-item"><span className="info-label">Pontos:</span><span className="info-value destaque">{usuario.pontos || 0}</span></div>
             </>
           )}

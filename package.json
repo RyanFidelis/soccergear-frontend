@@ -13,10 +13,18 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
     "connect-pg-simple": "^10.0.0",
+<<<<<<< HEAD
     "cors": "^2.8.6",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "framer-motion": "^12.23.24",
+=======
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.555.0",
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     "multer": "^2.0.2",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",

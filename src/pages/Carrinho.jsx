@@ -7,8 +7,24 @@ export default function Carrinho() {
   const [cart, setCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
 
+<<<<<<< HEAD
   function carregarCart() {
     const raw = localStorage.getItem("cart");
+=======
+  // --- Novos States para o Modal de Frete ---
+  const [modalAberto, setModalAberto] = useState(false);
+  const [cep, setCep] = useState("");
+  const [freteInfo, setFreteInfo] = useState(null);
+  const [loadingFrete, setLoadingFrete] = useState(false);
+
+  const getCartKey = () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    return usuario && usuario.id ? `cart_${usuario.id}` : "cart_guest";
+  };
+
+  function carregarCart() {
+    const raw = localStorage.getItem(getCartKey());
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     const stored = raw ? JSON.parse(raw) : [];
     setCart(stored);
   }
@@ -17,7 +33,11 @@ export default function Carrinho() {
     carregarCart();
 
     const onStorage = (e) => {
+<<<<<<< HEAD
       if (e.key === "cart") carregarCart();
+=======
+      if (e.key === getCartKey()) carregarCart();
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     };
 
     const onCartUpdated = () => carregarCart();
@@ -47,7 +67,11 @@ export default function Carrinho() {
     );
 
     setCart(newCart);
+<<<<<<< HEAD
     localStorage.setItem("cart", JSON.stringify(newCart));
+=======
+    localStorage.setItem(getCartKey(), JSON.stringify(newCart));
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     window.dispatchEvent(
       new CustomEvent("cart-updated", { detail: newCart })
     );
@@ -56,13 +80,21 @@ export default function Carrinho() {
   const removeItem = (index) => {
     const newCart = cart.filter((_, i) => i !== index);
     setCart(newCart);
+<<<<<<< HEAD
     localStorage.setItem("cart", JSON.stringify(newCart));
+=======
+    localStorage.setItem(getCartKey(), JSON.stringify(newCart));
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     window.dispatchEvent(
       new CustomEvent("cart-updated", { detail: newCart })
     );
   };
 
+<<<<<<< HEAD
   const finalizarCompra = () => {
+=======
+  const iniciarFinalizacao = () => {
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     if (cart.length === 0) {
       alert("Seu carrinho está vazio!");
       return;
@@ -70,12 +102,96 @@ export default function Carrinho() {
 
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuario) {
+<<<<<<< HEAD
       localStorage.setItem("redirectAfterLogin", "/pagamento");
+=======
+      localStorage.setItem("redirectAfterLogin", "/carrinho");
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       navigate("/login");
       return;
     }
 
+<<<<<<< HEAD
     localStorage.setItem("compraAtual", JSON.stringify(cart));
+=======
+    if (usuario.endereco) {
+        const cepSalvo = usuario.endereco.replace(/\D/g, "");
+        if (cepSalvo.length === 8) {
+            setCep(usuario.endereco);
+        }
+    }
+
+    setModalAberto(true);
+  };
+
+  const calcularFrete = async () => {
+    const cepLimpo = cep.replace(/\D/g, "");
+
+    if (cepLimpo.length !== 8) {
+      alert("Digite um CEP válido com 8 dígitos.");
+      return;
+    }
+
+    setLoadingFrete(true);
+    setFreteInfo(null);
+
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        alert("CEP não encontrado.");
+        setLoadingFrete(false);
+        return;
+      }
+
+      let valor = 0;
+      let prazo = "";
+
+      if (data.localidade === "Santana de Parnaíba" && data.uf === "SP") {
+        valor = 5.00;
+        prazo = "1 dia útil (Local)";
+      } else if (data.uf === "SP") {
+        valor = 10.00;
+        prazo = "2 a 4 dias úteis";
+      } else {
+        valor = 20.00;
+        prazo = "5 a 10 dias úteis";
+      }
+
+      setFreteInfo({
+        valor: valor,
+        valorFormatado: valor.toFixed(2).replace(".", ","),
+        prazo: prazo,
+        cidade: data.localidade,
+        uf: data.uf,
+        rua: data.logradouro
+      });
+
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao calcular. Tente novamente.");
+    } finally {
+      setLoadingFrete(false);
+    }
+  };
+
+  const confirmarEIrParaPagamento = () => {
+    if (!freteInfo) return;
+
+    const listaFinal = [...cart];
+    
+    listaFinal.push({
+        id: "frete-checkout",
+        nome: `Frete (${freteInfo.prazo})`,
+        imagem: "https://cdn-icons-png.flaticon.com/512/759/759063.png", 
+        preco: freteInfo.valor,
+        tamanho: "-",
+        quantity: 1
+    });
+
+    localStorage.setItem("compraAtual", JSON.stringify(listaFinal));
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     navigate("/pagamento");
   };
 
@@ -124,6 +240,7 @@ export default function Carrinho() {
           <span>R$ {subtotal.toFixed(2)}</span>
         </div>
 
+<<<<<<< HEAD
         <button onClick={finalizarCompra} className="botao-primario">
           Ir para Pagamento
         </button>
@@ -131,3 +248,54 @@ export default function Carrinho() {
     </main>
   );
 }
+=======
+        <button onClick={iniciarFinalizacao} className="botao-primario">
+          Ir para Pagamento
+        </button>
+      </div>
+
+      {/* --- MODAL DE FRETE --- */}
+      {modalAberto && (
+        <div className="modal-frete-overlay">
+            <div className="modal-frete-content">
+                <h3>Informe o Local de Entrega</h3>
+                <p>Digite seu CEP para calcularmos o envio.</p>
+                
+                <div className="modal-input-group">
+                    <input 
+                        type="text" 
+                        placeholder="00000-000" 
+                        value={cep}
+                        maxLength={9}
+                        onChange={(e) => setCep(e.target.value)}
+                    />
+                    <button onClick={calcularFrete} disabled={loadingFrete}>
+                        {loadingFrete ? "..." : "Calcular"}
+                    </button>
+                </div>
+
+                {freteInfo && (
+                    <div className="modal-resultado">
+                        <p><strong>Destino:</strong> {freteInfo.rua}, {freteInfo.cidade}-{freteInfo.uf}</p>
+                        <p><strong>Prazo:</strong> {freteInfo.prazo}</p>
+                        <p className="valor-destaque">Valor: R$ {freteInfo.valorFormatado}</p>
+                    </div>
+                )}
+
+                <div className="modal-actions">
+                    <button className="btn-cancelar" onClick={() => setModalAberto(false)}>Cancelar</button>
+                    <button 
+                        className="btn-confirmar" 
+                        disabled={!freteInfo} 
+                        onClick={confirmarEIrParaPagamento}
+                    >
+                        Confirmar e Pagar
+                    </button>
+                </div>
+            </div>
+        </div>
+      )}
+    </main>
+  );
+}
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db

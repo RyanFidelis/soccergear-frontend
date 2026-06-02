@@ -11,6 +11,10 @@
     }
     
     .cupons-grid {
+<<<<<<< HEAD
+=======
+      margin-top: 5%;
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 25px;

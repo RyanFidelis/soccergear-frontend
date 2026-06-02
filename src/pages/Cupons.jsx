@@ -88,7 +88,11 @@ export default function Cupons() {
           codigo: "BEMVINDO20",
           titulo: "20% OFF na Primeira Compra",
           descricao: "Desconto especial para novos clientes. Válido para compras acima de R$ 50,00.",
+<<<<<<< HEAD
           validade: "30/11/2025",
+=======
+          validade: "10/12/2025",
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
           desconto: "20% OFF",
         },
         {
@@ -134,6 +138,19 @@ export default function Cupons() {
         Aproveite nossos cupons exclusivos e economize em suas compras!
       </p>
 
+<<<<<<< HEAD
+=======
+            <div className="cupom-info">
+        <h3>Como usar os cupons</h3>
+        <p>1. Escolha o cupom desejado e clique em "Copiar Código"</p>
+        <p>
+          2. No processo de finalização da compra, cole o código no campo "Cupom
+          de Desconto"
+        </p>
+        <p>3. O desconto será aplicado automaticamente ao seu pedido</p>
+      </div>
+
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       <div className="cupons-grid">
         {cupons.map((cupom) => (
           <div key={cupom.id} className="cupom-card">
@@ -163,6 +180,7 @@ export default function Cupons() {
         ))}
       </div>
 
+<<<<<<< HEAD
       <div className="cupom-info">
         <h3>Como usar os cupons</h3>
         <p>1. Escolha o cupom desejado e clique em "Copiar Código"</p>
@@ -172,6 +190,8 @@ export default function Cupons() {
         </p>
         <p>3. O desconto será aplicado automaticamente ao seu pedido</p>
       </div>
+=======
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     </main>
   );
 }

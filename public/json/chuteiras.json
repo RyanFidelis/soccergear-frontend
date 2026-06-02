@@ -336,7 +336,11 @@
       "produtos/chuteira14_4.avif"
     ],
     "descricao": "Modelo clássico da Umbro com travas para campo, ideal para gramados naturais e durabilidade.",
+<<<<<<< HEAD
     "preco": 199.90,
+=======
+    "preco": 2199.90,
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     "tipo": "Campo",
     "avaliacao": 3.7,
     "numAvaliacoes": 44,
@@ -361,7 +365,11 @@
       "produtos/chuteira15_4.avif"
     ],
     "descricao": "Chuteira campo com visual moderno, leveza e tração otimizada para gramados.",
+<<<<<<< HEAD
     "preco": 279.90,
+=======
+    "preco": 2199.90,
+>>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     "tipo": "Campo",
     "avaliacao": 3.7,
     "numAvaliacoes": 44,
