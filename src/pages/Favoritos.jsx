@@ -5,10 +5,8 @@ export default function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);
   const [feedback, setFeedback] = useState("");
 
-<<<<<<< HEAD
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favoritos")) || [];
-=======
   const getStorageKey = () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     return usuario && usuario.id ? `favoritos_${usuario.id}` : "favoritos_guest";
@@ -16,23 +14,19 @@ export default function Favoritos() {
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem(getStorageKey())) || [];
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     setFavoritos(saved);
   }, []);
 
   const removerFavorito = (id) => {
-<<<<<<< HEAD
     const atualizados = favoritos.filter((p) => String(p.id) !== String(id));
     const removido = favoritos.find((p) => String(p.id) === String(id));
     setFavoritos(atualizados);
     localStorage.setItem("favoritos", JSON.stringify(atualizados));
-=======
     const key = getStorageKey();
     const atualizados = favoritos.filter((p) => String(p.id) !== String(id));
     const removido = favoritos.find((p) => String(p.id) === String(id));
     setFavoritos(atualizados);
     localStorage.setItem(key, JSON.stringify(atualizados));
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     mostrarFeedback(`${removido?.nome || "Produto"} removido dos favoritos`);
   };
 
@@ -50,14 +44,12 @@ export default function Favoritos() {
 
   if (favoritos.length === 0) {
     return (
-<<<<<<< HEAD
       <main className="favoritos-vazio">
         <h1>Meus Favoritos</h1>
         <p>Você ainda não favoritou nenhum produto ⭐</p>
         {feedback && (
           <div className="feedback-message-favoritos show">{feedback}</div>
         )}
-=======
       <main>
         <center>
           <h1>Meus Favoritos</h1>
@@ -66,7 +58,6 @@ export default function Favoritos() {
             <div className="feedback-message-favoritos show">{feedback}</div>
           )}
         </center>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       </main>
     );
   }
@@ -98,11 +89,8 @@ export default function Favoritos() {
                 title="Remover favorito"
                 role="button"
                 onClick={(e) => {
-<<<<<<< HEAD
                   e.stopPropagation(); 
-=======
                   e.stopPropagation();
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
                   removerFavorito(prod.id);
                 }}
               >
@@ -118,8 +106,5 @@ export default function Favoritos() {
       )}
     </main>
   );
-<<<<<<< HEAD
 }
-=======
 }
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
