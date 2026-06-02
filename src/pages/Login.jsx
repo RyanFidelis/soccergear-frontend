@@ -16,8 +16,6 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log("Tentando conectar na API:", API_URL);
-
     if (!email || !password) {
       alert("Por favor, preencha todos os campos!");
       return;
@@ -31,31 +29,37 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
 
+      // verifica se veio resposta válida
       const data = await response.json();
 
-      if (response.ok) {
-        console.log("Login realizado com sucesso!");
-
-        localStorage.setItem(
-          "usuarioLogado",
-          JSON.stringify(data.user)
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Email ou senha incorretos."
         );
-
-        window.dispatchEvent(new Event("user-updated"));
-
-        navigate("/");
-      } else {
-        alert(data.message || "Os dados fornecidos não foram encontrados.");
       }
-    } catch (error) {
-      console.error("Erro crítico no login:", error);
 
-      alert(
-        "Erro ao conectar com o servidor. Verifique se o backend está ligado."
+      // salva usuário
+      localStorage.setItem(
+        "usuarioLogado",
+        JSON.stringify(data.user)
       );
+
+      // atualiza navbar/perfil
+      window.dispatchEvent(new Event("user-updated"));
+
+      // redireciona para home
+      navigate("/", { replace: true });
+
+    } catch (error) {
+      console.error("Erro no login:", error);
+
+      alert(error.message || "Erro ao fazer login.");
     } finally {
       setLoading(false);
     }
@@ -66,7 +70,7 @@ export default function Login() {
       <div className="card-login">
         <h1 className="titulo-login">Entrar na Conta</h1>
 
-        <form onSubmit={handleLogin} autoComplete="off">
+        <form onSubmit={handleLogin}>
           <div className="input-container-login">
             <label>Email</label>
 
@@ -75,8 +79,8 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               placeholder="seu@email.com"
+              required
             />
           </div>
 
@@ -88,8 +92,8 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               placeholder="********"
+              required
             />
           </div>
 
