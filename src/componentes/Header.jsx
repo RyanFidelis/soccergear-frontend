@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/Cadastro.css";
+import "../css/HeaderFooter.css";
 
 export default function Cadastro() {
   const navigate = useNavigate();
