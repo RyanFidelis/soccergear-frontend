@@ -52,9 +52,7 @@
 }
 
 /* ===========================
-<<<<<<< HEAD
-=======
-   CUPOM DE DESCONTO (NOVO)
+   CUPOM DE DESCONTO 
    =========================== */
 .pagamento-cupom-box {
   margin-top: 20px;
@@ -117,7 +115,6 @@
 }
 
 /* ===========================
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
    Opções de pagamento
    =========================== */
 .pagamento-opcoes {
@@ -308,7 +305,6 @@
 
 .linha-dupla .campo-cartao {
   flex: 1;
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 }
 
 /* ===========================
@@ -357,10 +353,8 @@
 .pagamento-btn-finalizar:hover {
   opacity: 0.8;
 }
-<<<<<<< HEAD
-=======
 
-/* Responsividade Básica */
+/* Responsividade */
 @media (max-width: 600px) {
   .pagamento-item-linha {
     flex-direction: column;
@@ -381,4 +375,3 @@
     gap: 16px;
   }
 }
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
