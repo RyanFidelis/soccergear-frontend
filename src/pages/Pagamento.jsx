@@ -4,19 +4,12 @@ import "../css/Pagamento.css";
 
 export default function Pagamento() {
   const navigate = useNavigate();
-<<<<<<< HEAD
-
-=======
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const [itens, setItens] = useState([]);
   const [metodo, setMetodo] = useState("pix");
   const [copiadoPix, setCopiadoPix] = useState(false);
   const [copiadoBoleto, setCopiadoBoleto] = useState(false);
   const [processando, setProcessando] = useState(false);
-
-<<<<<<< HEAD
   const API_URL = process.env.REACT_APP_API_URL;
-=======
   const [dadosCartao, setDadosCartao] = useState({
     numero: "",
     nome: "",
@@ -28,7 +21,6 @@ export default function Pagamento() {
   });
 
   const API_URL = process.env.REACT_APP_API_URL || "https://soccergear-backend.onrender.com";
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
 
   const chavePix =
     "00020126360014BR.GOV.BCB.PIX0114+55119999999990214Pagamento Teste52040000530398654041.005802BR5925SoccerGear Pagamento6014SAO PAULO BR62070503***6304ABCD";
@@ -45,32 +37,26 @@ export default function Pagamento() {
 
   useEffect(() => {
     const usuario = localStorage.getItem("usuarioLogado");
-<<<<<<< HEAD
 
     if (!usuario) {
       alert("Você precisa estar logado.");
-=======
+
     if (!usuario) {
       alert("Você precisa estar logado para finalizar a compra.");
       localStorage.setItem("redirectAfterLogin", "/pagamento");
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       navigate("/login");
       return;
     }
 
-<<<<<<< HEAD
     const compra = JSON.parse(
       localStorage.getItem("compraAtual")
     );
 
-=======
     const compra = JSON.parse(localStorage.getItem("compraAtual"));
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     if (!compra || compra.length === 0) {
       navigate("/");
       return;
     }
-<<<<<<< HEAD
 
     setItens(compra);
   }, [navigate]);
@@ -87,7 +73,6 @@ export default function Pagamento() {
     const novaLista = itens.filter((_, i) => i !== index);
 
     if (novaLista.length === 0) {
-=======
     setItens(compra);
   }, [navigate]);
 
@@ -115,29 +100,24 @@ export default function Pagamento() {
     const aindaTemProdutos = novosItens.some(i => i.id !== "frete-checkout");
 
     if (!aindaTemProdutos) {
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       localStorage.removeItem("compraAtual");
       navigate("/");
       return;
     }
 
-<<<<<<< HEAD
     setItens(novaLista);
 
     localStorage.setItem(
       "compraAtual",
       JSON.stringify(novaLista)
     );
-=======
     setItens(novosItens);
     localStorage.setItem("compraAtual", JSON.stringify(novosItens));
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   };
 
   const finalizar = async () => {
     if (processando) return;
 
-<<<<<<< HEAD
     setProcessando(true);
 
     try {
@@ -216,7 +196,6 @@ export default function Pagamento() {
       alert(
         "Erro ao finalizar pedido: " + error.message
       );
-=======
     if (metodo === "cartao") {
       if (!dadosCartao.numero || !dadosCartao.nome || !dadosCartao.cpf || !dadosCartao.validade || !dadosCartao.cvv) {
         alert("Por favor, preencha todos os dados do cartão.");
@@ -294,7 +273,6 @@ export default function Pagamento() {
     } catch (err) {
       console.error("Erro de Conexão:", err);
       alert("Não foi possível conectar ao servidor.");
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     } finally {
       setProcessando(false);
     }
@@ -302,7 +280,6 @@ export default function Pagamento() {
 
   const copiarPix = () => {
     navigator.clipboard.writeText(chavePix);
-<<<<<<< HEAD
 
     setCopiadoPix(true);
 
@@ -321,7 +298,6 @@ export default function Pagamento() {
     setTimeout(() => {
       setCopiadoBoleto(false);
     }, 2000);
-=======
     setCopiadoPix(true);
     setTimeout(() => setCopiadoPix(false), 2000);
   };
@@ -330,7 +306,6 @@ export default function Pagamento() {
     navigator.clipboard.writeText(linhaDigitavelCopiar);
     setCopiadoBoleto(true);
     setTimeout(() => setCopiadoBoleto(false), 2000);
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   };
 
   return (
@@ -338,7 +313,6 @@ export default function Pagamento() {
       <h1>Finalizar Pagamento</h1>
 
       <h2>Itens da compra:</h2>
-<<<<<<< HEAD
 
       {itens.map((item, index) => (
         <div
@@ -414,7 +388,6 @@ export default function Pagamento() {
         >
           Boleto
         </button>
-=======
       {produtosReais.map((it, index) => (
         <div key={index} className="pagamento-item-linha">
           <img src={it.imagem} alt={it.nome} />
@@ -453,13 +426,11 @@ export default function Pagamento() {
         <button onClick={() => setMetodo("pix")} className={metodo === "pix" ? "ativo" : ""}>Pix</button>
         <button onClick={() => setMetodo("cartao")} className={metodo === "cartao" ? "ativo" : ""}>Cartão</button>
         <button onClick={() => setMetodo("boleto")} className={metodo === "boleto" ? "ativo" : ""}>Boleto</button>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       </div>
 
       {metodo === "pix" && (
         <div className="pagamento-pix-box">
           <h3>Pagamento via Pix</h3>
-<<<<<<< HEAD
 
           <img
             src={qrCodeURL}
@@ -486,13 +457,11 @@ export default function Pagamento() {
             {copiadoPix
               ? "Copiado!"
               : "Copiar"}
-=======
           <img src={qrCodeURL} alt="QR Code Pix" className="pagamento-qrcode" />
           <p className="pagamento-copiacola-label">Pix copia e cola:</p>
           <textarea readOnly value={chavePix} className="pagamento-copiacola" />
           <button className={`pagamento-btn-copiar ${copiadoPix ? "copiado" : ""}`} onClick={copiarPix}>
             {copiadoPix ? "copiado!" : "copiar"}
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
           </button>
         </div>
       )}
@@ -500,7 +469,6 @@ export default function Pagamento() {
       {metodo === "boleto" && (
         <div className="pagamento-boleto-box">
           <h3>Boleto Bancário</h3>
-<<<<<<< HEAD
 
           <img
             src={`https://bwipjs-api.metafloor.com/?bcid=code128&text=${linhaDigitavelCopiar}`}
@@ -526,7 +494,6 @@ export default function Pagamento() {
             {copiadoBoleto
               ? "Copiado!"
               : "Copiar"}
-=======
           <img
             src={"https://bwipjs-api.metafloor.com/?bcid=code128&text=" + linhaDigitavelCopiar}
             alt="Código de Barras do Boleto"
@@ -536,12 +503,10 @@ export default function Pagamento() {
           <input readOnly value={linhaDigitavel} />
           <button className={`pagamento-btn-copiar ${copiadoBoleto ? "copiado" : ""}`} onClick={copiarBoleto}>
             {copiadoBoleto ? "copiado!" : "copiar"}
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
           </button>
         </div>
       )}
 
-<<<<<<< HEAD
       <button
         className="pagamento-btn-finalizar"
         onClick={finalizar}
@@ -550,7 +515,6 @@ export default function Pagamento() {
         {processando
           ? "Processando..."
           : "Finalizar Pedido"}
-=======
       {metodo === "cartao" && (
         <div className="pagamento-cartao-box">
           <h3>Dados do Cartão</h3>
@@ -658,7 +622,6 @@ export default function Pagamento() {
         style={{ opacity: processando ? 0.7 : 1, cursor: processando ? 'wait' : 'pointer' }}
       >
         {processando ? "Processando..." : "Finalizar Pedido"}
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       </button>
     </main>
   );
