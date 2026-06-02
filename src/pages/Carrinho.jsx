@@ -4,12 +4,11 @@ import "../css/Carrinho.css";
 
 export default function Carrinho() {
   const navigate = useNavigate();
+
   const [cart, setCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
 
-  function carregarCart() {
-    const raw = localStorage.getItem("cart");
-  // Modal de Frete 
+  // Modal Frete
   const [modalAberto, setModalAberto] = useState(false);
   const [cep, setCep] = useState("");
   const [freteInfo, setFreteInfo] = useState(null);
@@ -17,12 +16,16 @@ export default function Carrinho() {
 
   const getCartKey = () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    return usuario && usuario.id ? `cart_${usuario.id}` : "cart_guest";
+
+    return usuario && usuario.id
+      ? `cart_${usuario.id}`
+      : "cart_guest";
   };
 
   function carregarCart() {
     const raw = localStorage.getItem(getCartKey());
     const stored = raw ? JSON.parse(raw) : [];
+
     setCart(stored);
   }
 
@@ -47,38 +50,51 @@ export default function Carrinho() {
 
   useEffect(() => {
     const total = cart.reduce(
-      (sum, it) => sum + Number(it.preco) * (it.quantity || 1),
+      (sum, item) =>
+        sum + Number(item.preco) * (item.quantity || 1),
       0
     );
+
     setSubtotal(total);
   }, [cart]);
 
   const updateQuantity = (index, delta) => {
-    const newCart = cart.map((it, i) =>
+    const newCart = cart.map((item, i) =>
       i === index
-        ? { ...it, quantity: Math.max((it.quantity || 1) + delta, 1) }
-        : it
+        ? {
+            ...item,
+            quantity: Math.max((item.quantity || 1) + delta, 1),
+          }
+        : item
     );
 
     setCart(newCart);
+
     localStorage.setItem("cart", JSON.stringify(newCart));
     localStorage.setItem(getCartKey(), JSON.stringify(newCart));
+
     window.dispatchEvent(
-      new CustomEvent("cart-updated", { detail: newCart })
+      new CustomEvent("cart-updated", {
+        detail: newCart,
+      })
     );
   };
 
   const removeItem = (index) => {
     const newCart = cart.filter((_, i) => i !== index);
+
     setCart(newCart);
+
     localStorage.setItem("cart", JSON.stringify(newCart));
     localStorage.setItem(getCartKey(), JSON.stringify(newCart));
+
     window.dispatchEvent(
-      new CustomEvent("cart-updated", { detail: newCart })
+      new CustomEvent("cart-updated", {
+        detail: newCart,
+      })
     );
   };
 
-  const finalizarCompra = () => {
   const iniciarFinalizacao = () => {
     if (cart.length === 0) {
       alert("Seu carrinho está vazio!");
@@ -86,19 +102,21 @@ export default function Carrinho() {
     }
 
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
     if (!usuario) {
-      localStorage.setItem("redirectAfterLogin", "/pagamento");
       localStorage.setItem("redirectAfterLogin", "/carrinho");
       navigate("/login");
       return;
     }
 
     localStorage.setItem("compraAtual", JSON.stringify(cart));
+
     if (usuario.endereco) {
-        const cepSalvo = usuario.endereco.replace(/\D/g, "");
-        if (cepSalvo.length === 8) {
-            setCep(usuario.endereco);
-        }
+      const cepSalvo = usuario.endereco.replace(/\D/g, "");
+
+      if (cepSalvo.length === 8) {
+        setCep(usuario.endereco);
+      }
     }
 
     setModalAberto(true);
@@ -108,7 +126,7 @@ export default function Carrinho() {
     const cepLimpo = cep.replace(/\D/g, "");
 
     if (cepLimpo.length !== 8) {
-      alert("Digite um CEP válido com 8 dígitos.");
+      alert("Digite um CEP válido.");
       return;
     }
 
@@ -116,41 +134,45 @@ export default function Carrinho() {
     setFreteInfo(null);
 
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+      const response = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
+      );
+
       const data = await response.json();
 
       if (data.erro) {
         alert("CEP não encontrado.");
-        setLoadingFrete(false);
         return;
       }
 
       let valor = 0;
       let prazo = "";
 
-      if (data.localidade === "Santana de Parnaíba" && data.uf === "SP") {
-        valor = 5.00;
-        prazo = "1 dia útil (Local)";
+      if (
+        data.localidade === "Santana de Parnaíba" &&
+        data.uf === "SP"
+      ) {
+        valor = 5;
+        prazo = "1 dia útil";
       } else if (data.uf === "SP") {
-        valor = 10.00;
+        valor = 10;
         prazo = "2 a 4 dias úteis";
       } else {
-        valor = 20.00;
+        valor = 20;
         prazo = "5 a 10 dias úteis";
       }
 
       setFreteInfo({
-        valor: valor,
+        valor,
         valorFormatado: valor.toFixed(2).replace(".", ","),
-        prazo: prazo,
+        prazo,
         cidade: data.localidade,
         uf: data.uf,
-        rua: data.logradouro
+        rua: data.logradouro,
       });
-
     } catch (error) {
       console.error(error);
-      alert("Erro ao calcular. Tente novamente.");
+      alert("Erro ao calcular frete.");
     } finally {
       setLoadingFrete(false);
     }
@@ -160,17 +182,22 @@ export default function Carrinho() {
     if (!freteInfo) return;
 
     const listaFinal = [...cart];
-    
+
     listaFinal.push({
-        id: "frete-checkout",
-        nome: `Frete (${freteInfo.prazo})`,
-        imagem: "https://cdn-icons-png.flaticon.com/512/759/759063.png", 
-        preco: freteInfo.valor,
-        tamanho: "-",
-        quantity: 1
+      id: "frete-checkout",
+      nome: `Frete (${freteInfo.prazo})`,
+      imagem:
+        "https://cdn-icons-png.flaticon.com/512/759/759063.png",
+      preco: freteInfo.valor,
+      tamanho: "-",
+      quantity: 1,
     });
 
-    localStorage.setItem("compraAtual", JSON.stringify(listaFinal));
+    localStorage.setItem(
+      "compraAtual",
+      JSON.stringify(listaFinal)
+    );
+
     navigate("/pagamento");
   };
 
@@ -180,7 +207,9 @@ export default function Carrinho() {
 
       <section className="carrinho-itens">
         {cart.length === 0 ? (
-          <p className="carrinho-vazio">Seu carrinho está vazio</p>
+          <p className="carrinho-vazio">
+            Seu carrinho está vazio
+          </p>
         ) : (
           cart.map((item, index) => (
             <div key={index} className="carrinho-item">
@@ -188,17 +217,40 @@ export default function Carrinho() {
 
               <div className="item-info">
                 <h4>{item.nome}</h4>
-                <p>R$ {Number(item.preco).toFixed(2)}</p>
-                {item.tamanho && <p>Tamanho: {item.tamanho}</p>}
+
+                <p>
+                  R$ {Number(item.preco).toFixed(2)}
+                </p>
+
+                {item.tamanho && (
+                  <p>Tamanho: {item.tamanho}</p>
+                )}
 
                 <div className="item-quantidade">
-                  <button onClick={() => updateQuantity(index, -1)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => updateQuantity(index, 1)}>+</button>
+                  <button
+                    onClick={() =>
+                      updateQuantity(index, -1)
+                    }
+                  >
+                    -
+                  </button>
+
+                  <span>{item.quantity || 1}</span>
+
+                  <button
+                    onClick={() =>
+                      updateQuantity(index, 1)
+                    }
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
-              <button className="remover-item" onClick={() => removeItem(index)}>
+              <button
+                className="remover-item"
+                onClick={() => removeItem(index)}
+              >
                 ×
               </button>
             </div>
@@ -211,65 +263,98 @@ export default function Carrinho() {
 
         <div className="resumo-linha">
           <span>Subtotal:</span>
-          <span>R$ {subtotal.toFixed(2)}</span>
+
+          <span>
+            R$ {subtotal.toFixed(2)}
+          </span>
         </div>
 
         <div className="resumo-linha total">
           <span>Total:</span>
-          <span>R$ {subtotal.toFixed(2)}</span>
+
+          <span>
+            R$ {subtotal.toFixed(2)}
+          </span>
         </div>
 
-        <button onClick={finalizarCompra} className="botao-primario">
-          Ir para Pagamento
-        </button>
-      </div>
-    </main>
-  );
-}
-        <button onClick={iniciarFinalizacao} className="botao-primario">
+        <button
+          onClick={iniciarFinalizacao}
+          className="botao-primario"
+        >
           Ir para Pagamento
         </button>
       </div>
 
-      {/* --- MODAL DE FRETE --- */}
       {modalAberto && (
         <div className="modal-frete-overlay">
-            <div className="modal-frete-content">
-                <h3>Informe o Local de Entrega</h3>
-                <p>Digite seu CEP para calcularmos o envio.</p>
-                
-                <div className="modal-input-group">
-                    <input 
-                        type="text" 
-                        placeholder="00000-000" 
-                        value={cep}
-                        maxLength={9}
-                        onChange={(e) => setCep(e.target.value)}
-                    />
-                    <button onClick={calcularFrete} disabled={loadingFrete}>
-                        {loadingFrete ? "..." : "Calcular"}
-                    </button>
-                </div>
+          <div className="modal-frete-content">
+            <h3>Informe o CEP</h3>
 
-                {freteInfo && (
-                    <div className="modal-resultado">
-                        <p><strong>Destino:</strong> {freteInfo.rua}, {freteInfo.cidade}-{freteInfo.uf}</p>
-                        <p><strong>Prazo:</strong> {freteInfo.prazo}</p>
-                        <p className="valor-destaque">Valor: R$ {freteInfo.valorFormatado}</p>
-                    </div>
-                )}
+            <p>
+              Digite seu CEP para calcular o frete.
+            </p>
 
-                <div className="modal-actions">
-                    <button className="btn-cancelar" onClick={() => setModalAberto(false)}>Cancelar</button>
-                    <button 
-                        className="btn-confirmar" 
-                        disabled={!freteInfo} 
-                        onClick={confirmarEIrParaPagamento}
-                    >
-                        Confirmar e Pagar
-                    </button>
-                </div>
+            <div className="modal-input-group">
+              <input
+                type="text"
+                placeholder="00000-000"
+                value={cep}
+                maxLength={9}
+                onChange={(e) => setCep(e.target.value)}
+              />
+
+              <button
+                onClick={calcularFrete}
+                disabled={loadingFrete}
+              >
+                {loadingFrete
+                  ? "Calculando..."
+                  : "Calcular"}
+              </button>
             </div>
+
+            {freteInfo && (
+              <div className="modal-resultado">
+                <p>
+                  <strong>Destino:</strong>{" "}
+                  {freteInfo.rua},{" "}
+                  {freteInfo.cidade}-
+                  {freteInfo.uf}
+                </p>
+
+                <p>
+                  <strong>Prazo:</strong>{" "}
+                  {freteInfo.prazo}
+                </p>
+
+                <p className="valor-destaque">
+                  Valor: R${" "}
+                  {freteInfo.valorFormatado}
+                </p>
+              </div>
+            )}
+
+            <div className="modal-actions">
+              <button
+                className="btn-cancelar"
+                onClick={() =>
+                  setModalAberto(false)
+                }
+              >
+                Cancelar
+              </button>
+
+              <button
+                className="btn-confirmar"
+                disabled={!freteInfo}
+                onClick={
+                  confirmarEIrParaPagamento
+                }
+              >
+                Confirmar e Pagar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </main>
