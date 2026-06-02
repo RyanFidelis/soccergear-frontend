@@ -1,0 +1,176 @@
+[
+  {
+    "id": 1,
+    "nome": "Camisa Corinthians 21/22",
+    "imagem": "produtos/camisa1.avif",
+    "angulo": [
+      "produtos/camisa1.avif",
+      "produtos/camisa1_1.avif",
+      "produtos/camisa1_2.avif",
+      "produtos/camisa1_3.avif",
+      "produtos/camisa1_4.avif"
+    ],
+    "descricao": "Camisa Corinthians 21/22 modelo torcedor, tecido respirável e conforto para uso diário ou esportivo.",
+    "preco": 349.90,
+    "avaliacao": 4.6,
+    "numAvaliacoes": 187,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 12,
+      "M": 18,
+      "G": 9,
+      "GG": 6
+    }
+  },
+  {
+    "id": 2,
+    "nome": "Camisa Corinthians 25/26",
+    "imagem": "produtos/camisa2.jpg",
+    "angulo": [
+      "produtos/camisa2.jpg",
+      "produtos/camisa2_1.jpg",
+      "produtos/camisa2_2.jpg"
+    ],
+    "descricao": "Camisa Corinthians 25/26 com design moderno, escudo bordado e excelente durabilidade.",
+    "preco": 349.90,
+    "avaliacao": 4.4,
+    "numAvaliacoes": 156,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 7,
+      "M": 15,
+      "G": 11,
+      "GG": 8
+    }
+  },
+  {
+    "id": 3,
+    "nome": "Camisa Barcelona 24/25",
+    "imagem": "produtos/camisa3.png",
+    "angulo": [
+      "produtos/camisa3.png",
+      "produtos/camisa3_1.png",
+      "produtos/camisa3_2.png"
+    ],
+    "descricao": "Camisa oficial do Barcelona 24/25, tecido leve, tecnologia Dry-Fit e escudo em alto relevo.",
+    "preco": 349.90,
+    "avaliacao": 4.8,
+    "numAvaliacoes": 244,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 10,
+      "M": 16,
+      "G": 13,
+      "GG": 5
+    }
+  },
+  {
+    "id": 4,
+    "nome": "Camisa Seleção Brasileira 22/23",
+    "imagem": "produtos/camisa4.webp",
+    "angulo": [
+      "produtos/camisa4.webp",
+      "produtos/camisa4_1.webp",
+      "produtos/camisa4_2.webp",
+      "produtos/camisa4_3.webp"
+    ],
+    "descricao": "Camisa Brasil 22/23, modelo amarelo oficial, tecido antissuor e caimento confortável.",
+    "preco": 349.90,
+    "avaliacao": 4.9,
+    "numAvaliacoes": 321,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 14,
+      "M": 22,
+      "G": 17,
+      "GG": 9
+    }
+  },
+  {
+    "id": 5,
+    "nome": "Camisa Real Madrid 25/26",
+    "imagem": "produtos/camisa5.webp",
+    "angulo": [
+      "produtos/camisa5.webp",
+      "produtos/camisa5_1.webp",
+      "produtos/camisa5_2.avif"
+    ],
+    "descricao": "Camisa oficial do Real Madrid 25/26 com acabamento premium e detalhes dourados.",
+    "preco": 349.90,
+    "avaliacao": 4.7,
+    "numAvaliacoes": 201,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 11,
+      "M": 19,
+      "G": 8,
+      "GG": 7
+    }
+  },
+  {
+    "id": 6,
+    "nome": "Camisa PSG IV 24/25",
+    "imagem": "produtos/camisa6.avif",
+    "angulo": [
+      "produtos/camisa6.avif",
+      "produtos/camisa6_1.avif",
+      "produtos/camisa6_2.avif",
+      "produtos/camisa6_3.avif",
+      "produtos/camisa6_4.avif"
+    ],
+    "descricao": "Camisa do PSG 24/25 edição especial, com tecido tecnológico ultra leve.",
+    "preco": 349.90,
+    "avaliacao": 4.5,
+    "numAvaliacoes": 142,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 8,
+      "M": 14,
+      "G": 11,
+      "GG": 6
+    }
+  },
+  {
+    "id": 7,
+    "nome": "Camisa Chelsea 24/25",
+    "imagem": "produtos/camisa7.webp",
+    "angulo": [
+      "produtos/camisa7.webp",
+      "produtos/camisa7_1.webp"
+    ],
+    "descricao": "Camisa Chelsea 24/25 com tecido respirável e design azul tradicional.",
+    "preco": 349.90,
+    "avaliacao": 4.3,
+    "numAvaliacoes": 119,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 6,
+      "M": 12,
+      "G": 10,
+      "GG": 5
+    }
+  },
+  {
+    "id": 8,
+    "nome": "Camisa Manchester City 24/25",
+    "imagem": "produtos/camisa8.webp",
+    "angulo": [
+      "produtos/camisa8.webp",
+      "produtos/camisa8_1.webp",
+      "produtos/camisa8_2.webp",
+      "produtos/camisa8_3.webp",
+      "produtos/camisa8_4.webp"
+    ],
+    "descricao": "Camisa Manchester City 24/25 com design inspirado em tecnologia moderna.",
+    "preco": 349.90,
+    "avaliacao": 4.4,
+    "numAvaliacoes": 167,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "estoque": {
+      "P": 9,
+      "M": 17,
+      "G": 12,
+      "GG": 8
+    }
+  }
+]

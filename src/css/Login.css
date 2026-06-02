@@ -1,0 +1,99 @@
+/* Container principal */
+.container-login,
+.container-cadastro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f9f9f9;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Card */
+.card-login,
+.card-cadastro {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  width: 380px;
+  text-align: center;
+}
+
+/* Título */
+.titulo-login,
+.titulo-cadastro {
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  color: #111;
+}
+
+/* Inputs */
+.input-container-login,
+.input-container-cadastro {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.input-login,
+.input-cadastro {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+.input-login:focus,
+.input-cadastro:focus {
+  border-color: #000;
+  outline: none;
+}
+
+/* Botões */
+.btn-login,
+.btn-cadastro {
+  width: 100%;
+  background: #000;
+  color: white;
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn-login:hover,
+.btn-cadastro:hover {
+  background: #333;
+}
+
+/* Textos */
+.texto-login,
+.texto-cadastro {
+  margin-top: 15px;
+  font-size: 0.95rem;
+}
+
+.link-login,
+.link-cadastro {
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.link-login:hover,
+.link-cadastro:hover {
+  text-decoration: underline;
+}
+
+/* Checkbox dos termos */
+.termos-cadastro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}

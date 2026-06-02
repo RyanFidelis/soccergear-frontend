@@ -1,0 +1,452 @@
+[
+  {
+    "id": 1,
+    "nome": "Chuteira Nike Mercurial",
+    "imagem": "produtos/chuteira1.webp",
+    "angulo": [
+      "produtos/chuteira1.webp",
+      "produtos/chuteira1_1.webp",
+      "produtos/chuteira1_2.webp",
+      "produtos/chuteira1_3.webp",
+      "produtos/chuteira1_4.webp"
+    ],
+    "descricao": "Chuteira de futsal com solado liso, ideal para quadras indoor.",
+    "preco": 349.90,
+    "tipo": "Futsal",
+    "avaliacao": 4.2,
+    "numAvaliacoes": 112,
+    "tamanhos": [37, 38, 39, 40, 41, 42, 43],
+    "estoque": {
+      "37": 12,
+      "38": 15,
+      "39": 8,
+      "40": 18,
+      "41": 10,
+      "42": 7,
+      "43": 14
+    }
+  },
+  {
+    "id": 2,
+    "nome": "Chuteira Nike Mercurial",
+    "imagem": "produtos/chuteira2.webp",
+    "angulo": [
+      "produtos/chuteira2.webp",
+      "produtos/chuteira2_1.webp",
+      "produtos/chuteira2_2.webp",
+      "produtos/chuteira2_3.webp",
+      "produtos/chuteira2_4.webp"
+    ],
+    "descricao": "Chuteira de futsal com solado liso, ideal para quadras indoor.",
+    "preco": 349.90,
+    "tipo": "Futsal",
+    "avaliacao": 4.2,
+    "numAvaliacoes": 112,
+    "tamanhos": [37, 38, 39, 40, 41, 42, 43],
+    "estoque": {
+      "37": 11,
+      "38": 17,
+      "39": 20,
+      "40": 9,
+      "41": 6,
+      "42": 13,
+      "43": 10
+    }
+  },
+  {
+    "id": 3,
+    "nome": "Chuteira Nike Phantom",
+    "imagem": "produtos/chuteira3.webp",
+    "angulo": [
+      "produtos/chuteira3.webp",
+      "produtos/chuteira3_1.webp",
+      "produtos/chuteira3_2.webp",
+      "produtos/chuteira3_3.webp",
+      "produtos/chuteira3_4.webp"
+    ],
+    "descricao": "Chuteira de futsal com cano alto e cabedal texturizado, ideal para jogos em quadras indoor.",
+    "preco": 449.90,
+    "tipo": "Futsal",
+    "avaliacao": 3.9,
+    "numAvaliacoes": 65,
+    "tamanhos": [37, 39, 41, 43, 44],
+    "estoque": {
+      "37": 16,
+      "39": 10,
+      "41": 13,
+      "43": 7,
+      "44": 18
+    }
+  },
+  {
+    "id": 4,
+    "nome": "Chuteira Nike mercurial superfly 7",
+    "imagem": "produtos/chuteira4.jpg",
+    "angulo": [
+      "produtos/chuteira4.jpg",
+      "produtos/chuteira4_1.jpg",
+      "produtos/chuteira4_2.jpg",
+      "produtos/chuteira4_3.jpg",
+      "produtos/chuteira4_4.jpg"
+    ],
+    "descricao": "Chuteira de society com visual moderno, conforto e tração ideal para gramados society.",
+    "preco": 299.90,
+    "tipo": "Society",
+    "avaliacao": 3.3,
+    "numAvaliacoes": 41,
+    "tamanhos": [39, 40, 41, 42, 43],
+    "estoque": {
+      "39": 14,
+      "40": 6,
+      "41": 19,
+      "42": 9,
+      "43": 11
+    }
+  },
+  {
+    "id": 5,
+    "nome": "Chuteira Nike Tiempo CLUB 10",
+    "imagem": "produtos/chuteira5.webp",
+    "angulo": [
+      "produtos/chuteira5.webp",
+      "produtos/chuteira5_1.webp",
+      "produtos/chuteira5_2.webp",
+      "produtos/chuteira5_3.webp",
+      "produtos/chuteira5_4.webp"
+    ],
+    "descricao": "Versão VSN elite, ideal para jogos rápidos em Campos.",
+    "preco": 299.90,
+    "tipo": "Futsal",
+    "avaliacao": 4.7,
+    "numAvaliacoes": 138,
+    "tamanhos": [38, 39, 40, 41, 42],
+    "estoque": {
+      "38": 20,
+      "39": 15,
+      "40": 9,
+      "41": 11,
+      "42": 7
+    }
+  },
+  {
+    "id": 6,
+    "nome": "Chuteira Nike React Gato",
+    "imagem": "produtos/chuteira6.jpg",
+    "angulo": [
+      "produtos/chuteira6.jpg",
+      "produtos/chuteira6_1.jpg",
+      "produtos/chuteira6_2.jpg",
+      "produtos/chuteira6_3.jpg",
+      "produtos/chuteira6_4.jpg"
+    ],
+    "descricao": "Chuteira Futsal com design chamativo e ótimo desempenho em quadras.",
+    "preco": 199.90,
+    "tipo": "Futsal",
+    "avaliacao": 3.8,
+    "numAvaliacoes": 54,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 13,
+      "38": 8,
+      "39": 12,
+      "40": 17,
+      "41": 7
+    }
+  },
+  {
+    "id": 7,
+    "nome": "Chuteira Nike React Gato",
+    "imagem": "produtos/chuteira7.jpg",
+    "angulo": [
+      "produtos/chuteira7.jpg",
+      "produtos/chuteira7_1.jpg",
+      "produtos/chuteira7_2.jpg",
+      "produtos/chuteira7_3.jpg",
+      "produtos/chuteira7_4.jpg"
+    ],
+    "descricao": "Chuteira de futsal com solado liso e amortecimento responsivo para partidas em indoor.",
+    "preco": 279.90,
+    "tipo": "Futsal",
+    "avaliacao": 3.8,
+    "numAvaliacoes": 54,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 14,
+      "38": 19,
+      "39": 6,
+      "40": 9,
+      "41": 13
+    }
+  },
+  {
+    "id": 8,
+    "nome": "Chuteira Adidas Predator accuracy 4",
+    "imagem": "produtos/chuteira8.jpg",
+    "angulo": [
+      "produtos/chuteira8.jpg",
+      "produtos/chuteira8_1.jpg",
+      "produtos/chuteira8_2.jpg",
+      "produtos/chuteira8_3.jpg"
+    ],
+    "descricao": "Modelo Predator com cabedal texturizado e solado para campo natural.",
+    "preco": 319.90,
+    "tipo": "Campo",
+    "avaliacao": 4.4,
+    "numAvaliacoes": 97,
+    "tamanhos": [38, 39, 40, 41, 42, 43],
+    "estoque": {
+      "38": 18,
+      "39": 11,
+      "40": 7,
+      "41": 13,
+      "42": 20,
+      "43": 15
+    }
+  },
+  {
+    "id": 9,
+    "nome": "Chuteira Adidas Deportivo II",
+    "imagem": "produtos/chuteira9.jpg",
+    "angulo": [
+      "produtos/chuteira9.jpg",
+      "produtos/chuteira9_1.jpg",
+      "produtos/chuteira9_2.jpg",
+      "produtos/chuteira9_3.jpg"
+    ],
+    "descricao": "Chuteira leve para campo com design aerodinâmico e ótimo grip nas travas.",
+    "preco": 379.90,
+    "tipo": "Campo",
+    "avaliacao": 4.7,
+    "numAvaliacoes": 112,
+    "tamanhos": [37, 38, 40, 42, 44],
+    "estoque": {
+      "37": 15,
+      "38": 20,
+      "40": 13,
+      "42": 8,
+      "44": 10
+    }
+  },
+  {
+    "id": 10,
+    "nome": "Chuteira Adidas Predator accuracy 4",
+    "imagem": "produtos/chuteira10.webp",
+    "angulo": [
+      "produtos/chuteira10.webp",
+      "produtos/chuteira10_1.webp",
+      "produtos/chuteira10_2.webp",
+      "produtos/chuteira10_3.webp"
+    ],
+    "descricao": "Chuteira de campo com visual clássico e travas altas para boa estabilidade.",
+    "preco": 399.90,
+    "tipo": "Campo",
+    "avaliacao": 4.4,
+    "numAvaliacoes": 97,
+    "tamanhos": [38, 39, 40, 41, 42, 43],
+    "estoque": {
+      "38": 14,
+      "39": 19,
+      "40": 17,
+      "41": 9,
+      "42": 11,
+      "43": 6
+    }
+  },
+  {
+    "id": 11,
+    "nome": "Chuteira Adidas X Speedportal ",
+    "imagem": "produtos/chuteira11.webp",
+    "angulo": [
+      "produtos/chuteira11.webp",
+      "produtos/chuteira11_1.webp",
+      "produtos/chuteira11_2.webp",
+      "produtos/chuteira11_3.webp"
+    ],
+    "descricao": "Chuteira de futsal com design vibrante e solado emborrachado para quadras indoor.",
+    "preco": 269.90,
+    "tipo": "Futsal",
+    "avaliacao": 4.0,
+    "numAvaliacoes": 75,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 12,
+      "38": 15,
+      "39": 10,
+      "40": 7,
+      "41": 18
+    }
+  },
+  {
+    "id": 12,
+    "nome": "Chuteira Adidas X Speedportal",
+    "imagem": "produtos/chuteira12.webp",
+    "angulo": [
+      "produtos/chuteira12.webp",
+      "produtos/chuteira12_1.webp",
+      "produtos/chuteira12_2.webp",
+      "produtos/chuteira12_3.webp"
+    ],
+    "descricao": "Chuteira de society clássica com solado resistente para uso frequente em campos sintéticos.",
+    "preco": 249.90,
+    "tipo": "Futsal",
+    "avaliacao": 4.0,
+    "numAvaliacoes": 75,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 16,
+      "38": 11,
+      "39": 13,
+      "40": 19,
+      "41": 6
+    }
+  },
+  {
+    "id": 13,
+    "nome": "Chuteira Adidas X Speedportal",
+    "imagem": "produtos/chuteira13.webp",
+    "angulo": [
+      "produtos/chuteira13.webp",
+      "produtos/chuteira13_1.webp",
+      "produtos/chuteira13_2.webp",
+      "produtos/chuteira13_3.webp"
+    ],
+    "descricao": "Chuteira de campo com travas tradicionais, ideal para jogos em gramado natural.",
+    "preco": 299.90,
+    "tipo": "Futsal",
+    "avaliacao": 4.0,
+    "numAvaliacoes": 75,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 20,
+      "38": 17,
+      "39": 9,
+      "40": 12,
+      "41": 7
+    }
+  },
+  {
+    "id": 14,
+    "nome": "Chuteira Nike Zoom Mercurial Vapor 16 Elite KM",
+    "imagem": "produtos/chuteira14.avif",
+    "angulo": [
+      "produtos/chuteira14.avif",
+      "produtos/chuteira14_1.avif",
+      "produtos/chuteira14_2.avif",
+      "produtos/chuteira14_3.avif",
+      "produtos/chuteira14_4.avif"
+    ],
+    "descricao": "Modelo clássico da Umbro com travas para campo, ideal para gramados naturais e durabilidade.",
+    "preco": 199.90,
+    "tipo": "Campo",
+    "avaliacao": 3.7,
+    "numAvaliacoes": 44,
+    "tamanhos": [38, 39, 40, 41, 42],
+    "estoque": {
+      "38": 12,
+      "39": 8,
+      "40": 19,
+      "41": 14,
+      "42": 7
+    }
+  },
+  {
+    "id": 15,
+    "nome": "Chuteira Nike Zoom Mercurial Vapor 16 Elite KM",
+    "imagem": "produtos/chuteira15.jpg",
+    "angulo": [
+      "produtos/chuteira15.jpg",
+      "produtos/chuteira15_1.avif",
+      "produtos/chuteira15_2.jpg",
+      "produtos/chuteira15_3.avif",
+      "produtos/chuteira15_4.avif"
+    ],
+    "descricao": "Chuteira campo com visual moderno, leveza e tração otimizada para gramados.",
+    "preco": 279.90,
+    "tipo": "Campo",
+    "avaliacao": 3.7,
+    "numAvaliacoes": 44,
+    "tamanhos": [38, 39, 40, 41, 42],
+    "estoque": {
+      "38": 17,
+      "39": 12,
+      "40": 6,
+      "41": 9,
+      "42": 18
+    }
+  },
+  {
+    "id": 16,
+    "nome": "Chuteira Nike React Gato",
+    "imagem": "produtos/chuteira16.jpg",
+    "angulo": [
+      "produtos/chuteira16.jpg",
+      "produtos/chuteira16_1.jpg",
+      "produtos/chuteira16_2.jpg",
+      "produtos/chuteira16_3.jpg",
+      "produtos/chuteira16_4.jpg"
+    ],
+    "descricao": "Chuteira campo com design elegante e sola com excelente aderência.",
+    "preco": 279.90,
+    "tipo": "Futsal",
+    "avaliacao": 3.8,
+    "numAvaliacoes": 54,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 14,
+      "38": 16,
+      "39": 11,
+      "40": 7,
+      "41": 19
+    }
+  },
+  {
+    "id": 17,
+    "nome": "Chuteira Nike React Gato",
+    "imagem": "produtos/chuteira17.jpg",
+    "angulo": [
+      "produtos/chuteira17.jpg",
+      "produtos/chuteira17_1.jpg",
+      "produtos/chuteira17_2.jpg",
+      "produtos/chuteira17_3.jpg",
+      "produtos/chuteira17_4.jpg"
+    ],
+    "descricao": "Modelo campo ideal para gramados, com ótimo ajuste e responsividade.",
+    "preco": 279.90,
+    "tipo": "Futsal",
+    "avaliacao": 3.8,
+    "numAvaliacoes": 54,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 11,
+      "38": 19,
+      "39": 14,
+      "40": 10,
+      "41": 8
+    }
+  },
+  {
+    "id": 18,
+    "nome": "Chuteira Nike React Gato",
+    "imagem": "produtos/chuteira18.jpg",
+    "angulo": [
+      "produtos/chuteira18.jpg",
+      "produtos/chuteira18_1.jpg",
+      "produtos/chuteira18_2.jpg",
+      "produtos/chuteira18_3.jpg",
+      "produtos/chuteira18_4.jpg"
+    ],
+    "descricao": "Chuteira campo com construção leve e ótimo controle em gramados.",
+    "preco": 279.90,
+    "tipo": "Futsal",
+    "avaliacao": 3.8,
+    "numAvaliacoes": 54,
+    "tamanhos": [37, 38, 39, 40, 41],
+    "estoque": {
+      "37": 13,
+      "38": 18,
+      "39": 9,
+      "40": 6,
+      "41": 20
+    }
+  }
+]

@@ -1,0 +1,206 @@
+[
+  {
+    "id": 1,
+    "nome": "Luva Poker Altered",
+    "imagem": "produtos/luva1.webp",
+    "angulo": [
+      "produtos/luva1.webp",
+      "produtos/luva1_1.webp",
+      "produtos/luva1_2.webp",
+      "produtos/luva1_3.webp",
+      "produtos/luva1_4.webp"
+    ],
+    "descricao": "Luva profissional com palma de alta aderência e dorso reforçado para partidas em alto nível.",
+    "preco": 349.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.6,
+    "numAvaliacoes": 128,
+    "estoque": {
+      "9": 13,
+      "10": 8,
+      "11": 17,
+      "12": 6
+    }
+  },
+  {
+    "id": 2,
+    "nome": "Luva Zeus N1 Ares",
+    "imagem": "produtos/luva2.jpg",
+    "angulo": [
+      "produtos/luva2.jpg",
+      "produtos/luva2_1.jpg",
+      "produtos/luva2_2.jpg",
+      "produtos/luva2_3.jpg",
+      "produtos/luva2_4.jpg"
+    ],
+    "descricao": "Luva com corte negativo e grande aderência em condições secas e úmidas.",
+    "preco": 349.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.3,
+    "numAvaliacoes": 94,
+    "estoque": {
+      "9": 11,
+      "10": 16,
+      "11": 7,
+      "12": 19
+    }
+  },
+  {
+    "id": 3,
+    "nome": "Luva Infinity Delta",
+    "imagem": "produtos/luva3.webp",
+    "angulo": [
+      "produtos/luva3.webp",
+      "produtos/luva3_1.webp",
+      "produtos/luva3_2.webp",
+      "produtos/luva3_3.webp"
+    ],
+    "descricao": "Modelo com proteção de dedos e excelente absorção de impacto em defesas rápidas.",
+    "preco": 449.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.8,
+    "numAvaliacoes": 152,
+    "estoque": {
+      "9": 9,
+      "10": 14,
+      "11": 6,
+      "12": 18
+    }
+  },
+  {
+    "id": 4,
+    "nome": "Luva Poker Altered Elite",
+    "imagem": "produtos/luva4.webp",
+    "angulo": [
+      "produtos/luva4.webp",
+      "produtos/luva4_1.webp",
+      "produtos/luva4_2.webp",
+      "produtos/luva4_3.webp",
+      "produtos/luva4_4.webp"
+    ],
+    "descricao": "Luva leve com dorso flexível e palma com grip avançado para máxima performance.",
+    "preco": 299.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.1,
+    "numAvaliacoes": 73,
+    "estoque": {
+      "9": 18,
+      "10": 12,
+      "11": 7,
+      "12": 15
+    }
+  },
+  {
+    "id": 5,
+    "nome": "Luva Poker Dominator",
+    "imagem": "produtos/luva5.webp",
+    "angulo": [
+      "produtos/luva5.webp",
+      "produtos/luva5_1.webp",
+      "produtos/luva5_2.webp",
+      "produtos/luva5_3.webp",
+      "produtos/luva5_4.webp"
+    ],
+    "descricao": "Luva com proteção anti-impacto e palma macia para jogos competitivos.",
+    "preco": 299.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.5,
+    "numAvaliacoes": 110,
+    "estoque": {
+      "9": 6,
+      "10": 15,
+      "11": 19,
+      "12": 8
+    }
+  },
+  {
+    "id": 6,
+    "nome": "Luva Ho Soccer One Roll Negative Kombat",
+    "imagem": "produtos/luva6.webp",
+    "angulo": [
+      "produtos/luva6.webp",
+      "produtos/luva6_1.webp",
+      "produtos/luva6_2.webp",
+      "produtos/luva6_3.webp",
+      "produtos/luva6_4.webp"
+    ],
+    "descricao": "Modelo híbrido com corte roll/negative e forte aderência em qualquer clima.",
+    "preco": 199.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 3.9,
+    "numAvaliacoes": 56,
+    "estoque": {
+      "9": 12,
+      "10": 7,
+      "11": 16,
+      "12": 10
+    }
+  },
+  {
+    "id": 7,
+    "nome": "Luva Poker Altered Pro",
+    "imagem": "produtos/luva7.webp",
+    "angulo": [
+      "produtos/luva7.webp",
+      "produtos/luva7_1.webp",
+      "produtos/luva7_2.webp",
+      "produtos/luva7_3.webp",
+      "produtos/luva7_4.webp"
+    ],
+    "descricao": "Luva com palma alemã de alto desempenho e conforto superior.",
+    "preco": 279.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.4,
+    "numAvaliacoes": 89,
+    "estoque": {
+      "9": 17,
+      "10": 11,
+      "11": 6,
+      "12": 15
+    }
+  },
+  {
+    "id": 8,
+    "nome": "Luva Poker Hug Flex 3",
+    "imagem": "produtos/luva8.webp",
+    "angulo": [
+      "produtos/luva8.webp",
+      "produtos/luva8_1.webp",
+      "produtos/luva8_2.webp",
+      "produtos/luva8_3.webp"
+    ],
+    "descricao": "Luva com alta flexibilidade e grip otimizado para treinos intensos.",
+    "preco": 379.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.2,
+    "numAvaliacoes": 67,
+    "estoque": {
+      "9": 14,
+      "10": 5,
+      "11": 18,
+      "12": 9
+    }
+  },
+  {
+    "id": 9,
+    "nome": "Luva N1 Horus Elite",
+    "imagem": "produtos/luva9.jpg",
+    "angulo": [
+      "produtos/luva9.jpg",
+      "produtos/luva9_1.webp",
+      "produtos/luva9_2.webp",
+      "produtos/luva9_3.webp"
+    ],
+    "descricao": "Luva profissional com palma importada e grande absorção de impacto.",
+    "preco": 399.90,
+    "tamanhos": [9, 10, 11, 12],
+    "avaliacao": 4.9,
+    "numAvaliacoes": 182,
+    "estoque": {
+      "9": 7,
+      "10": 18,
+      "11": 13,
+      "12": 20
+    }
+  }
+]

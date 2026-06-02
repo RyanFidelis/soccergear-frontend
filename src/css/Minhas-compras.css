@@ -1,0 +1,48 @@
+.minhas-compras {
+    padding: 20px;
+}
+
+.minhas-compras h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.compra-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+}
+
+.compra-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.compra-info {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.compra-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+.compra-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.compra-preco {
+    font-weight: bold;
+    color: #000;
+}

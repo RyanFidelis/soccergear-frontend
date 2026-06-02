@@ -1,0 +1,139 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.favoritos-container {
+  padding: 40px 6%;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.favoritos-container h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 30px;
+}
+
+/* ===== GRID DE PRODUTOS FAVORITOS ===== */
+.grid-favoritos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+
+/* ===== CARD DO PRODUTO ===== */
+.produto-card-favoritos {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.produto-card-favoritos:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== IMAGEM DO PRODUTO ===== */
+.produto-imagem-favoritos {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* ===== NOME E PREÇO ===== */
+.produto-card-favoritos h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+  margin: 10px 0 5px;
+}
+
+.preco-favoritos {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* ===== AÇÕES (REMOVER FAVORITO) ===== */
+.produto-acoes-favoritos {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.estrela-favorito-favoritos {
+  font-size: 24px;
+  cursor: pointer;
+  color: #f5c518;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.estrela-favorito-favoritos:hover {
+  transform: scale(1.3);
+  filter: brightness(1.2);
+}
+
+/* ===== FEEDBACK MENSAGEM ===== */
+.feedback-message-favoritos {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #111;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1000;
+}
+
+.feedback-message-favoritos.show {
+  opacity: 1;
+}
+
+/* ===== ESTILO PARA QUANDO NÃO HÁ FAVORITOS ===== */
+.favoritos-vazio {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #fafafa;
+  color: #555;
+}
+
+.favoritos-vazio h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .favoritos-container {
+    padding: 25px 5%;
+  }
+
+  .grid-favoritos {
+    gap: 18px;
+  }
+
+  .produto-imagem-favoritos {
+    height: 180px;
+  }
+
+  .produto-card-favoritos h4 {
+    font-size: 1rem;
+  }
+
+  .preco-favoritos {
+    font-size: 0.95rem;
+  }
+}
