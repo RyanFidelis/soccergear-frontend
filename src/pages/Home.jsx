@@ -13,8 +13,6 @@ export default function Home() {
     { nome: "meioes", titulo: "Meiões" },
     { nome: "bolas", titulo: "Bolas" },
   ];
-
-<<<<<<< HEAD
   const [produtos, setProdutos] = useState({});
   const [favoritos, setFavoritos] = useState(
     JSON.parse(localStorage.getItem("favoritos")) || []
@@ -29,7 +27,6 @@ export default function Home() {
   const refsCategorias = useRef({});
 
   useEffect(() => {
-=======
   const originalBanners = [
     { id: 1, img: "/imagem/anuncio.webp", titulo: "Nike Phantom" },
     { id: 2, img: "/imagem/anuncio2.jpg", titulo: "Camisa do Corinthians 25/26" },
@@ -166,7 +163,6 @@ export default function Home() {
     setFavoritos(salvos);
     setFavoritosCarregados(true);
 
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     async function carregar() {
       const dados = {};
       for (const { nome } of categorias) {
@@ -184,7 +180,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-<<<<<<< HEAD
     localStorage.setItem("cart", JSON.stringify(carrinho));
   }, [carrinho]);
 
@@ -192,15 +187,12 @@ export default function Home() {
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }, [favoritos]);
 
-  // 🔍 Busca acionada apenas ao clicar no botão
-=======
     if (favoritosCarregados) {
       const favKey = getStorageKey("favoritos");
       localStorage.setItem(favKey, JSON.stringify(favoritos));
     }
   }, [favoritos, favoritosCarregados]);
 
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
   const buscarProdutos = () => {
     const termo = termoBusca.trim().toLowerCase();
     setBuscou(true);
@@ -251,7 +243,6 @@ export default function Home() {
     const favorito = favoritos.some((f) => f.uid === uid);
     const produtoComUID = { ...produto, uid };
 
-<<<<<<< HEAD
     return (
       <div
         className="produto"
@@ -293,7 +284,6 @@ export default function Home() {
           >
             {favorito ? "⭐" : "☆"}
           </span>
-=======
     const irParaDetalhes = () => {
         localStorage.setItem("produtoSelecionado", JSON.stringify(produtoComUID));
         navigate("/verproduto");
@@ -349,7 +339,6 @@ export default function Home() {
             >
                 <img src="imagem/carrinho.png" alt="Carrinho" className="icon carrinho" />
             </button>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         </div>
       </div>
     );
@@ -365,11 +354,9 @@ export default function Home() {
       });
     }
   };
-
-<<<<<<< HEAD
+          
   return (
     <main>
-=======
   const realIndex = (currentIndex - 1 + originalBanners.length) % originalBanners.length;
 
   return (
@@ -378,7 +365,6 @@ export default function Home() {
         {feedbackMsg}
       </div>
 
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       <div className="barra-pesquisa">
         <input
           type="text"
@@ -408,12 +394,10 @@ export default function Home() {
 
       {!buscou && (
         <>
-<<<<<<< HEAD
           <h2 className="titulo">Lançamento</h2>
           <div className="anuncio">
             <img src="/imagem/anuncio.jpg" alt="Anúncio" />
             <p>Nike React Gato - Futsal</p>
-=======
           <h2 className="titulo">Destaques da Semana</h2>
           <div className="carrossel-container">
             <button className="carrossel-btn prev" onClick={prevSlide}>&#10094;</button>
@@ -454,7 +438,6 @@ export default function Home() {
                     ></span>
                 ))}
             </div>
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
           </div>
           <hr />
         </>
@@ -463,11 +446,8 @@ export default function Home() {
       {buscou && resultados.length > 0 && (
         <>
           <h2 className="titulo">Resultados da busca</h2>
-<<<<<<< HEAD
           <div className="ResultadosProdutos grid-produtos">
-=======
           <div className="grid-produtos">
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
             {resultados.map((p) => renderProduto(p, p.categoria))}
           </div>
         </>
@@ -475,11 +455,7 @@ export default function Home() {
 
       {buscou && resultados.length === 0 && (
         <p style={{ textAlign: "center", marginTop: "2rem", color: "#555" }}>
-<<<<<<< HEAD
           Nenhum produto encontrado para "{termoBusca}". 
-=======
-          Nenhum produto encontrado para "{termoBusca}".
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
         </p>
       )}
 
@@ -514,11 +490,9 @@ export default function Home() {
           ))}
         </>
       )}
-<<<<<<< HEAD
     </main>
   );
 }
-=======
 
       {modalCompra.aberto && modalCompra.produto && (
         <div className="modal-overlay-tamanho">
@@ -555,4 +529,3 @@ export default function Home() {
     </main>
   );
 }
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
