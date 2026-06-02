@@ -3,17 +3,10 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import "./provador.css";
 
-/* ===========================================================
-   COMPONENTE MANEQUIM - Centralizado e sem troca de pele
-   =========================================================== */
 function Manequim({ glb }) {
   const { scene } = useGLTF(glb);
   return <primitive object={scene} position={[0, -0.2, 0]} scale={1.1} />;
 }
-
-/* ===========================================================
-   CONTROLES DE CÂMERA COM ZOOM PRECISO
-   =========================================================== */
 function CameraControls({ cameraPosition, setZoomPercent }) {
   const controls = useRef();
   const { camera } = useThree();
@@ -25,7 +18,7 @@ function CameraControls({ cameraPosition, setZoomPercent }) {
     controls.current.update();
   }, [cameraPosition, camera]);
 
-  // Atualiza a porcentagem do zoom corretamente
+  // Atualiza a porcentagem do zoom 
   useEffect(() => {
     const updateZoom = () => {
       const distance = Math.sqrt(
@@ -53,9 +46,6 @@ function CameraControls({ cameraPosition, setZoomPercent }) {
   );
 }
 
-/* ===========================================================
-   COMPONENTE PRINCIPAL
-   =========================================================== */
 export default function Provador() {
   const [camisaSelecionada, setCamisaSelecionada] = useState(null);
   const [parteInferior, setParteInferior] = useState(null);
@@ -87,9 +77,7 @@ export default function Provador() {
 
   const modeloFinal = getModeloGLB();
 
-  /* ===========================================================
-     FUNÇÕES DE ZOOM PRECISAS (incrementos suaves)
-     =========================================================== */
+  //FUNÇÕES DE ZOOM 
   const ajustarZoom = (fator) => {
     setCameraPosition(([x, y, z]) => {
       const dir = { x: -x, y: 1 - y, z: -z };
@@ -193,9 +181,6 @@ export default function Provador() {
   );
 }
 
-/* ===========================================================
-   LUZES
-   =========================================================== */
 function Luzes() {
   return (
     <>
