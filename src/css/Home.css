@@ -122,16 +122,6 @@
 .produtos {
   display: flex;
   overflow-x: auto;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  gap: 15px;
-  padding: 10px 40px;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-.produtos {
-  display: flex;
-  overflow-x: auto;
   scroll-behavior: smooth;
   gap: 15px;
   padding: 10px 40px;
@@ -146,7 +136,7 @@
 
 .produto {
   flex: 0 0 auto;
-  width: 180px;
+  width: 220px;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -155,15 +145,6 @@
   text-align: center;
   box-sizing: border-box;
   cursor: pointer;
-  width: 220px;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .produto:hover {
@@ -216,7 +197,6 @@
   color: #555;
   height: 32px;
   overflow: hidden;
-}
   margin: 5px 0 8px 0;
   color: #333;
   white-space: nowrap;
