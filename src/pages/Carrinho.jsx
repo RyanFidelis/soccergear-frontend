@@ -7,11 +7,9 @@ export default function Carrinho() {
   const [cart, setCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
 
-<<<<<<< HEAD
   function carregarCart() {
     const raw = localStorage.getItem("cart");
-=======
-  // --- Novos States para o Modal de Frete ---
+  // Modal de Frete 
   const [modalAberto, setModalAberto] = useState(false);
   const [cep, setCep] = useState("");
   const [freteInfo, setFreteInfo] = useState(null);
@@ -24,7 +22,6 @@ export default function Carrinho() {
 
   function carregarCart() {
     const raw = localStorage.getItem(getCartKey());
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     const stored = raw ? JSON.parse(raw) : [];
     setCart(stored);
   }
@@ -33,11 +30,8 @@ export default function Carrinho() {
     carregarCart();
 
     const onStorage = (e) => {
-<<<<<<< HEAD
       if (e.key === "cart") carregarCart();
-=======
       if (e.key === getCartKey()) carregarCart();
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     };
 
     const onCartUpdated = () => carregarCart();
@@ -67,11 +61,8 @@ export default function Carrinho() {
     );
 
     setCart(newCart);
-<<<<<<< HEAD
     localStorage.setItem("cart", JSON.stringify(newCart));
-=======
     localStorage.setItem(getCartKey(), JSON.stringify(newCart));
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     window.dispatchEvent(
       new CustomEvent("cart-updated", { detail: newCart })
     );
@@ -80,21 +71,15 @@ export default function Carrinho() {
   const removeItem = (index) => {
     const newCart = cart.filter((_, i) => i !== index);
     setCart(newCart);
-<<<<<<< HEAD
     localStorage.setItem("cart", JSON.stringify(newCart));
-=======
     localStorage.setItem(getCartKey(), JSON.stringify(newCart));
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     window.dispatchEvent(
       new CustomEvent("cart-updated", { detail: newCart })
     );
   };
 
-<<<<<<< HEAD
   const finalizarCompra = () => {
-=======
   const iniciarFinalizacao = () => {
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     if (cart.length === 0) {
       alert("Seu carrinho está vazio!");
       return;
@@ -102,18 +87,13 @@ export default function Carrinho() {
 
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuario) {
-<<<<<<< HEAD
       localStorage.setItem("redirectAfterLogin", "/pagamento");
-=======
       localStorage.setItem("redirectAfterLogin", "/carrinho");
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
       navigate("/login");
       return;
     }
 
-<<<<<<< HEAD
     localStorage.setItem("compraAtual", JSON.stringify(cart));
-=======
     if (usuario.endereco) {
         const cepSalvo = usuario.endereco.replace(/\D/g, "");
         if (cepSalvo.length === 8) {
@@ -191,7 +171,6 @@ export default function Carrinho() {
     });
 
     localStorage.setItem("compraAtual", JSON.stringify(listaFinal));
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
     navigate("/pagamento");
   };
 
@@ -240,7 +219,6 @@ export default function Carrinho() {
           <span>R$ {subtotal.toFixed(2)}</span>
         </div>
 
-<<<<<<< HEAD
         <button onClick={finalizarCompra} className="botao-primario">
           Ir para Pagamento
         </button>
@@ -248,7 +226,6 @@ export default function Carrinho() {
     </main>
   );
 }
-=======
         <button onClick={iniciarFinalizacao} className="botao-primario">
           Ir para Pagamento
         </button>
@@ -298,4 +275,3 @@ export default function Carrinho() {
     </main>
   );
 }
->>>>>>> 344c7d79af2025b4a48363db0b3b4b71df1649db
