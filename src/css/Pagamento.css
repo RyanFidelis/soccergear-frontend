@@ -52,7 +52,7 @@
 }
 
 /* ===========================
-   CUPOM DE DESCONTO 
+   CUPOM DE DESCONTO
    =========================== */
 .pagamento-cupom-box {
   margin-top: 20px;
@@ -177,7 +177,6 @@
   font-size: 14px;
 }
 
-/* Botão copiar */
 .pagamento-btn-copiar {
   padding: 8px 16px;
   font-size: 14px;
@@ -201,27 +200,13 @@
 /* ===========================
    Cartão
    =========================== */
-<<<<<<< HEAD
-.pagamento-cartao input,
-.pagamento-cartao select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-}
-
-.pagamento-cartao-linha {
-  display: flex;
-  gap: 10px;
-=======
 .pagamento-cartao-box {
   background: #fff;
   padding: 25px;
   border-radius: 12px;
   border: 1px solid #ddd;
   margin-top: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .pagamento-cartao-box h3 {
@@ -291,7 +276,7 @@
 .campo-cartao input:focus,
 .campo-cartao select:focus {
   border-color: #000;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .campo-cartao input::placeholder {
@@ -327,7 +312,9 @@
   border: 1px solid #ccc;
 }
 
-/* Código de barras */
+/* ===========================
+   Código de barras
+   =========================== */
 .barcode-img {
   margin-top: 20px;
   width: 85%;
@@ -354,13 +341,15 @@
   opacity: 0.8;
 }
 
-/* Responsividade */
+/* ===========================
+   Responsividade
+   =========================== */
 @media (max-width: 600px) {
   .pagamento-item-linha {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .pagamento-item-linha button {
     margin-left: 0;
     width: 100%;
@@ -373,5 +362,10 @@
   .linha-dupla {
     flex-direction: column;
     gap: 16px;
+  }
+
+  .pagamento-qrcode {
+    width: 220px;
+    height: 220px;
   }
 }
